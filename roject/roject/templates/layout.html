@@ -4,31 +4,29 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ title }}</title>
-    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.min.css" />
+
+    <!-- icon -->
+    <link rel="shortcut icon" href="/static/icon/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/static/icon/favicon.ico" type="image/x-icon">
+
+    <!-- stylesheets -->
+    <link rel="stylesheet" type="text/css" href="/static/css/site.css" />
+    <link rel="stylesheet" type="text/css" href="/static/css/pure-min.css" />
 </head>
 
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a href="/" class="navbar-brand">Chat</a>
-            </div>
-        </div>
+    <div class="pure-menu pure-menu-horizontal">
+        <a href="/" class="pure-menu-heading pure-menu-link">Chat</a>
     </div>
+    <br />
 
-    <hr />
-    <div class="container">
+    <div id="content">
         {% block content %}{% endblock %}
     </div>
-    <hr />
 
+    <br />
     <footer>
-        <p>&copy; {{ year }}</p>
+        <p>To commemorate the ending of my first shadiness</p>
     </footer>
 </body>
 </html>
