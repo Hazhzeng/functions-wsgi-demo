@@ -31,6 +31,12 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="roject\schema\Message.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="roject\schema\__init__.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="roject\views\api.py">
       <SubType>Code</SubType>
     </Compile>
@@ -48,6 +54,7 @@
     <Folder Include="C:\Users\zengh\Documents\Visual Studio 2017\Projects\roject\roject\roject\static\js\" />
     <Folder Include="C:\Users\zengh\Documents\Visual Studio 2017\Projects\roject\roject\roject\templates\" />
     <Folder Include="roject\" />
+    <Folder Include="C:\Users\zengh\Documents\Visual Studio 2017\Projects\roject\roject\roject\views\schema\" />
     <Folder Include="roject\static\" />
     <Folder Include="roject\static\build\" />
     <Folder Include="roject\static\css\" />
@@ -59,6 +66,7 @@
     <Folder Include="roject\static\js\includes\" />
     <Folder Include="roject\templates\" />
     <Folder Include="roject\views\" />
+    <Folder Include="C:\Users\zengh\Documents\Visual Studio 2017\Projects\roject\roject\roject\schema\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="requirements.txt" />
@@ -69,6 +77,8 @@
     <Content Include="roject\static\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="roject\static\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="roject\static\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="roject\static\js\Api.js" />
+    <Content Include="roject\static\js\App.js" />
     <Content Include="roject\static\js\components\TextHolder.js" />
     <Content Include="roject\static\js\components\TextBox.js" />
     <Content Include="roject\static\js\containers\ChatboxContainer.js" />

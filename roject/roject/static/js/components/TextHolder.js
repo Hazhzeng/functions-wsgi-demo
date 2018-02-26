@@ -11,9 +11,7 @@ class TextHolder extends Component {
 
     render() {
         return (
-            <div>
-                <input value={this.state.msg} readOnly />
-            </div>
+            <textarea value={this.state.msg} readOnly />
         );
     }
 }

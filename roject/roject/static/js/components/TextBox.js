@@ -6,6 +6,7 @@ class TextBox extends Component {
         super(props);
         this.state = {
             msg: '',
+            disabled: true
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -14,19 +15,24 @@ class TextBox extends Component {
 
     handleChange(event) {
         this.setState({ msg: event.target.value });
+        if (event.target.value) {
+            this.setState(Object.assign({}, { disabled: false }));
+        } else {
+            this.setState(Object.assign({}, { disabled: true }));
+        }
     }
 
     handleSubmit(event) {
         event.preventDefault();
         this.props.handleSubmit(this.state.msg);
-        this.setState({ msg: '' });
+        this.setState({ msg: '', disabled: true });
     }
 
     render() {
         return (
             <form onSubmit={this.handleSubmit} className="pure-form">
                 <input type="text" value={this.state.msg} onChange={this.handleChange} className="pure-input-1-2" />
-                <button type="submit" className="pure-button pure-button-active">POST</button>
+                <button type="submit" className="pure-button pure-button-active" disabled={this.state.disabled}>POST</button>
             </form>
         );
     }

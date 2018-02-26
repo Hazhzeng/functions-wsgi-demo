@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
 
+import { postmsg } from "../Api";
 import TextBox from "../components/TextBox";
 import TextHolder from "../components/TextHolder";
 
@@ -13,6 +14,7 @@ class ChatboxContainer extends Component {
     }
 
     handleSubmit(value) {
+        postmsg(value);
         this.setState((prevState) => {
             return {
                 msg_history: prevState.msg_history.concat([value])
