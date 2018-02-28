@@ -55,6 +55,7 @@
     <Folder Include="C:\Users\zengh\Documents\Visual Studio 2017\Projects\roject\roject\roject\templates\" />
     <Folder Include="roject\" />
     <Folder Include="C:\Users\zengh\Documents\Visual Studio 2017\Projects\roject\roject\roject\views\schema\" />
+    <Folder Include="roject\schema\" />
     <Folder Include="roject\static\" />
     <Folder Include="roject\static\build\" />
     <Folder Include="roject\static\css\" />
@@ -67,6 +68,7 @@
     <Folder Include="roject\templates\" />
     <Folder Include="roject\views\" />
     <Folder Include="C:\Users\zengh\Documents\Visual Studio 2017\Projects\roject\roject\roject\schema\" />
+    <Folder Include="roject\views\schema\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="requirements.txt" />

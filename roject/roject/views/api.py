@@ -1,25 +1,18 @@
 from datetime import datetime
-from flask import request, Response
+from flask import request, Response, g
 from roject import app
+from webargs.flaskparser import use_args
 
+from roject.views import response
 from roject.schema.Message import MessageObject, MessageSchema
-import json
 
 @app.route("/api/ping", methods=["GET"])
 def ping() -> str:
-    return "pong"
+    return response.ok('pong')
 
 @app.route("/api/postmsg", methods=["POST"])
-def postmsg() -> str:
-    request_json = request.get_json()
-    message_obj = MessageSchema().load(request_json).data
-    print(message_obj.msg)
-    return 'ok'
+@use_args(MessageSchema())
+def postmsg(args) -> str:
+    print(g.messages, flush=True)
+    return response.ok(args.msg)
 
-@app.route("/api/getmsg")
-def getmsg() -> None:
-    raise NotImplementedError
-
-@app.route("/api/getmsgs")
-def getmsgs(count: int) -> None:
-    raise NotImplementedError
