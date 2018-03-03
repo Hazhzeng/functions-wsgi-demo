@@ -1,4 +1,5 @@
 const path = require("path");
+const webpack = require("webpack");
 
 const entry_point = path.resolve(__dirname, './roject/roject/static/js/index.js');
 const build_dir = path.resolve(__dirname, './roject/roject/static/build');
@@ -17,7 +18,11 @@ module.exports = {
                 use: {
                     loader: "babel-loader"
                 }
+            },
+            {
+                test: /\.css$/,
+                use: ['style-loader', 'css-loader']
             }
         ]
-    }
+    },
 };

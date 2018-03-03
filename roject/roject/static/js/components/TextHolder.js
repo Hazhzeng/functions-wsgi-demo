@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
+import { Card, CardTitle, CardText } from "material-ui/Card";
 
 class TextHolder extends Component {
     constructor(props) {
@@ -11,7 +12,12 @@ class TextHolder extends Component {
 
     render() {
         return (
-            <textarea value={this.state.msg} readOnly />
+            <Card>
+                <CardTitle
+                    title={this.state.msg}
+                    subtitle={this.props.index}
+                />
+            </Card>
         );
     }
 }

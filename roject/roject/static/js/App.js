@@ -1,9 +1,12 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
 
-import ChatboxContainer from "./containers/ChatboxContainer";
+import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 
-class App extends Component {
+import ChatboxContainer from "./containers/ChatboxContainer";
+import NavigationContainer from "./containers/NavigationContainer";
+
+class ReactContent extends Component {
     constructor() {
         super();
     }
@@ -11,11 +14,17 @@ class App extends Component {
     render() {
         return (
             <div>
+                <NavigationContainer />
                 <ChatboxContainer />
             </div>
         )
     }
 }
 
-const wrapper = document.getElementById("app");
-wrapper ? ReactDOM.render(<App />, wrapper) : false;
+const App = () => (
+    <MuiThemeProvider>
+        <ReactContent />
+    </MuiThemeProvider>
+);
+
+ReactDOM.render(<App />, document.getElementById("app"));

@@ -6,4 +6,4 @@ from roject import app
 @app.route('/index')
 @app.route('/')
 def index():
-    return render_template('index.html', title='Chat', year=datetime.now().year)
+    return render_template('index.html')

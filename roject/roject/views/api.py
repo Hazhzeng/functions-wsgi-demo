@@ -13,6 +13,5 @@ def ping() -> str:
 @app.route("/api/postmsg", methods=["POST"])
 @use_args(MessageSchema())
 def postmsg(args) -> str:
-    print(g.messages, flush=True)
     return response.ok(args.msg)
 

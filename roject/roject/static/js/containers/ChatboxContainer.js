@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
+import Paper from "material-ui/Paper";
 
 import API from "../Api";
 import TextBox from "../components/TextBox";
@@ -24,13 +25,13 @@ class ChatboxContainer extends Component {
 
     render() {
         const msg_histories = this.state.msg_history.map((text, index) => (
-            <TextHolder key={`key_${index}`} msg={text} />
+            <TextHolder key={`key_${index}`} msg={text} index={index}/>
         ));
         return (
-            <div>
+            <Paper zDepth={2}>
                 {msg_histories}
                 <TextBox handleSubmit={this.handleSubmit.bind(this)} />
-            </div>
+            </Paper>
         );
     }
 }

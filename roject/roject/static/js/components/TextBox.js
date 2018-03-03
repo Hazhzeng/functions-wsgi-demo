@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
+import RaisedButton from 'material-ui/RaisedButton';
+import TextField from 'material-ui/TextField';
 
 class TextBox extends Component {
     constructor(props) {
@@ -30,9 +32,9 @@ class TextBox extends Component {
 
     render() {
         return (
-            <form onSubmit={this.handleSubmit} className="pure-form">
-                <input type="text" value={this.state.msg} onChange={this.handleChange} className="pure-input-1-2" />
-                <button type="submit" className="pure-button pure-button-active" disabled={this.state.disabled}>POST</button>
+            <form onSubmit={this.handleSubmit}>
+                <TextField id="text-box-0" type="text" value={this.state.msg} onChange={this.handleChange}/>
+                <RaisedButton type="submit" label="POST" disabled={this.state.disabled}/>
             </form>
         );
     }
