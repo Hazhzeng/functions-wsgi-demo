@@ -6,6 +6,11 @@ import API from "../Api";
 import TextBox from "../components/TextBox";
 import TextHolder from "../components/TextHolder";
 
+const style = {
+    position: 'absolute',
+    margin: '0 0 0 300px',
+};
+
 class ChatboxContainer extends Component {
     constructor() {
         super();
@@ -28,7 +33,7 @@ class ChatboxContainer extends Component {
             <TextHolder key={`key_${index}`} msg={text} index={index}/>
         ));
         return (
-            <Paper zDepth={2}>
+            <Paper zDepth={2} style={style}>
                 {msg_histories}
                 <TextBox handleSubmit={this.handleSubmit.bind(this)} />
             </Paper>

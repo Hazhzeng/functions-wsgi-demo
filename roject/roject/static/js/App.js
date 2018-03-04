@@ -3,8 +3,9 @@ import ReactDOM from "react-dom";
 
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 
+import BlogContainer from "./containers/BlogContainer";
+import CalendarContainer from "./containers/CalendarContainer";
 import ChatboxContainer from "./containers/ChatboxContainer";
-import NavigationContainer from "./containers/NavigationContainer";
 
 class ReactContent extends Component {
     constructor() {
@@ -14,7 +15,8 @@ class ReactContent extends Component {
     render() {
         return (
             <div>
-                <NavigationContainer />
+                <BlogContainer />
+                <CalendarContainer />
                 <ChatboxContainer />
             </div>
         )
