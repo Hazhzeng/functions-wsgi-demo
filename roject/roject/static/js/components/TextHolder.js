@@ -6,7 +6,8 @@ class TextHolder extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            msg: props.msg
+            msg_content: props.msg_content,
+            msg_update: props.msg_update,
         };
     }
 
@@ -14,8 +15,8 @@ class TextHolder extends Component {
         return (
             <Card>
                 <CardTitle
-                    title={this.state.msg}
-                    subtitle={this.props.index}
+                    title={this.state.msg_content}
+                    subtitle={this.state.msg_update}
                 />
             </Card>
         );

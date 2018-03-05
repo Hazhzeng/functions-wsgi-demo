@@ -19,18 +19,25 @@ class ChatboxContainer extends Component {
         };
     }
 
-    handleSubmit(value) {
-        API.postmsg(value);
+    handleSubmit(message) {
+        const last_update = API.postmsg(message);
         this.setState((prevState) => {
             return {
-                msg_history: prevState.msg_history.concat([value])
+                msg_history: prevState.msg_history.concat([{
+                    msg_content: message,
+                    msg_update: 'todo_last_update',
+                }])
             }
         });
     }
 
     render() {
-        const msg_histories = this.state.msg_history.map((text, index) => (
-            <TextHolder key={`key_${index}`} msg={text} index={index}/>
+        const msg_histories = this.state.msg_history.map((value, index) => (
+            <TextHolder
+                key={`key_${index}`}
+                msg_content={value.msg_content}
+                msg_update={value.msg_update}
+            />
         ));
         return (
             <Paper zDepth={2} style={style}>

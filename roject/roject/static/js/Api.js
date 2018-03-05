@@ -25,6 +25,6 @@ export default class API {
         const request_body = {
             msg: message
         };
-        post_json('/api/postmsg', {}, request_body);
+        return post_json('/api/postmsg', {}, request_body);
     }
 }

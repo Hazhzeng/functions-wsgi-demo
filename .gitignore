@@ -1,5 +1,7 @@
 
 # Created by https://www.gitignore.io/api/python,visualstudio
+roject/roject/static/build/
+roject/roject/sql/chat.db
 
 ### Python ###
 # Byte-compiled / optimized / DLL files
@@ -13,7 +15,6 @@ __pycache__/
 # Distribution / packaging
 .Python
 build/
-roject/roject/static/build/
 develop-eggs/
 dist/
 downloads/
