@@ -1,5 +1,5 @@
 from flask import Flask
-import roject.models
+from flask_sqlalchemy import SQLAlchemy
 import os
 
 
@@ -14,12 +14,15 @@ app = Flask(
 app.config.from_object(__name__)
 
 app.config.update(dict(
-    DATABASE=os.path.join(app.root_path, 'chat.db'),
+    SQLALCHEMY_DATABASE_URI='sqlite:////{}'.format(os.path.join(app.root_path, 'sql', 'chat.db')),
+    SQLALCHEMY_TRACK_MODIFICATIONS='False',
     DATABASE_INIT_SQL=os.path.join(app.root_path, 'sql', 'init.sql'),
     SECRET_KEY='development',
     USERNAME='admin',
     PASSWORD='default'
 ))
+
+db = SQLAlchemy(app)
 
 import roject.views.views
 import roject.views.api
