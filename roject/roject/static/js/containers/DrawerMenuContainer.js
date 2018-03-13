@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import Drawer from 'material-ui/Drawer';
-import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
-import InboxIcon from 'material-ui-icons/MoveToInbox';
-import DraftsIcon from 'material-ui-icons/Drafts';
+import List from 'material-ui/List';
 import { withStyles } from 'material-ui/styles';
+
+import MenuListItem from '../components/DrawerMenu/MenuListItem';
 
 const styles = theme => ({
   drawer: {
@@ -22,18 +22,9 @@ class DrawerMenuContainer extends Component {
       <div>
         <div className={classes.toolbar} />
         <List component="nav">
-          <ListItem button>
-            <ListItemIcon>
-              <InboxIcon />
-            </ListItemIcon>
-            <ListItemText primary="Inbox" />
-          </ListItem>
-          <ListItem button>
-            <ListItemIcon>
-              <DraftsIcon />
-            </ListItemIcon>
-            <ListItemText primary="Drafts" />
-          </ListItem>
+          <MenuListItem name='home' />
+          <MenuListItem name='post' />
+          <MenuListItem name='info' />
         </List>
       </div>
     );
