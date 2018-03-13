@@ -1,42 +1,38 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import Paper from 'material-ui/Paper';
-import Grid from 'material-ui/Grid';
 import { withStyles } from 'material-ui/styles';
+
+import ApplicationBarContainer from './ApplicationBarContainer';
+import ContentContainer from './ContentContainer';
+import DrawerMenuContainer from './DrawerMenuContainer';
 
 const styles = theme => ({
   root: {
     flexGrow: 1,
-  },
-  paper: {
-    padding: theme.spacing.unit * 2,
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-    height: '100px',
+    height: 430,
+    zIndex: 1,
+    overflow: 'hidden',
+    display: 'flex',
+    width: '100%',
   },
 });
 
 class MainContainer extends Component {
   render() {
-    const { classes, stupid } = this.props;
+    const { classes } = this.props;
     return (
       <div className={classes.root}>
-        <Grid container spacing={24}>
-          <Grid item xs={4} sm={3}>
-            <Paper className={classes.paper}>{stupid}</Paper>
-          </Grid>
-          <Grid item xs={8} sm={9}>
-            <Paper className={classes.paper}>Post</Paper>
-          </Grid>
-        </Grid>
+        <ApplicationBarContainer />
+        <DrawerMenuContainer />
+        <ContentContainer />
       </div>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  stupid: 'focus',
+  title: 'dump',
 });
 
 export default withStyles(styles)(connect(mapStateToProps)(MainContainer));
