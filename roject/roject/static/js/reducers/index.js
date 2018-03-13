@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 
-import blogReducer from './blogReducer';
+import BlogReducer from './BlogReducer';
 
 export default combineReducers({
-  blogReducer
+  BlogReducer
 });

@@ -3,9 +3,10 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 
-import reducers from './reducers';
+import MainContainer from './containers';
+import MainReducer from './reducers';
 
-let store = createStore(reducers);
+let store = createStore(MainReducer);
 
 class App extends Component {
   constructor() {
@@ -14,8 +15,8 @@ class App extends Component {
 
   render() {
     return (
-      <div>Hello</div>
-    )
+      <MainContainer />
+    );
   }
 }
 
