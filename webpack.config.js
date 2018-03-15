@@ -1,29 +1,38 @@
-const path = require("path");
-const webpack = require("webpack");
+const path = require('path');
+const webpack = require('webpack');
 
 const entry_point = path.resolve(__dirname, './roject/roject/static/js/index.js');
 const build_dir = path.resolve(__dirname, './roject/roject/static/build');
 
 module.exports = {
-    entry: [entry_point],
-    output: {
-        path: path.resolve(__dirname, build_dir),
-        filename: "main.js"
+  entry: [entry_point],
+  output: {
+    path: path.resolve(__dirname, build_dir),
+    filename: 'main.js'
+  },
+  module: {
+    rules: [
+    {
+      enforce: 'pre',
+      test: /\.js$/,
+      exclude: ['/node_modules/', build_dir],
+      loader: 'eslint-loader',
+      options: {
+        quite: true,
+      },
     },
-    module: {
-        rules: [
-            {
-                test: /\.js$/,
-                exclude: /node_modules/,
-                loader: "babel-loader",
-                query: {
-                  presets:[ 'es2015', 'react', 'stage-3' ],
-                },
-            },
-            {
-                test: /\.css$/,
-                use: ['style-loader', 'css-loader']
-            }
-        ]
+    {
+      test: /\.js$/,
+      exclude: /node_modules/,
+      loader: 'babel-loader',
+      query: {
+        presets:['es2015', 'react', 'stage-0', 'stage-3'],
+      },
     },
+    {
+      test: /\.css$/,
+      use: ['style-loader', 'css-loader']
+    }
+    ]
+  },
 };

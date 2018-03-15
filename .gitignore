@@ -248,6 +248,9 @@ DocProject/Help/*.hhp
 DocProject/Help/Html2
 DocProject/Help/html
 
+# NPM package lock
+package-lock.json
+
 # Click-Once directory
 publish/
 

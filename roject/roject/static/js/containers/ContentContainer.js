@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import Grid from 'material-ui/Grid';
+import Paper from 'material-ui/Paper';
 import Typography from 'material-ui/Typography';
 import { withStyles } from 'material-ui/styles';
+
+import Editor from '../components/Contents/Editor';
 
 const styles = theme => ({
   content: {
@@ -11,23 +15,46 @@ const styles = theme => ({
     padding: theme.spacing.unit * 3,
     minWidth: 0,
   },
+  paper: {
+    padding: theme.spacing.unit * 2,
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+  },
   toolbar: theme.mixins.toolbar,
 });
 
 class ContentContainer extends Component {
+  _renderLeftPanel() {
+    return <Editor />;
+  }
+
+  _renderRightPanel() {
+    return <div>right</div>;
+  }
+
   render() {
     const { classes, content } = this.props;
     return (
       <main className={classes.content}>
         <div className={classes.toolbar} />
-        <Typography noWrap>{content}</Typography>
+        <Grid container spacing={24}>
+          <Grid item sm={6}>
+            <Paper className={classes.paper}>
+              {this._renderLeftPanel()}
+            </Paper>
+          </Grid>
+          <Grid item sm={6}>
+            <Paper className={classes.paper}>
+              {this._renderRightPanel()}
+            </Paper>
+          </Grid>
+        </Grid>
       </main>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  content: 'left left right right',
 });
 
 const ContentRedux = connect(mapStateToProps)(ContentContainer);

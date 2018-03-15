@@ -34,9 +34,9 @@ class DrawerMenuContainer extends Component {
     const { classes, anchor } = this.props;
     return (
       <Drawer
-        variant="permanent"
-        classes={{ paper: classes.drawer }}
-        anchor={anchor}
+          variant="permanent"
+          classes={{ paper: classes.drawer }}
+          anchor={anchor}
       >
       {this._renderList()}
       </Drawer>
