@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import React, { Component } from 'react';
+import React from 'react';
 import { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
 
 import HomeIcon from 'material-ui-icons/Home';

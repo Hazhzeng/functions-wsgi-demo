@@ -28,7 +28,7 @@ class ApplicationBarContainer extends Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = () => ({
   title: 'stupid',
 });
 

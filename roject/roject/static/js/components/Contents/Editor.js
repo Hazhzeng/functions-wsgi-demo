@@ -1,5 +1,4 @@
-import _ from 'lodash';
-import React, { Component } from 'react';
+import React from 'react';
 
 import TextField from 'material-ui/TextField';
 import { withStyles } from 'material-ui/styles';

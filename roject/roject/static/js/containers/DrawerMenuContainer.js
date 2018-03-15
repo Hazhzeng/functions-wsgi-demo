@@ -44,7 +44,7 @@ class DrawerMenuContainer extends Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = () => ({
   anchor: 'left',
 });
 

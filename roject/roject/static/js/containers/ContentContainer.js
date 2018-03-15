@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 
 import Grid from 'material-ui/Grid';
 import Paper from 'material-ui/Paper';
-import Typography from 'material-ui/Typography';
 import { withStyles } from 'material-ui/styles';
 
 import Editor from '../components/Contents/Editor';
@@ -33,7 +32,7 @@ class ContentContainer extends Component {
   }
 
   render() {
-    const { classes, content } = this.props;
+    const { classes } = this.props;
     return (
       <main className={classes.content}>
         <div className={classes.toolbar} />
@@ -54,7 +53,7 @@ class ContentContainer extends Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = () => ({
 });
 
 const ContentRedux = connect(mapStateToProps)(ContentContainer);

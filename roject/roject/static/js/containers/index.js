@@ -7,7 +7,7 @@ import ApplicationBarContainer from './ApplicationBarContainer';
 import ContentContainer from './ContentContainer';
 import DrawerMenuContainer from './DrawerMenuContainer';
 
-const styles = theme => ({
+const styles = () => ({
   root: {
     flexGrow: 1,
     height: 430,
@@ -31,7 +31,7 @@ class MainContainer extends Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = () => ({
   title: 'dump',
 });
 
