@@ -7,6 +7,7 @@ const styles = theme => ({
   textField: {
     marginLeft: theme.spacing.unit * 3,
     marginRight: theme.spacing.unit * 3,
+    width: "80%",
   }
 });
 
@@ -16,19 +17,19 @@ const Editor = ({ classes }) => {
       <TextField
           label="title"
           className={classes.textField}
-          fullWidth
+          fullWidth={true}
           margin="normal"
       />
       <TextField
           label="tag"
           className={classes.textField}
-          fullWidth
+          fullWidth={true}
           margin="normal"
       />
       <TextField
           label="text"
           className={classes.textField}
-          fullWidth
+          fullWidth={true}
           margin="normal"
           multiline
           rows={8}

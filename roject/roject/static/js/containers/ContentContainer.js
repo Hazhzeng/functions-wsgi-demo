@@ -5,6 +5,7 @@ import Grid from 'material-ui/Grid';
 import Paper from 'material-ui/Paper';
 import { withStyles } from 'material-ui/styles';
 
+import Preview from '../components/Contents/Preview';
 import Editor from '../components/Contents/Editor';
 
 const styles = theme => ({
@@ -28,7 +29,7 @@ class ContentContainer extends Component {
   }
 
   _renderRightPanel() {
-    return <div>right</div>;
+    return <Preview />;
   }
 
   render() {
