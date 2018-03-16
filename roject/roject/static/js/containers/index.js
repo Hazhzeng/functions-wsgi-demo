@@ -10,7 +10,6 @@ import DrawerMenuContainer from './DrawerMenuContainer';
 const styles = () => ({
   root: {
     flexGrow: 1,
-    height: 430,
     zIndex: 1,
     overflow: 'hidden',
     display: 'flex',

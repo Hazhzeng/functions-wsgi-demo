@@ -2,7 +2,7 @@ import Blog from '../constants/BlogConstants';
 
 const initialState = {
   title: '',
-  content: '',
+  text: '',
 };
 
 const blogReducer = (state = initialState, action) => {
@@ -11,6 +11,11 @@ const blogReducer = (state = initialState, action) => {
       return {
         ...state,
         title: action.payload,
+      };
+    case Blog.CHANGE_TEXT:
+      return {
+        ...state,
+        text: action.payload,
       };
     default:
       return state;

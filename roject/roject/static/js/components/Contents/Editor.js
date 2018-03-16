@@ -1,6 +1,7 @@
 import React from 'react';
 
 import TextField from 'material-ui/TextField';
+import Button from 'material-ui/Button';
 import { withStyles } from 'material-ui/styles';
 
 const styles = theme => ({
@@ -11,30 +12,37 @@ const styles = theme => ({
   }
 });
 
-const Editor = ({ classes }) => {
+const Editor = ({ classes, handleChangeText }) => {
   return (
     <div>
       <TextField
-          label="title"
-          className={classes.textField}
-          fullWidth={true}
-          margin="normal"
+        label="title"
+        className={classes.textField}
+        fullWidth={true}
+        margin="normal"
       />
       <TextField
-          label="tag"
-          className={classes.textField}
-          fullWidth={true}
-          margin="normal"
+        label="tag"
+        className={classes.textField}
+        fullWidth={true}
+        margin="normal"
       />
       <TextField
-          label="text"
-          className={classes.textField}
-          fullWidth={true}
-          margin="normal"
-          multiline
-          rows={8}
-          rowsMax={100}
+        label="text"
+        className={classes.textField}
+        fullWidth={true}
+        margin="normal"
+        multiline
+        rows={20}
+        rowsMax={20}
+        onChange={(event) => handleChangeText(event.target.value)}
       />
+      <Button
+        variant="raised"
+        color="primary"
+      >
+      Submit
+      </Button>
     </div>
   )
 };

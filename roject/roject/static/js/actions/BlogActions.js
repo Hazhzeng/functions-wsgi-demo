@@ -1,10 +1,11 @@
 import Blog from '../constants/BlogConstants';
 
-const changeTitle = (title) => ({
+export const changeTitle = (title) => ({
   type: Blog.CHANGE_TITLE,
   payload: title,
 });
 
-export default {
-  changeTitle,
-};
+export const changeText = (text) => ({
+  type: Blog.CHANGE_TEXT,
+  payload: text,
+});

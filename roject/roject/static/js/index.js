@@ -6,7 +6,12 @@ import { createStore } from 'redux';
 import MainContainer from './containers';
 import MainReducer from './reducers';
 
-let store = createStore(MainReducer);
+/* eslint-disable no-underscore-dangle */
+let store = createStore(
+  MainReducer,
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+);
+/* eslint-enable */
 
 class App extends Component {
   constructor() {

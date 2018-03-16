@@ -5,8 +5,10 @@ import Grid from 'material-ui/Grid';
 import Paper from 'material-ui/Paper';
 import { withStyles } from 'material-ui/styles';
 
+import { changeText } from '../actions/BlogActions';
 import Preview from '../components/Contents/Preview';
 import Editor from '../components/Contents/Editor';
+import { textSelector } from '../selectors/BlogSelector';
 
 const styles = theme => ({
   content: {
@@ -25,11 +27,13 @@ const styles = theme => ({
 
 class ContentContainer extends Component {
   _renderLeftPanel() {
-    return <Editor />;
+    const { handleChangeText } = this.props;
+    return <Editor handleChangeText={handleChangeText} />;
   }
 
   _renderRightPanel() {
-    return <Preview />;
+    const { blogText } = this.props;
+    return <Preview text={blogText} />;
   }
 
   render() {
@@ -54,9 +58,14 @@ class ContentContainer extends Component {
   }
 }
 
-const mapStateToProps = () => ({
+const mapStateToProps = (state) => ({
+  blogText: textSelector(state),
 });
 
-const ContentRedux = connect(mapStateToProps)(ContentContainer);
+const mapDispatchToProps = (dispatch) => ({
+  handleChangeText: (text) => dispatch(changeText(text)),
+});
+
+const ContentRedux = connect(mapStateToProps, mapDispatchToProps)(ContentContainer);
 
 export default withStyles(styles)(ContentRedux);
