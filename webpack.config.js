@@ -11,9 +11,6 @@ module.exports = {
     filename: '[name].bundle.js'
   },
   devtool: 'source-map',
-  devServer: {
-    contentBase: build_dir
-  },
   module: {
     rules: [
     {

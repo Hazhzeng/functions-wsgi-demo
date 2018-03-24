@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
@@ -8,7 +9,7 @@ import { withStyles } from 'material-ui/styles';
 import { changeTitle, changeTag, changeText, submitBlog } from '../actions/BlogActions';
 import Preview from '../components/Contents/Preview';
 import Editor from '../components/Contents/Editor';
-import { textSelector } from '../selectors/BlogSelector';
+import { titleSelector, tagSelector, textSelector } from '../selectors/BlogSelector';
 
 const styles = theme => ({
   content: {
@@ -27,18 +28,13 @@ const styles = theme => ({
 
 class ContentContainer extends Component {
   _renderLeftPanel() {
-    return <Editor
-      handleChangeTitle={this.props.handleChangeTitle}
-      handleChangeTag={this.props.handleChangeTag}
-      handleChangeText={this.props.handleChangeText}
-      submitBlog={this.props.submitBlog}
-    />;
+    const props = _.omit(this.props, ['classes']);
+    return <Editor {...props} />;
   }
 
   _renderRightPanel() {
-    return <Preview
-      blogText={this.props.blogText}
-    />;
+    const props = _.omit(this.props, ['classes']);
+    return <Preview {...props} />;
   }
 
   render() {
@@ -64,6 +60,8 @@ class ContentContainer extends Component {
 }
 
 const mapStateToProps = (state) => ({
+  blogTag: tagSelector(state),
+  blogTitle: titleSelector(state),
   blogText: textSelector(state),
 });
 

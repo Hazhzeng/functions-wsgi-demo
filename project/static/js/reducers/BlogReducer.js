@@ -1,4 +1,5 @@
 import Blog from '../constants/BlogConstants';
+import API from '../API';
 
 const initialState = {
   title: '',
@@ -24,7 +25,7 @@ const blogReducer = (state = initialState, action) => {
         text: action.payload,
       };
     case Blog.SUBMIT_BLOG:
-      console.log(state);
+      API.postblog(state.title, state.tag, state.text);
       return {
         title: '',
         tag: '',
