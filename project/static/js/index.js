@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
+import { AppContainer } from 'react-hot-loader';
 
 import MainContainer from './containers';
 import MainReducer from './reducers';
@@ -25,9 +26,17 @@ class App extends Component {
   }
 }
 
+const _App = () => (
+  <AppContainer>
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </AppContainer>
+);
+
 ReactDOM.render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
+  <_App />,
   document.getElementById("app")
 );
+
+export default _App;

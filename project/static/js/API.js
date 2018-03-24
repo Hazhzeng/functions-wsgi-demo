@@ -7,6 +7,7 @@ export default class API {
         tag: tag,
         text: text,
       };
+
       return post_json('/api/postblog', {}, request_body);
     }
 }
