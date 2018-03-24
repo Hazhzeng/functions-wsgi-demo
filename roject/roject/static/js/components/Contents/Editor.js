@@ -12,7 +12,12 @@ const styles = theme => ({
   }
 });
 
-const Editor = ({ classes, handleChangeText }) => {
+const Editor = ({
+  classes,
+  handleChangeTitle,
+  handleChangeTag,
+  handleChangeText,
+}) => {
   return (
     <div>
       <TextField
@@ -20,12 +25,14 @@ const Editor = ({ classes, handleChangeText }) => {
         className={classes.textField}
         fullWidth={true}
         margin="normal"
+        onChange={(event) => handleChangeTitle(event.target.value)}
       />
       <TextField
         label="tag"
         className={classes.textField}
         fullWidth={true}
         margin="normal"
+        onChange={(event) => handleChangeTag(event.target.value)}
       />
       <TextField
         label="text"

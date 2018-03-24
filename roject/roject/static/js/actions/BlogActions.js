@@ -5,6 +5,11 @@ export const changeTitle = (title) => ({
   payload: title,
 });
 
+export const changeTag = (tag) => ({
+  type: Blog.CHANGE_TAG,
+  payload: tag,
+});
+
 export const changeText = (text) => ({
   type: Blog.CHANGE_TEXT,
   payload: text,

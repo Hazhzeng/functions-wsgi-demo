@@ -5,7 +5,7 @@ import Grid from 'material-ui/Grid';
 import Paper from 'material-ui/Paper';
 import { withStyles } from 'material-ui/styles';
 
-import { changeText } from '../actions/BlogActions';
+import { changeTitle, changeTag, changeText } from '../actions/BlogActions';
 import Preview from '../components/Contents/Preview';
 import Editor from '../components/Contents/Editor';
 import { textSelector } from '../selectors/BlogSelector';
@@ -27,8 +27,16 @@ const styles = theme => ({
 
 class ContentContainer extends Component {
   _renderLeftPanel() {
-    const { handleChangeText } = this.props;
-    return <Editor handleChangeText={handleChangeText} />;
+    const {
+      handleChangeTitle,
+      handleChangeTag,
+      handleChangeText,
+    } = this.props;
+    return <Editor
+      handleChangeTitle={handleChangeTitle}
+      handleChangeTag={handleChangeTag}
+      handleChangeText={handleChangeText}
+    />;
   }
 
   _renderRightPanel() {
@@ -63,6 +71,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
+  handleChangeTitle: (title) => dispatch(changeTitle(title)),
+  handleChangeTag: (tag) => dispatch(changeTag(tag)),
   handleChangeText: (text) => dispatch(changeText(text)),
 });
 

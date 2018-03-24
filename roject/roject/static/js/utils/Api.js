@@ -21,10 +21,12 @@ const post_json = (url, header = {}, body = null) => {
 }
 
 export default class API {
-    static postmsg(message) {
-        const request_body = {
-            msg: message
-        };
-        return post_json('/api/postmsg', {}, request_body);
+    static postblog(title, tag, text) {
+      const request_body = {
+        title: title,
+        tag: tag,
+        text: text,
+      };
+      return post_json('/api/postblog', {}, request_body);
     }
 }
