@@ -1,14 +1,18 @@
 const path = require('path');
 const webpack = require('webpack');
 
-const entry_point = path.resolve(__dirname, './roject/roject/static/js/index.js');
-const build_dir = path.resolve(__dirname, './roject/roject/static/build');
+const entry_point = path.resolve(__dirname, './project/static/js/index.js');
+const build_dir = path.resolve(__dirname, './project/static/dist');
 
 module.exports = {
   entry: [entry_point],
   output: {
-    path: path.resolve(__dirname, build_dir),
-    filename: 'main.js'
+    path: build_dir,
+    filename: '[name].bundle.js'
+  },
+  devtool: 'source-map',
+  devServer: {
+    contentBase: build_dir
   },
   module: {
     rules: [
