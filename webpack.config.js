@@ -5,12 +5,18 @@ const entry_point = path.resolve(__dirname, './project/static/js/index.js');
 const build_dir = path.resolve(__dirname, './project/static/dist');
 
 module.exports = {
-  entry: [entry_point],
+  entry: {
+    'app': entry_point,
+  },
   output: {
     path: build_dir,
     filename: '[name].bundle.js'
   },
   devtool: 'source-map',
+  devServer: {
+    contentBase: build_dir,
+    hot: true
+  },
   module: {
     rules: [
     {
@@ -37,7 +43,5 @@ module.exports = {
     }
     ]
   },
-  plugins: [
-    new webpack.HotModuleReplacementPlugin()
-  ],
+  plugins: [],
 };

@@ -52,9 +52,9 @@ const Editor = ({
         onChange={(event) => handleChangeText(event.target.value)}
       />
       <Button
-        variant="raised"
         color="primary"
         onClick={submitBlog}
+        fullWidth
       >
       Submit
       </Button>
