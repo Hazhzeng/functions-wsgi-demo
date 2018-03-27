@@ -6,6 +6,7 @@ import { AppContainer } from 'react-hot-loader';
 
 import MainContainer from './containers';
 import MainReducer from './reducers';
+import { RouteConfig } from './Routes';
 
 /* eslint-disable no-underscore-dangle */
 let store = createStore(
@@ -21,7 +22,7 @@ class App extends Component {
 
   render() {
     return (
-      <MainContainer />
+      <MainContainer routes={RouteConfig} />
     );
   }
 }

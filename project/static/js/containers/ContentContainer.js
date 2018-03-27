@@ -12,18 +12,11 @@ import Editor from '../components/Contents/Editor';
 import { titleSelector, tagSelector, textSelector } from '../selectors/BlogSelector';
 
 const styles = theme => ({
-  content: {
-    flexGrow: 1,
-    backgroundColor: theme.palette.background.default,
-    padding: theme.spacing.unit * 3,
-    minWidth: 0,
-  },
   paper: {
     padding: theme.spacing.unit * 2,
     textAlign: 'left',
     color: theme.palette.text.secondary,
   },
-  toolbar: theme.mixins.toolbar,
 });
 
 class ContentContainer extends Component {
@@ -40,21 +33,18 @@ class ContentContainer extends Component {
   render() {
     const { classes } = this.props;
     return (
-      <main className={classes.content}>
-        <div className={classes.toolbar} />
-        <Grid container spacing={24}>
-          <Grid item sm={6}>
-            <Paper className={classes.paper}>
-              {this._renderLeftPanel()}
-            </Paper>
-          </Grid>
-          <Grid item sm={6}>
-            <Paper className={classes.paper}>
-              {this._renderRightPanel()}
-            </Paper>
-          </Grid>
+      <Grid container spacing={24}>
+        <Grid item sm={6}>
+          <Paper className={classes.paper}>
+            {this._renderLeftPanel()}
+          </Paper>
         </Grid>
-      </main>
+        <Grid item sm={6}>
+          <Paper className={classes.paper}>
+            {this._renderRightPanel()}
+          </Paper>
+        </Grid>
+      </Grid>
     );
   }
 }
