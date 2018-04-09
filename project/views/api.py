@@ -23,9 +23,7 @@ def postblog(args) -> str:
 
 @app.route("/api/getblog", methods=["GET"])
 def getblog() -> str:
-    print('get_blog', flush=True)
     old_blog = BlogModel.query.order_by(BlogModel.last_update.desc()).first()
-    ret = BlogSchema.make_blog(old_blog)
-    print(ret, flush=True)
+    ret = BlogSchema().dump(old_blog)
 
-    return response.ok()
+    return response.ok(ret)

@@ -17,7 +17,7 @@ const styles = theme => ({
 class HomeContainer extends Component {
   constructor(props) {
     super(props);
-    props.pullBlog();
+    props.pull();
   }
 
   render() {
@@ -35,7 +35,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  pullBlog: () => dispatch(pullBlog()),
+  pull: () => dispatch(pullBlog()),
 });
 
 const HomeRedux =

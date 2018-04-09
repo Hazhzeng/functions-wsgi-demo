@@ -7,9 +7,11 @@ const initialState = {
 
 const homeReducer = (state = initialState, action) => {
   switch (action.type) {
-    case Home.PULL_BLOGS:
-      API.getblog();
-      return state;
+    case Home.PULL_BLOG:
+      return {
+        ...state,
+        blogs: API.getblog(),
+      };
     default:
       return state;
   }

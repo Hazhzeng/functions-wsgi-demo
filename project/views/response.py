@@ -1,8 +1,12 @@
-from flask import Response, jsonify
+from flask import Response, jsonify, make_response
 from typing import Any, Tuple
 
-def _response(result:Any, code:int) -> Tuple[Response, int]:
-    return jsonify(result), code
+def _response(result:Any, code:int) -> Response:
+    ret = make_response(
+        jsonify(result),
+        code
+    )
+    return ret
 
 def ok(result:Any={}, code:int=200):
     return _response(result, code)
