@@ -1,4 +1,4 @@
-import { post_json } from './utils/request';
+import { get_json, post_json } from './utils/request';
 
 export default class API {
     static postblog(title, tag, text) {
@@ -9,5 +9,9 @@ export default class API {
       };
 
       return post_json('/api/postblog', {}, request_body);
+    }
+
+    static getblog() {
+      return get_json('/api/getblog', {});
     }
 }

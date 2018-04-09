@@ -62,6 +62,7 @@ const mapDispatchToProps = (dispatch) => ({
   submitBlog: () => dispatch(submitBlog()),
 });
 
-const ContentRedux = connect(mapStateToProps, mapDispatchToProps)(ContentContainer);
+const ContentRedux =
+  connect(mapStateToProps, mapDispatchToProps)(ContentContainer);
 
 export default withStyles(styles)(ContentRedux);
