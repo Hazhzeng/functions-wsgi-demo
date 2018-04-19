@@ -9,7 +9,7 @@ export const RouteConfig = [
     exact: false,
     component: HomeContainer,
     pristine: {
-      title: 'Roject\'s Home',
+      title: 'Rx Blog',
     },
   },
   {

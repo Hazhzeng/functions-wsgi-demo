@@ -1,16 +1,29 @@
 import Home from '../constants/HomeConstants';
-import API from '../API';
 
 const initialState = {
-  blogs: [],
+  blogs: [
+    /* {
+     *  title:
+     *  tag:
+     *  last_update:
+     *  text:
+     * }
+     */
+  ],
+  error: null,
 };
 
 const homeReducer = (state = initialState, action) => {
   switch (action.type) {
-    case Home.PULL_BLOG:
+    case Home.PULL_BLOG_SUCCESS:
       return {
         ...state,
-        blogs: API.getblog(),
+        blogs: action.payload
+      };
+    case Home.PULL_BLOG_FAILURE:
+      return {
+        ...state,
+        error: action.payload.error
       };
     default:
       return state;

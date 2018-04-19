@@ -25,7 +25,7 @@ const blogReducer = (state = initialState, action) => {
         text: action.payload,
       };
     case Blog.SUBMIT_BLOG:
-      API.postblog(state.title, state.tag, state.text);
+      API.postBlog(state.title, state.tag, state.text);
       return {
         title: '',
         tag: '',

@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import Grid from 'material-ui/Grid';
 import Paper from 'material-ui/Paper';
 import { withStyles } from 'material-ui/styles';
 
 import { pullBlog } from '../actions/HomeActions';
 import { blogsSelector } from '../selectors/HomeSelector';
+
+import Blog from '../components/Contents/Blog';
 
 const styles = theme => ({
   paper: {
@@ -21,11 +24,19 @@ class HomeContainer extends Component {
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes, blogs } = this.props;
+    const renderedBlogs = blogs.map(blog => (
+      <Grid item sm={12} lg={6} key={blog.last_update}>
+        <Paper className={classes.paper}>
+          <Blog title={blog.title} time={blog.last_update} text={blog.text} />
+        </Paper>
+      </Grid>
+    ));
+
     return (
-      <Paper className={classes.paper}>
-        Home
-      </Paper>
+      <Grid container spacing={24}>
+        {renderedBlogs}
+      </Grid>
     );
   }
 }

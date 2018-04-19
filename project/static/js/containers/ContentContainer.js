@@ -34,12 +34,12 @@ class ContentContainer extends Component {
     const { classes } = this.props;
     return (
       <Grid container spacing={24}>
-        <Grid item sm={6}>
+        <Grid item sm={12} lg={6}>
           <Paper className={classes.paper}>
             {this._renderLeftPanel()}
           </Paper>
         </Grid>
-        <Grid item sm={6}>
+        <Grid item sm={12} lg={6}>
           <Paper className={classes.paper}>
             {this._renderRightPanel()}
           </Paper>
