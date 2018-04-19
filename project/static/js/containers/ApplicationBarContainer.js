@@ -4,7 +4,10 @@ import { connect } from 'react-redux';
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
+import { LinearProgress } from 'material-ui/Progress';
 import { withStyles } from 'material-ui/styles';
+
+import HomeSelector from '../selectors/HomeSelector';
 
 const styles = theme => ({
   appbar: {
@@ -23,13 +26,16 @@ class ApplicationBarContainer extends Component {
             {title}
           </Typography>
         </Toolbar>
+        {this.props.loading && <LinearProgress />}
+        {this.props.loading && 'Loading..'}
       </AppBar>
     );
   }
 }
 
 const mapStateToProps = () => ({
-  title: 'Roject',
+  title: 'Pristine',
+  loading: HomeSelector.uiSelector.loading,
 });
 
 const ApplicationBarRedux = connect(mapStateToProps)(ApplicationBarContainer);

@@ -50,7 +50,8 @@ module.exports = {
       exclude: ['/node_modules/', build_dir],
       parallel: true,
       parallel: 2,
-      sourceMap: true
+      sourceMap: true,
+      cache: false
     })
   ],
 };

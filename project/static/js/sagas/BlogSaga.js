@@ -1,9 +1,14 @@
 import { call, put, takeEvery } from 'redux-saga/effects';
 import HomeConstants from '../constants/HomeConstants';
-import { pullBlogSuccess, pullBlogFailure } from '../actions/HomeActions';
+import {
+  pullBlogLoading,
+  pullBlogSuccess,
+  pullBlogFailure,
+} from '../actions/HomeActions';
 import API from '../API';
 
 function *getBlogSaga() {
+  yield put(pullBlogLoading());
   try {
     const blogs = yield call(API.getBlog);
     yield put(pullBlogSuccess(blogs));

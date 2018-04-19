@@ -25,6 +25,5 @@ def postblog(args) -> Response:
 def getblog() -> Response:
     old_blogs = BlogModel.query.order_by(BlogModel.last_update.desc())
     ret = [BlogSchema().dump(old_blog).data for old_blog in old_blogs]
-    print('ret=', ret, flush=True)
 
     return response.ok(ret)

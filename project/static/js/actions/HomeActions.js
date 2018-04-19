@@ -13,3 +13,7 @@ export const pullBlogFailure = error => ({
   type: Home.PULL_BLOG_FAILURE,
   payload: { error: error },
 });
+
+export const pullBlogLoading = () => ({
+  type: Home.PULL_BLOG_LOADING,
+});
