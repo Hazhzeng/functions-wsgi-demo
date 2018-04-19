@@ -1,5 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 const entry_point = path.resolve(__dirname, './project/static/js/index.js');
 const build_dir = path.resolve(__dirname, './project/static/dist');
@@ -43,5 +44,13 @@ module.exports = {
     }
     ]
   },
-  plugins: [],
+  plugins: [
+    new UglifyJsPlugin({
+      test: /\.js$/,
+      exclude: ['/node_modules/', build_dir],
+      parallel: true,
+      parallel: 2,
+      sourceMap: true
+    })
+  ],
 };
