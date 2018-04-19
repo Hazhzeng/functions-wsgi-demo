@@ -3,6 +3,8 @@ import MarkdownIt from 'markdown-it';
 import hljs from 'highlight.js';
 import 'highlight.js/styles/atom-one-light.css';
 
+import { leadingZeros } from '../../utils/format';
+
 class Blog extends React.Component {
   constructor(props) {
     super(props);
@@ -37,11 +39,11 @@ class Blog extends React.Component {
     const t = new Date(time);
 
     const year = t.getFullYear();
-    const month = t.getMonth();
-    const day = t.getDate();
-    const hour = t.getHours();
-    const minute = t.getMinutes();
-    const second = t.getSeconds();
+    const month = leadingZeros(t.getMonth() + 1, 2);
+    const day = leadingZeros(t.getDate(), 2);
+    const hour = leadingZeros(t.getHours(), 2);
+    const minute = leadingZeros(t.getMinutes(), 2);
+    const second = leadingZeros(t.getSeconds(), 2);
 
     return <pre>{year}-{month}-{day} {hour}:{minute}:{second}</pre>;
   }

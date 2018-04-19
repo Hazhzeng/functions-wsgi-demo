@@ -2,6 +2,7 @@ import React from 'react';
 import MarkdownIt from 'markdown-it';
 import hljs from 'highlight.js';
 import 'highlight.js/styles/atom-one-light.css';
+import { leadingZeros } from '../../utils/format';
 
 class Preview extends React.Component {
   constructor(props) {
@@ -26,13 +27,14 @@ class Preview extends React.Component {
   _renderTitle() {
     const { blogTitle } = this.props;
     if (!blogTitle) return null;
-    const time = new Date();
-    const year = time.getFullYear();
-    const month = time.getMonth();
-    const day = time.getDate();
-    const hour = time.getHours();
-    const minute = time.getMinutes();
-    const second = time.getSeconds();
+
+    const t = new Date();
+    const year = t.getFullYear();
+    const month = leadingZeros(t.getMonth() + 1, 2);
+    const day = leadingZeros(t.getDate(), 2);
+    const hour = leadingZeros(t.getHours(), 2);
+    const minute = leadingZeros(t.getMinutes(), 2);
+    const second = leadingZeros(t.getSeconds(), 2);
 
     return (
       <div>
