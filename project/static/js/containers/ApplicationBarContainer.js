@@ -27,15 +27,14 @@ class ApplicationBarContainer extends Component {
           </Typography>
         </Toolbar>
         {this.props.loading && <LinearProgress />}
-        {this.props.loading && 'Loading..'}
       </AppBar>
     );
   }
 }
 
-const mapStateToProps = () => ({
+const mapStateToProps = state => ({
   title: 'Pristine',
-  loading: HomeSelector.uiSelector.loading,
+  loading: HomeSelector.uiSelector(state).loading,
 });
 
 const ApplicationBarRedux = connect(mapStateToProps)(ApplicationBarContainer);
