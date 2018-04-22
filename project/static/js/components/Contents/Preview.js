@@ -26,7 +26,9 @@ class Preview extends React.Component {
 
   _renderTitle() {
     const { blogTitle } = this.props;
-    if (!blogTitle) return null;
+    if (!blogTitle) {
+      return <span>Waiting for your story here</span>;
+    }
 
     const t = new Date();
     const year = t.getFullYear();

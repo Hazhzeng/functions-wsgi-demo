@@ -8,7 +8,7 @@ import Paper from 'material-ui/Paper';
 import { withStyles } from 'material-ui/styles';
 
 import { pullBlog } from '../actions/HomeActions';
-import { blogsSelector } from '../selectors/HomeSelector';
+import { blogsSelector, uiSelector } from '../selectors/HomeSelector';
 
 import Blog from '../components/Contents/Blog';
 import { dateToString } from '../utils/format';
@@ -31,23 +31,27 @@ class HomeContainer extends Component {
 
     const t = new Date();
     this.state = {
+      isDateValid: true,
       date: `${dateToString(t)}`
-    };
-
-    this.pristine = {
-      today: `${dateToString(t)}`
     };
 
     this.onDateChange = this.onDateChange.bind(this);
     this.pullSubmit = _.debounce(this.pullSubmit, 1000);
 
     /* API call */
-    props.pull(this.pristine.today);
+    props.pull(this.state.date);
   }
 
   onDateChange(event) {
-    this.setState({ date: event.target.value });
-    this.pullSubmit();
+    const isValid = Boolean(Date.parse(event.target.value));
+    this.setState({
+      date: event.target.value,
+      isDateValid: isValid,
+    });
+
+    if (isValid) {
+      this.pullSubmit();
+    }
   }
 
   pullSubmit() {
@@ -55,16 +59,18 @@ class HomeContainer extends Component {
   }
 
   _renderMemoryPicker() {
-    const { classes } = this.props;
+    const { classes, loading } = this.props;
     return (
       <Grid item sm={12} lg={12} key={'blog.today'}>
         <TextField
           id="date"
           type="date"
+          value={this.state.date}
           onChange={this.onDateChange}
-          defaultValue={this.pristine.today}
           className={classes.textField}
           InputLabelProps={{shrink: true}}
+          disabled={loading}
+          error={!this.state.isDateValid}
         />
       </Grid>
     );
@@ -94,6 +100,7 @@ class HomeContainer extends Component {
 
 const mapStateToProps = (state) => ({
   blogs: blogsSelector(state),
+  loading: uiSelector(state).loading,
 });
 
 const mapDispatchToProps = (dispatch) => ({
