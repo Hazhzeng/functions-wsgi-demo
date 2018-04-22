@@ -17,7 +17,7 @@ class BlogSchema(Schema):
 
     title = fields.String(required=True)
     tag = fields.String(required=False)
-    text = fields.String(required=False)
+    text = fields.String(required=True)
     last_update = fields.DateTime(required=False)
 
     @post_load
