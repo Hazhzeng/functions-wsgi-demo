@@ -12,8 +12,11 @@ export default class API {
       return post_json('/api/postblog', {}, request_body);
     }
 
-    static getBlog() {
-      return get_json('/api/getblog', {})
+    static getBlog(date, limit=10) {
+      return get_json('/api/getblog', {}, {
+        date: date,
+        limit: limit,
+      })
         .then(errorHandler)
         .then(response => response.json())
         .then(data => Promise.resolve(data))

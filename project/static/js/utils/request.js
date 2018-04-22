@@ -1,3 +1,5 @@
+import urlUtil from 'url';
+
 const _fetch = (method, url, head = {}, body = null) => {
   const request_data = {
     headers: {
@@ -20,8 +22,16 @@ export const post_json = (url, header = {}, body = null) => {
   return _fetch('POST', url, header, body);
 }
 
-export const get_json = (url, header = {}) => {
-  return _fetch('GET', url, header);
+export const get_json = (url, header = {}, body = null) => {
+  const urlString = urlUtil.format({
+    hostname: window.location.hostname,
+    port: window.location.hostname === 'localhost' ? 5001 : 80,
+    pathname: url,
+    query: {
+      ...body,
+    }
+  });
+  return _fetch('GET', urlString, header);
 }
 
 export default {

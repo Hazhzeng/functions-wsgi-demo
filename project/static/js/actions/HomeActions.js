@@ -1,7 +1,10 @@
 import Home from '../constants/HomeConstants';
 
-export const pullBlog = () => ({
+export const pullBlog = date => ({
   type: Home.PULL_BLOG,
+  payload: {
+    date: date
+  },
 });
 
 export const pullBlogSuccess = blogs => ({

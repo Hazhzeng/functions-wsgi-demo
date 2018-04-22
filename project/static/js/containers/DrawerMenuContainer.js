@@ -16,16 +16,22 @@ const styles = theme => ({
 });
 
 class DrawerMenuContainer extends Component {
+  _renderMenuList() {
+    return (
+      <List component="nav">
+        <MenuListItem name='home' />
+        <MenuListItem name='post' />
+        <MenuListItem name='info' />
+      </List>
+    );
+  }
+
   _renderList() {
     const { classes } = this.props;
     return (
       <div>
         <div className={classes.toolbar} />
-        <List component="nav">
-          <MenuListItem name='home' />
-          <MenuListItem name='post' />
-          <MenuListItem name='info' />
-        </List>
+        {this._renderMenuList()}
       </div>
     );
   }

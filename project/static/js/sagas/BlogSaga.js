@@ -7,10 +7,10 @@ import {
 } from '../actions/HomeActions';
 import API from '../API';
 
-function *getBlogSaga() {
+function *getBlogSaga(action) {
   yield put(pullBlogLoading());
   try {
-    const blogs = yield call(API.getBlog);
+    const blogs = yield call(API.getBlog, action.payload.date);
     yield put(pullBlogSuccess(blogs));
   } catch (error) {
     yield put(pullBlogFailure(error));

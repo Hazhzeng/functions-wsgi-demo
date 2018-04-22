@@ -34,6 +34,7 @@
         "redux-saga": "^0.16.0",
         "style-loader": "0.20.2",
         "uglifyjs-webpack-plugin": "^1.2.5",
+        "url": "^0.11.0",
         "webpack": "3.11.0"
     },
     "dependencies": {

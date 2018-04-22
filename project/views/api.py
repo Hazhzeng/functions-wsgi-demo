@@ -4,6 +4,7 @@ from webargs.flaskparser import use_args
 
 from project.views import response
 from project.schema.Blog import BlogSchema
+from project.schema.PullBlog import PullBlogSchema
 from project.models import BlogModel
 
 @app.route("/api/ping", methods=["GET"])
@@ -22,7 +23,9 @@ def postblog(args) -> Response:
 
 
 @app.route("/api/getblog", methods=["GET"])
-def getblog() -> Response:
+@use_args(PullBlogSchema())
+def getblog(args) -> Response:
+    print('date=', args.date, ' limit=', args.limit, flush=True)
     old_blogs = BlogModel.query.order_by(BlogModel.last_update.desc())
     ret = [BlogSchema().dump(old_blog).data for old_blog in old_blogs]
 
