@@ -60,7 +60,6 @@ class HomeContainer extends Component {
       <Grid item sm={12} lg={12} key={'blog.today'}>
         <TextField
           id="date"
-          label="Memory"
           type="date"
           onChange={this.onDateChange}
           defaultValue={this.pristine.today}

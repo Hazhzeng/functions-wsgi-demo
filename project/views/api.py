@@ -1,5 +1,7 @@
 from flask import request, Response, g
 from project import app, db
+from dateutil import parser
+from datetime import timedelta
 from webargs.flaskparser import use_args
 
 from project.views import response
@@ -25,8 +27,12 @@ def postblog(args) -> Response:
 @app.route("/api/getblog", methods=["GET"])
 @use_args(PullBlogSchema())
 def getblog(args) -> Response:
-    print('date=', args.date, ' limit=', args.limit, flush=True)
-    old_blogs = BlogModel.query.order_by(BlogModel.last_update.desc())
-    ret = [BlogSchema().dump(old_blog).data for old_blog in old_blogs]
+    last_update = parser.parse(args.date)
+    last_update += timedelta(hours=23, minutes=59, seconds=59)
+    blogs = db.session.query(BlogModel)\
+        .filter(BlogModel.last_update <= last_update)\
+        .order_by(BlogModel.last_update.desc())\
+        .limit(args.limit)
+    ret = [BlogSchema().dump(blog).data for blog in blogs]
 
     return response.ok(ret)
