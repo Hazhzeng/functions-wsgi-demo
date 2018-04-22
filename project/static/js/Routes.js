@@ -1,24 +1,25 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
+
 import ContentContainer from './containers/ContentContainer';
 import HomeContainer from './containers/HomeContainer';
+import InfoContainer from './containers/InfoContainer';
 
 export const RouteConfig = [
   {
     path: "/home",
     exact: false,
     component: HomeContainer,
-    pristine: {
-      title: 'Rx Blog',
-    },
   },
   {
     path: "/post",
     exact: false,
     component: ContentContainer,
-    pristine: {
-      title: 'Post a diary?',
-    }
+  },
+  {
+    path: "/info",
+    exact: false,
+    component: InfoContainer,
   },
 ];
 
