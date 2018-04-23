@@ -5,8 +5,7 @@ from datetime import timedelta
 from webargs.flaskparser import use_args
 
 from project.views import response
-from project.schema.Blog import BlogSchema
-from project.schema.PullBlog import PullBlogSchema
+from project.schema import BlogSchema, PullBlogSchema, UserSchema
 from project.models import BlogModel
 
 @app.route("/api/ping", methods=["GET"])
@@ -36,3 +35,9 @@ def getblog(args) -> Response:
     ret = [BlogSchema().dump(blog).data for blog in blogs]
 
     return response.ok(ret)
+
+
+@app.route("/api/login", methods=["POST"])
+@use_args(UserSchema())
+def login(args) -> Response:
+    return response.ok(args.username)

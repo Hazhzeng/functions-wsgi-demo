@@ -1,8 +1,7 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from flask_login import LoginManager
 import os
-import logging
+#import logging
 
 TEMPLATE_DIR = os.path.join('./templates')
 STATIC_DIR = os.path.join('./static')
@@ -28,11 +27,8 @@ app.config.update(dict(
 
 db = SQLAlchemy(app)
 
-login_manager = LoginManager()
-login_manager.init_app(app)
-
-logging.basicConfig(format='%(asctime)-15s %(message)s')
-logger = logging.getLogger('Roject Logger')
+#logging.basicConfig(format='%(asctime)-15s %(message)s')
+#logger = logging.getLogger('Roject Logger')
 
 import project.views.views
 import project.views.api
