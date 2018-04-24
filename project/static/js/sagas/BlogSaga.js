@@ -1,4 +1,4 @@
-import { call, put, takeEvery } from 'redux-saga/effects';
+import { call, put, takeLatest } from 'redux-saga/effects';
 import HomeConstants from '../constants/HomeConstants';
 import {
   pullBlogLoading,
@@ -18,7 +18,7 @@ function *getBlogSaga(action) {
 }
 
 function *watcher() {
-  yield takeEvery(HomeConstants.PULL_BLOG, getBlogSaga);
+  yield takeLatest(HomeConstants.PULL_BLOG, getBlogSaga);
 }
 
 export default [watcher];

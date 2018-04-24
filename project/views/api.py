@@ -1,11 +1,12 @@
 from flask import request, Response, g
 from project import app, db
 from dateutil import parser
-from datetime import timedelta
+from datetime import datetime, timedelta
+from webargs import fields
 from webargs.flaskparser import use_args
 
 from project.views import response
-from project.schema import BlogSchema, PullBlogSchema, UserSchema
+from project.schema import BlogSchema
 from project.models import BlogModel
 
 @app.route("/api/ping", methods=["GET"])
@@ -24,20 +25,30 @@ def postblog(args) -> Response:
 
 
 @app.route("/api/getblog", methods=["GET"])
-@use_args(PullBlogSchema())
+@use_args({
+        'date': fields.String(),
+        'limit': fields.Integer(required=True)
+})
 def getblog(args) -> Response:
-    last_update = parser.parse(args.date)
-    last_update += timedelta(hours=23, minutes=59, seconds=59)
+    last_update = datetime.utcnow()
+    if 'date' in args:
+        last_update = parser.parse(args['date'])
+        last_update += timedelta(hours=23, minutes=59, seconds=59)
+
     blogs = db.session.query(BlogModel)\
         .filter(BlogModel.last_update <= last_update)\
         .order_by(BlogModel.last_update.desc())\
-        .limit(args.limit)
+        .limit(args['limit'])
+
     ret = [BlogSchema().dump(blog).data for blog in blogs]
 
     return response.ok(ret)
 
 
 @app.route("/api/login", methods=["POST"])
-@use_args(UserSchema())
+@use_args({
+        'username': fields.String(required=True),
+        'password': fields.String(required=True)
+})
 def login(args) -> Response:
-    return response.ok(args.username)
+    return response.ok(args['username'])

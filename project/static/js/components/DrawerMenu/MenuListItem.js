@@ -6,13 +6,15 @@ import { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
 import HomeIcon from 'material-ui-icons/Home';
 import InfoIcon from 'material-ui-icons/InfoOutline';
 import PostIcon from 'material-ui-icons/InsertDriveFile';
+import LoginIcon from 'material-ui-icons/Input';
 import DefaultIcon from 'material-ui-icons/CheckBoxOutlineBlank';
 
 const MenuListItemMap = {
   home: <HomeIcon />,
   info: <InfoIcon />,
   post: <PostIcon />,
-}
+  login: <LoginIcon />,
+};
 
 const MenuListItem = ({ name }) => {
   const icon = MenuListItemMap[name] || <DefaultIcon />;

@@ -20,7 +20,7 @@ class Editor extends React.Component {
   _renderTitle() {
     const { blogTitle, handleChangeTitle } = this.props;
     return (
-      <Grid item sm={10} lg={10} key={'editor.title'}>
+      <Grid item sm={12} lg={12} key={'editor.title'}>
         <TextField
           label="title"
           margin="normal"
@@ -36,7 +36,7 @@ class Editor extends React.Component {
   _renderTag() {
     const { blogTag, handleChangeTag } = this.props;
     return (
-      <Grid item sm={10} lg={10} key={'editor.tag'}>
+      <Grid item sm={12} lg={12} key={'editor.tag'}>
         <TextField
           label="tag"
           margin="normal"
@@ -52,7 +52,7 @@ class Editor extends React.Component {
     const { classes, blogText, handleChangeText } = this.props;
 
     return (
-      <Grid item sm={10} lg={10} key={'editor.ace'}>
+      <Grid item sm={12} lg={12} key={'editor.ace'}>
         <AceEditor
           mode="markdown"
           theme="github"
@@ -71,7 +71,6 @@ class Editor extends React.Component {
     return (
       <Grid container
         direction="column"
-        justify="space-around"
         alignItems="center"
         spacing={24}
       >

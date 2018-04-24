@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import Divider from 'material-ui/Divider';
 import Drawer from 'material-ui/Drawer';
 import List from 'material-ui/List';
 import { withStyles } from 'material-ui/styles';
@@ -22,6 +23,8 @@ class DrawerMenuContainer extends Component {
         <MenuListItem name='home' />
         <MenuListItem name='post' />
         <MenuListItem name='info' />
+        <Divider />
+        <MenuListItem name='login' />
       </List>
     );
   }

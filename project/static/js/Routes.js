@@ -4,6 +4,7 @@ import { Route } from 'react-router-dom';
 import ContentContainer from './containers/ContentContainer';
 import HomeContainer from './containers/HomeContainer';
 import InfoContainer from './containers/InfoContainer';
+import LoginContainer from './containers/LoginContainer';
 
 export const RouteConfig = [
   {
@@ -20,6 +21,11 @@ export const RouteConfig = [
     path: "/info",
     exact: false,
     component: InfoContainer,
+  },
+  {
+    path: "/login",
+    exact: false,
+    component: LoginContainer,
   },
 ];
 
