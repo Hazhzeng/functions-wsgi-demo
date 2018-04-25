@@ -1,4 +1,6 @@
+import _ from 'lodash';
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import Grid from 'material-ui/Grid';
 import Paper from 'material-ui/Paper';
@@ -8,6 +10,13 @@ import { withStyles } from 'material-ui/styles';
 
 import AccountCircle from 'material-ui-icons/AccountCircle';
 import Lock from 'material-ui-icons/Lock';
+
+import {
+  changeUsername,
+  changePassword,
+  authTrigger,
+} from '../actions/UserActions';
+import { isUsernamePasswordTouched } from '../selectors/UserSelector';
 
 const styles = theme => ({
   paper: {
@@ -26,14 +35,23 @@ class LoginContainer extends Component {
     super(props);
     this.handleUsernameChange = this.handleUsernameChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
+    this.debouncedSubmit = _.debounce(this.debouncedSubmit.bind(this), 1000);
   }
 
   handleUsernameChange(event) {
-    console.log('username:', event.target.value);
+    this.props.changeUsername(event.target.value);
+    this.debouncedSubmit();
   }
 
   handlePasswordChange(event) {
-    console.log('password:', event.target.value);
+    this.props.changePassword(event.target.value);
+    this.debouncedSubmit();
+  }
+
+  debouncedSubmit() {
+    if (this.props.isSubmitable) {
+      this.props.submit();
+    }
   }
 
   _renderLoginForm() {
@@ -57,7 +75,7 @@ class LoginContainer extends Component {
               className={classes.margin}
               name="password"
               type="password"
-              onChange={() => console.log('!')}
+              onChange={this.handlePasswordChange}
               startAdornment={
                 <InputAdornment position="start">
                   <Lock />
@@ -83,4 +101,17 @@ class LoginContainer extends Component {
   }
 }
 
-export default withStyles(styles)(LoginContainer)
+const mapStateToProps = (state) => ({
+  isSubmitable: isUsernamePasswordTouched(state),
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  changeUsername: value => dispatch(changeUsername(value)),
+  changePassword: value => dispatch(changePassword(value)),
+  submit: () => dispatch(authTrigger()),
+});
+
+const LoginRedux =
+  connect(mapStateToProps, mapDispatchToProps)(LoginContainer);
+
+export default withStyles(styles)(LoginRedux)

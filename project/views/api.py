@@ -51,4 +51,6 @@ def getblog(args) -> Response:
         'password': fields.String(required=True)
 })
 def login(args) -> Response:
-    return response.ok(args['username'])
+    if args['username'] == 'rogerxman' and args['password'] == 'roger23':
+        return response.ok()
+    return response.unauthorized('Invalid login for ' + args['username'])

@@ -6,6 +6,10 @@ const initialState = {
     username: '',
     password: '',
   },
+  statuses: {
+    username_touched: false,
+    password_touched: false,
+  },
   ui: {
     loading: false,
     success: false,
@@ -22,6 +26,10 @@ const userReducer = (state = initialState, action) => {
           ...state.identity,
           username: action.payload,
         },
+        statuses: {
+          ...state.statuses,
+          username_touched: true,
+        },
         step: User.STEP_TOUCHED,
       }
     case User.CHANGE_PASSWORD:
@@ -30,6 +38,10 @@ const userReducer = (state = initialState, action) => {
         identity: {
           ...state.identity,
           password: action.payload,
+        },
+        statuses: {
+          ...state.statuses,
+          password_touched: true,
         },
         step: User.STEP_TOUCHED,
       }

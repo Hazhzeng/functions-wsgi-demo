@@ -24,6 +24,7 @@ export default class API {
   }
 
   static authenticate(identity) {
-    return post_json('/api/login', {}, identity);
+    return post_json('/api/login', {}, identity)
+      .then(errorHandler);
   }
 }

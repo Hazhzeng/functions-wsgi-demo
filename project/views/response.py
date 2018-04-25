@@ -12,11 +12,14 @@ def ok(result:Any={}, code:int=200):
     return _response(result, code)
 
 def bad_request(result:Any={}, code:int=400):
-    return _response(result, code)
+    return _response({ 'error': result }, code)
+
+def unauthorized(result:Any={}, code:int=401):
+    return _response({ 'error': result }, code)
 
 def forbidden(result:Any={}, code:int=403):
-    return _response(result, code)
+    return _response({ 'error': result }, code)
 
 def not_found(result:Any={}, code:int=404):
-    return _response(result, code)
+    return _response({ 'error': result }, code)
 
