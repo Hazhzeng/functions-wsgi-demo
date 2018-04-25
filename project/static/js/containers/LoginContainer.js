@@ -16,7 +16,11 @@ import {
   changePassword,
   authTrigger,
 } from '../actions/UserActions';
-import { isUsernamePasswordTouched } from '../selectors/UserSelector';
+
+import {
+  isUsernamePasswordTouched,
+  uiSelector
+} from '../selectors/UserSelector';
 
 const styles = theme => ({
   paper: {
@@ -64,6 +68,8 @@ class LoginContainer extends Component {
               className={classes.margin}
               name="username"
               type="text"
+              disabled={this.props.ui.loading || this.props.ui.success}
+              error={this.props.ui.failure}
               onChange={this.handleUsernameChange}
               startAdornment={
                 <InputAdornment position="start">
@@ -75,6 +81,8 @@ class LoginContainer extends Component {
               className={classes.margin}
               name="password"
               type="password"
+              disabled={this.props.ui.loading || this.props.ui.success}
+              error={this.props.ui.failure}
               onChange={this.handlePasswordChange}
               startAdornment={
                 <InputAdornment position="start">
@@ -103,6 +111,7 @@ class LoginContainer extends Component {
 
 const mapStateToProps = (state) => ({
   isSubmitable: isUsernamePasswordTouched(state),
+  ui: uiSelector(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
