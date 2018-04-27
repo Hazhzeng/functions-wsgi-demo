@@ -23,3 +23,5 @@ def forbidden(result:Any={}, code:int=403):
 def not_found(result:Any={}, code:int=404):
     return _response({ 'error': result }, code)
 
+def unprocessable_entity(result:Any={}, code:int=422):
+    return _response({ 'error': result } , code)

@@ -3,6 +3,7 @@ from datetime import datetime
 
 class BlogModel(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+
     title = db.Column(db.String(64), unique=False, nullable=False)
     tag = db.Column(db.String(64), unique=False, nullable=True)
     text = db.Column(db.String(1024), unique=False, nullable=True)
