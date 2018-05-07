@@ -3,4 +3,7 @@ export default {
   CHANGE_TAG: 'BlogConstants.CHANGE_TAG',
   CHANGE_TEXT: 'BlogConstants.CHANGE_TEXT',
   SUBMIT_BLOG: 'BlogConstants.SUBMIT_BLOG',
+  SUBMIT_BLOG_LOADING: 'BlogConstants.SUBMIT_BLOG_LOADING',
+  SUBMIT_BLOG_SUCCESS: 'BlogConstants.SUBMIT_BLOG_SUCCESS',
+  SUBMIT_BLOG_FAILURE: 'BlogConstants.SUBMIT_BLOG_FAILURE',
 };

@@ -1,5 +1,4 @@
 import Blog from '../constants/BlogConstants';
-import API from '../API';
 
 const initialState = {
   title: '',
@@ -24,13 +23,16 @@ const blogReducer = (state = initialState, action) => {
         ...state,
         text: action.payload,
       };
-    case Blog.SUBMIT_BLOG:
-      API.postBlog(state.title, state.tag, state.text);
+    case Blog.SUBMIT_BLOG_LOADING:
+      return state;
+    case Blog.SUBMIT_BLOG_SUCCESS:
       return {
         title: '',
         tag: '',
         text: '',
       };
+    case Blog.SUBMIT_BLOG_FAILURE:
+      return state;
     default:
       return state;
   }

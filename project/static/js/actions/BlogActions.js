@@ -18,3 +18,15 @@ export const changeText = (text) => ({
 export const submitBlog = () => ({
   type: Blog.SUBMIT_BLOG,
 });
+
+export const submitBlogLoading = () => ({
+  type: Blog.SUBMIT_BLOG_LOADING,
+});
+
+export const submitBlogSuccess = () => ({
+  type: Blog.SUBMIT_BLOG_SUCCESS,
+});
+
+export const submitBlogFailure = () => ({
+  type: Blog.SUBMIT_BLOG_Failure,
+});
