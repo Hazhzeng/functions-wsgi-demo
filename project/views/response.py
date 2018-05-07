@@ -14,7 +14,7 @@ def is_success(code:int):
 def ok(result:Any={}, code:int=200):
     return _response(result, code)
 
-def is_created(result:Any={}, code:int=201):
+def created(result:Any={}, code:int=201):
     return _response(result, code)
 
 def bad_request(result:Any={}, code:int=400):

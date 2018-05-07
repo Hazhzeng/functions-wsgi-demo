@@ -1,5 +1,5 @@
 import hashlib, uuid
-from flask import request, Response, make_response, g, session
+from flask import request, Response, g, session
 from project import app, db
 from dateutil import parser
 from datetime import datetime, timedelta
@@ -76,11 +76,11 @@ def login_api(args) -> Response:
     db.session.add(user)
 
     # Set Token
-    res = make_response('', 200)
+    res = response.ok()
     res.set_cookie(
-            key='token',
-            value=token,
-            expires=now+timedelta(hours=24),
+        key='token',
+        value=token,
+        expires=now+timedelta(hours=24),
     )
     return res
 
@@ -116,11 +116,11 @@ def register_api(args) -> Response:
     db.session.add(new_user)
 
     # Set Token
-    res = make_response('', 201)
+    res = response.created()
     res.set_cookie(
-            key='token',
-            value=token,
-            expires=now+timedelta(hours=24),
+        key='token',
+        value=token,
+        expires=now+timedelta(hours=24),
     )
     return res
 

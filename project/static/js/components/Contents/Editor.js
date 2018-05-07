@@ -17,6 +17,16 @@ const styles = theme => ({
 });
 
 class Editor extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+    this.props.submitBlog();
+  }
+
   _renderTitle() {
     const { blogTitle, handleChangeTitle } = this.props;
     return (
@@ -27,7 +37,6 @@ class Editor extends React.Component {
           value={blogTitle}
           onChange={(event) => handleChangeTitle(event.target.value)}
           fullWidth
-          required
         />
       </Grid>
     );
@@ -67,7 +76,6 @@ class Editor extends React.Component {
   }
 
   render() {
-    const { submitBlog } = this.props;
     return (
       <Grid container
         direction="column"
@@ -80,7 +88,10 @@ class Editor extends React.Component {
           {this._renderAceEditor()}
           <Button
             color="primary"
-            onClick={submitBlog}
+            onClick={this.handleSubmit}
+            onSubmit={this.handleSubmit}
+            type="submit"
+            disabled={!this.props.isSubmittable}
             fullWidth
           >
           Submit

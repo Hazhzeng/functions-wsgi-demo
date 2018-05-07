@@ -9,7 +9,12 @@ import { withStyles } from 'material-ui/styles';
 import { changeTitle, changeTag, changeText, submitBlog } from '../actions/BlogActions';
 import Preview from '../components/Contents/Preview';
 import Editor from '../components/Contents/Editor';
-import { titleSelector, tagSelector, textSelector } from '../selectors/BlogSelector';
+import {
+  titleSelector,
+  tagSelector,
+  textSelector,
+  isSubmittableSelector,
+} from '../selectors/BlogSelector';
 
 const styles = theme => ({
   paper: {
@@ -53,6 +58,7 @@ const mapStateToProps = (state) => ({
   blogTag: tagSelector(state),
   blogTitle: titleSelector(state),
   blogText: textSelector(state),
+  isSubmittable: isSubmittableSelector(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
