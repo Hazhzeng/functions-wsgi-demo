@@ -58,7 +58,7 @@ const userReducer = (state = initialState, action) => {
       return {
         ...state,
         ui: {
-          loading: false,
+          loading: true,
           success: true,
           failure: false,
         },

@@ -1,5 +1,5 @@
 import hashlib, uuid
-from flask import request, Response, g, session
+from flask import request, Response, make_response, g, session
 from project import app, db
 from dateutil import parser
 from datetime import datetime, timedelta
@@ -13,12 +13,12 @@ from project.models import BlogModel, UserModel
 from .authenticate import login_required_api
 
 
-@app.route("/api/ping", methods=["GET"])
+@app.route('/api/ping', methods=['GET'])
 def ping() -> str:
     return response.ok('pong')
 
 
-@app.route("/api/postblog", methods=["POST"])
+@app.route('/api/postblog', methods=['POST'])
 @login_required_api
 @use_args(BlogSchema())
 def postblog_api(args) -> Response:
@@ -27,7 +27,7 @@ def postblog_api(args) -> Response:
     return response.ok();
 
 
-@app.route("/api/getblog", methods=["GET"])
+@app.route('/api/getblog', methods=['GET'])
 @use_args({
     'date': fields.String(),
     'limit': fields.Integer(required=True)
@@ -47,7 +47,7 @@ def getblog_api(args) -> Response:
     return response.ok(ret)
 
 
-@app.route("/api/login", methods=["POST"])
+@app.route('/api/login', methods=['POST'])
 @use_args({
     'username': fields.String(required=True),
     'password': fields.String(required=True)
@@ -61,13 +61,31 @@ def login_api(args) -> Response:
         .first()
     if user is None:
         return response.unauthorized()
+    else:
+        expected_hash = user.hash
+        calculated_hash = hashlib.sha512(
+            (username + password + user.salt).encode('utf-8')
+        ).hexdigest()
+        if expected_hash != calculated_hash:
+            return response.forbidden()
 
-    user.login_date = datetime.utcnow()
+    now = datetime.utcnow()
+    token = uuid.uuid4().hex
+    user.login_date = now
+    user.token = token
     db.session.add(user)
-    return response.ok()
+
+    # Set Token
+    res = make_response('', 200)
+    res.set_cookie(
+            key='token',
+            value=token,
+            expires=now+timedelta(hours=24),
+    )
+    return res
 
 
-@app.route("/api/register", methods=["POST"])
+@app.route('/api/register', methods=['POST'])
 @use_args({
     'username': fields.String(required=True),
     'password': fields.String(required=True)
@@ -82,33 +100,46 @@ def register_api(args) -> Response:
     if user is not None:
         return response.unprocessable_entity()
 
+    now = datetime.utcnow()
+    token = uuid.uuid4().hex
     salt = uuid.uuid4().hex
-    hash = hashlib.sha512((username + salt).encode('utf-8')).hexdigest()
+    hash = hashlib.sha512(
+        (username + password + salt).encode('utf-8')
+    ).hexdigest()
     new_user = UserModel(
         username=username,
         salt=salt,
         hash=hash,
-        register_date=datetime.utcnow(),
+        token=token,
+        register_date=now,
     )
     db.session.add(new_user)
-    return response.ok()
+
+    # Set Token
+    res = make_response('', 201)
+    res.set_cookie(
+            key='token',
+            value=token,
+            expires=now+timedelta(hours=24),
+    )
+    return res
 
 
 @app.before_request
 def before_request():
-    if session["token"]:
-        token = session["token"]
+    token = request.cookies.get('token')
+    if token is not None:
         user = db.session.query(UserModel)\
             .filter(UserModel.token == token)\
             .first()
     else:
         user = None
-    flask.g.user = user
+    g.user = user
 
 
 @app.after_request
 def after_request(res):
-    if res.status == 200:
+    if response.is_success(res.status_code):
         db.session.commit()
     else:
         db.session.rollback()

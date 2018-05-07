@@ -5,8 +5,10 @@ import { connect } from 'react-redux';
 import Grid from 'material-ui/Grid';
 import Paper from 'material-ui/Paper';
 import { FormControl } from 'material-ui/Form';
+import { CircularProgress } from 'material-ui/Progress';
 import Input, { InputAdornment } from 'material-ui/Input';
 import { withStyles } from 'material-ui/styles';
+import { green, blue } from 'material-ui/colors';
 
 import AccountCircle from 'material-ui-icons/AccountCircle';
 import Lock from 'material-ui-icons/Lock';
@@ -31,6 +33,9 @@ const styles = theme => ({
   },
   margin: {
     margin: theme.spacing.unit * 3,
+  },
+  progress: {
+    margin: theme.spacing.unit * 2,
   },
 });
 
@@ -60,6 +65,15 @@ class LoginContainer extends Component {
 
   _renderLoginForm() {
     const { classes } = this.props;
+    const loadingIcon = this.props.ui.success
+      ? <CircularProgress
+          className={classes.progress}
+          style={{color: green[500]}}
+        />
+      : <CircularProgress
+          className={classes.progress}
+          style={{color: blue[500]}}
+        />;
     return (
       <Grid item sm={12} lg={12} key={'login.form'}>
         <Paper className={classes.paper}>
@@ -91,6 +105,9 @@ class LoginContainer extends Component {
               }
             />
           </FormControl>
+          {this.props.ui.loading && (
+              <div>{loadingIcon}</div>
+          )}
         </Paper>
       </Grid>
     );

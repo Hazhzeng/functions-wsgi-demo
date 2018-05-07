@@ -6,6 +6,7 @@ const _fetch = (method, url, head = {}, body = null) => {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
     },
+    credentials: 'include',
     method: method,
   }
   if (head) {
@@ -25,7 +26,7 @@ export const post_json = (url, header = {}, body = null) => {
 export const get_json = (url, header = {}, body = null) => {
   const urlString = urlUtil.format({
     hostname: window.location.hostname,
-    port: window.location.hostname === 'localhost' ? 5001 : 80,
+    port: window.location.hostname === 'dev.rogertsang.info' ? 5001 : 80,
     pathname: url,
     query: {
       ...body,

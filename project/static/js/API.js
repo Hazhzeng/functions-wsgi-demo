@@ -27,4 +27,9 @@ export default class API {
     return post_json('/api/login', {}, identity)
       .then(errorHandler);
   }
+
+  static register(identity) {
+    return post_json('/api/register', {}, identity)
+      .then(errorHandler);
+  }
 }
