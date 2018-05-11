@@ -1,3 +1,4 @@
+const webpack = require('webpack');
 const merge = require('webpack-merge');
 const common = require('./webpack.common.js');
 const path = require('path');
@@ -9,4 +10,9 @@ module.exports = merge(common, {
     contentBase: build_dir,
     hot: true
   },
+  plugins: [
+    new webpack.DefinePlugin({
+      'process.env.NODE:ENV': '"development"',
+    })
+  ],
 });

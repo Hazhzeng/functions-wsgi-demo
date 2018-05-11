@@ -1,3 +1,4 @@
+const webpack = require('webpack');
 const merge = require('webpack-merge');
 const common = require('./webpack.common.js');
 const path = require('path');
@@ -13,6 +14,9 @@ module.exports = merge(common, {
       parallel: 2,
       sourceMap: true,
       cache: false
-    })
+    }),
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': '"production"',
+    }),
   ],
 });
