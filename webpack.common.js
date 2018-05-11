@@ -1,6 +1,5 @@
 const path = require('path');
 const webpack = require('webpack');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 const entry_point = path.resolve(__dirname, './project/static/js/index.js');
 const build_dir = path.resolve(__dirname, './project/static/dist');
@@ -12,11 +11,6 @@ module.exports = {
   output: {
     path: build_dir,
     filename: '[name].bundle.js'
-  },
-  devtool: 'source-map',
-  devServer: {
-    contentBase: build_dir,
-    hot: true
   },
   module: {
     rules: [
@@ -44,14 +38,4 @@ module.exports = {
     }
     ]
   },
-  plugins: [
-    new UglifyJsPlugin({
-      test: /\.js$/,
-      exclude: ['/node_modules/', build_dir],
-      parallel: true,
-      parallel: 2,
-      sourceMap: true,
-      cache: false
-    })
-  ],
 };

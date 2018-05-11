@@ -4,12 +4,12 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "build": "webpack",
-        "watch": "webpack --watch",
+        "watch": "webpack --config webpack.dev.js  --watch",
+        "build": "webpack --config webpack.prod.js",
         "lint": "./node_modules/.bin/eslint roject/roject"
     },
     "keywords": [],
-    "author": "",
+    "author": "Roger Tsang",
     "license": "ISC",
     "devDependencies": {
         "babel-core": "6.26.0",
@@ -48,7 +48,8 @@
         "react-dom": "16.2.0",
         "react-hot-loader": "4.0.0",
         "react-redux": "5.0.7",
-        "redux": "3.7.2"
+        "redux": "3.7.2",
+        "webpack-merge": "4.1.2"
     },
     "eslintConfig": {
         "env": {
