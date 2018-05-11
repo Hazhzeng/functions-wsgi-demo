@@ -1,6 +1,6 @@
 
 # Created by https://www.gitignore.io/api/python,visualstudio
-package-lock.json
+*.sock
 project/static/dist/
 project/sql/chat.db
 

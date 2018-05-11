@@ -45,7 +45,6 @@ module.exports = {
     ]
   },
   plugins: [
-    /*
     new UglifyJsPlugin({
       test: /\.js$/,
       exclude: ['/node_modules/', build_dir],
@@ -54,6 +53,5 @@ module.exports = {
       sourceMap: true,
       cache: false
     })
-    */
   ],
 };
