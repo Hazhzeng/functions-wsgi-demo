@@ -8,15 +8,17 @@ import PostIcon from 'material-ui-icons/InsertDriveFile';
 import LoginIcon from 'material-ui-icons/Input';
 
 const MenuListItemMap = {
-  home: { label: "Home", icon: <HomeIcon /> },
-  info: { label: "Information", icon: <InfoIcon /> },
-  post: { label: "Compose", icon: <PostIcon /> },
-  login: { label: "Login & Register", icon: <LoginIcon /> },
+  home: { label: "Home", icon: <HomeIcon />, loginRequired: false },
+  info: { label: "Information", icon: <InfoIcon />, loginRequired: false },
+  post: { label: "Compose", icon: <PostIcon />, loginRequired: true },
+  login: {
+    label: "Login & Register",
+    icon: <LoginIcon />,
+    loginRequired: false
+  },
 };
 
-const MenuListItem = ({ name }) => {
-  const item = MenuListItemMap[name];
-
+const enableItem = (name, item) => {
   return (
     <Link to={name}>
       <ListItem button>
@@ -24,7 +26,22 @@ const MenuListItem = ({ name }) => {
         <ListItemText primary={item.label} />
       </ListItem>
     </Link>
-  )
+  );
+};
+
+const disableItem = (name, item) => {
+  return (
+    <ListItem disabled>
+      <ListItemIcon>{item.icon}</ListItemIcon>
+      <ListItemText primary={item.label} />
+    </ListItem>
+  );
+};
+
+const MenuListItem = ({ name, isLoggedIn }) => {
+  const item = MenuListItemMap[name];
+  const isDisabled = item.loginRequired && !isLoggedIn;
+  return isDisabled ? disableItem(name, item) : enableItem(name, item);
 };
 
 export default MenuListItem;

@@ -5,8 +5,12 @@ const userSelector = (state) => state.UserReducer;
 export const identitySelector = state => userSelector(state).identity;
 export const uiSelector = state => userSelector(state).ui;
 export const statusesSelector = state => userSelector(state).statuses;
-export const usernameSelector = () => window.user && window.user.username || '';
-export const isUserLoggedin = () => window.user && window.user.login_date;
+
+export const usernameSelector = () => (
+  window.user && window.user.username
+);
+
+export const isUserLoggedinSelector = () => Boolean(window.user);
 
 export const isUsernameValid = state => {
   const schema = new validator();
@@ -36,7 +40,7 @@ export default {
   uiSelector,
   statusesSelector,
   usernameSelector,
-  isUserLoggedin,
+  isUserLoggedinSelector,
   isUsernameValid,
   isPasswordValid,
 };

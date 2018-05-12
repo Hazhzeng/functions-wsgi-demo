@@ -6,6 +6,8 @@ import Drawer from 'material-ui/Drawer';
 import List from 'material-ui/List';
 import { withStyles } from 'material-ui/styles';
 
+import { isUserLoggedinSelector } from '../selectors/UserSelector';
+
 import MenuListItem from '../components/DrawerMenu/MenuListItem';
 
 const styles = theme => ({
@@ -17,14 +19,21 @@ const styles = theme => ({
 });
 
 class DrawerMenuContainer extends Component {
+  constructor(props) {
+    super(props);
+    this.config = {
+      anchor: 'left',
+    };
+  }
+
   _renderMenuList() {
     return (
       <List component="nav">
-        <MenuListItem name='home' />
-        <MenuListItem name='post' />
-        <MenuListItem name='info' />
+        <MenuListItem name='home' isLoggedIn={this.props.isLoggedIn} />
+        <MenuListItem name='post' isLoggedIn={this.props.isLoggedIn} />
+        <MenuListItem name='info' isLoggedIn={this.props.isLoggedIn} />
         <Divider />
-        <MenuListItem name='login' />
+        <MenuListItem name='login' isLoggedIn={this.props.isLoggedIn} />
       </List>
     );
   }
@@ -40,12 +49,12 @@ class DrawerMenuContainer extends Component {
   }
 
   render() {
-    const { classes, anchor } = this.props;
+    const { classes } = this.props;
     return (
       <Drawer
           variant="permanent"
           classes={{ paper: classes.drawer }}
-          anchor={anchor}
+          anchor={this.config.anchor}
       >
       {this._renderList()}
       </Drawer>
@@ -54,7 +63,7 @@ class DrawerMenuContainer extends Component {
 }
 
 const mapStateToProps = () => ({
-  anchor: 'left',
+  isLoggedIn: isUserLoggedinSelector(),
 });
 
 const DrawerMenuRedux = connect(mapStateToProps)(DrawerMenuContainer);
