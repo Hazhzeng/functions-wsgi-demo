@@ -1,16 +1,16 @@
 import hashlib, uuid
-from flask import request, Response, g, session
-from project import app, db
+from flask import Response, g, session, request
 from dateutil import parser
 from datetime import datetime, timedelta
 from webargs import fields
 from webargs.flaskparser import use_args
 
+from project import app, db
 from project.views import response
 from project.schema import BlogSchema
 from project.models import BlogModel, UserModel
 
-from .authenticate import login_required_api
+from .wrappers import login_required_api
 
 
 @app.route('/api/ping', methods=['GET'])
@@ -24,7 +24,7 @@ def ping() -> str:
 def postblog_api(args) -> Response:
     new_blog = BlogModel(title=args.title, tag=args.tag, text=args.text)
     db.session.add(new_blog)
-    return response.ok();
+    return response.ok()
 
 
 @app.route('/api/getblog', methods=['GET'])
@@ -82,6 +82,27 @@ def login_api(args) -> Response:
         value=token,
         expires=now+timedelta(hours=24),
     )
+    return res
+
+
+@app.route('/api/logout', methods=['DELETE'])
+def logout_api() -> Response:
+    res = response.ok()
+    if g.user:
+        user = db.session.query(UserModel)\
+            .filter(UserModel.id == g.user.id)\
+            .first()
+        
+        if user:
+            # Refresh token
+            user.token = uuid.uuid4().hex
+            db.session.add(user)
+            g.user = None
+            res.set_cookie(
+                key='token',
+                value='',
+                expires=0,
+            )
     return res
 
 

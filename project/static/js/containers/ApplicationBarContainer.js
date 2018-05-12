@@ -1,3 +1,4 @@
+import { capitalize } from 'lodash';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
@@ -8,6 +9,7 @@ import { LinearProgress } from 'material-ui/Progress';
 import { withStyles } from 'material-ui/styles';
 
 import HomeSelector from '../selectors/HomeSelector';
+import UserSelector from '../selectors/UserSelector';
 
 const styles = theme => ({
   appbar: {
@@ -18,12 +20,12 @@ const styles = theme => ({
 
 class ApplicationBarContainer extends Component {
   render() {
-    const { classes, title } = this.props;
+    const { classes, username } = this.props;
     return (
       <AppBar className={classes.appbar}>
         <Toolbar>
           <Typography variant="title" color="inherit" noWrap>
-            {title}
+            {username ? capitalize(username) : 'Pristine'}
           </Typography>
         </Toolbar>
         {this.props.loading && <LinearProgress />}
@@ -33,7 +35,7 @@ class ApplicationBarContainer extends Component {
 }
 
 const mapStateToProps = state => ({
-  title: 'Pristine',
+  username: UserSelector.usernameSelector(),
   loading: HomeSelector.uiSelector(state).loading,
 });
 

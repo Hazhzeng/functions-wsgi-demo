@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ title }}</title>
+    <title>Pristine</title>
 
     <!-- icon -->
     <link rel="shortcut icon" href={{ url_for('static', filename='icon/favicon.ico') }} type="image/x-icon">
@@ -15,6 +15,12 @@
 </head>
 
 <body>
+    <script>
+      {% if user %}
+        window.user = {{ user|tojson|safe }};
+      {% endif %}
+    </script>
+
     <div id="content">
         {% block content %}{% endblock %}
     </div>

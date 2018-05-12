@@ -1,7 +1,7 @@
-from project import app
-from project.views import response
+import json
 from functools import wraps
 from flask import session, redirect, url_for, g
+from project.views import response
 
 def login_required(func):
     @wraps(func)

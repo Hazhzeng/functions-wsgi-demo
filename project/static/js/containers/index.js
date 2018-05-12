@@ -1,7 +1,10 @@
+import { capitalize } from 'lodash';
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import { withStyles } from 'material-ui/styles';
 import { BrowserRouter } from 'react-router-dom';
+import { usernameSelector } from '../selectors/UserSelector';
 import { RouteWithSubRoutes } from '../Routes';
 
 import ApplicationBarContainer from './ApplicationBarContainer';
@@ -25,6 +28,11 @@ const styles = theme => ({
 });
 
 class MainContainer extends Component {
+  constructor(props) {
+    super(props);
+    document.title = capitalize(props.title) || 'Pristine';
+  }
+
   render() {
     const { classes, routes } = this.props;
     return (
@@ -45,4 +53,10 @@ class MainContainer extends Component {
   }
 }
 
-export default withStyles(styles)(MainContainer);
+const mapStateToProps = () => ({
+  title: usernameSelector(),
+});
+
+const MainRedux = connect(mapStateToProps)(MainContainer);
+
+export default withStyles(styles)(MainRedux);
