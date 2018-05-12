@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
@@ -10,20 +9,20 @@ import LoginIcon from 'material-ui-icons/Input';
 import DefaultIcon from 'material-ui-icons/CheckBoxOutlineBlank';
 
 const MenuListItemMap = {
-  home: <HomeIcon />,
-  info: <InfoIcon />,
-  post: <PostIcon />,
-  login: <LoginIcon />,
+  home: { label: "Home", icon: <HomeIcon /> },
+  info: { label: "Information", icon: <InfoIcon /> },
+  post: { label: "Compose", icon: <PostIcon /> },
+  login: { label: "Login & Register", icon: <LoginIcon /> },
 };
 
 const MenuListItem = ({ name }) => {
-  const icon = MenuListItemMap[name] || <DefaultIcon />;
-
+  const item = MenuListItemMap[name];
+  
   return (
     <Link to={name}>
       <ListItem button>
-        <ListItemIcon>{icon}</ListItemIcon>
-        <ListItemText primary={_.capitalize(name)} />
+        <ListItemIcon>{item.icon}</ListItemIcon>
+        <ListItemText primary={item.label} />
       </ListItem>
     </Link>
   )

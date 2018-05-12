@@ -5,10 +5,9 @@ import { connect } from 'react-redux';
 import Grid from 'material-ui/Grid';
 import Paper from 'material-ui/Paper';
 import { FormControl } from 'material-ui/Form';
-import { CircularProgress } from 'material-ui/Progress';
+import { LinearProgress } from 'material-ui/Progress';
 import Input, { InputAdornment } from 'material-ui/Input';
 import { withStyles } from 'material-ui/styles';
-import { green, blue } from 'material-ui/colors';
 
 import AccountCircle from 'material-ui-icons/AccountCircle';
 import Lock from 'material-ui-icons/Lock';
@@ -20,7 +19,8 @@ import {
 } from '../actions/UserActions';
 
 import {
-  isUsernamePasswordTouched,
+  isUsernameValid,
+  isPasswordValid,
   uiSelector
 } from '../selectors/UserSelector';
 
@@ -34,46 +34,99 @@ const styles = theme => ({
   margin: {
     margin: theme.spacing.unit * 3,
   },
-  progress: {
-    margin: theme.spacing.unit * 2,
-  },
 });
 
 class LoginContainer extends Component {
   constructor(props) {
     super(props);
+    this.config = {
+      userDebounce: 3000, /* How many milliseconds should we wait before submit */
+      timerGranularity: 10, /* How often should we update progress bar */
+    }
+    this.state = {
+      progress: { value: 0, color: 'primary', variant: "determinate" },
+    }
     this.handleUsernameChange = this.handleUsernameChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
-    this.debouncedSubmit = _.debounce(this.debouncedSubmit.bind(this), 1000);
+    this.debouncedSubmit = _.debounce(this.debouncedSubmit.bind(this), this.config.userDebounce);
+
+    this.progressBarWaiting = this.progressBarWaiting.bind(this);
+    this.progressBarError = this.progressBarError.bind(this);
+    this.progressStartTimer = this.progressStartTimer.bind(this);
+    this.progressStopTimer = this.progressStopTimer.bind(this);
+    this.progressTimer = null;
   }
 
   handleUsernameChange(event) {
     this.props.changeUsername(event.target.value);
-    this.debouncedSubmit();
+    if (this.props.isSubmitable) {
+      this.progressStopTimer()
+      this.progressStartTimer();
+      this.debouncedSubmit();
+    } else {
+      this.progressBarError();
+    }
   }
 
   handlePasswordChange(event) {
     this.props.changePassword(event.target.value);
-    this.debouncedSubmit();
+    if (this.props.isSubmitable) {
+      this.progressStopTimer()
+      this.progressStartTimer();
+      this.debouncedSubmit();
+    } else {
+      this.progressBarError();
+    }
   }
 
   debouncedSubmit() {
+    this.progressStopTimer();
     if (this.props.isSubmitable) {
       this.props.submit();
     }
   }
 
+  progressStartTimer() {
+    if (!this.progressTimer) {
+      this.progressTimer = setInterval(this.progressBarWaiting, this.config.userDebounce / this.config.timerGranularity);
+
+      const progressValue = 100 - (100.0 / this.config.timerGranularity);
+      this.setState({
+        ...this.state,
+        progress: { value: progressValue, color: 'primary', variant: 'determinate'},
+      });
+    }
+  }
+
+  progressStopTimer() {
+    if (this.progressTimer) {
+      clearInterval(this.progressTimer);
+      this.progressTimer = null;
+    }
+  }
+
+  progressBarWaiting() {
+    if (this.props.isSubmitable) {
+      const expectedValue = this.state.progress.value - (100.0 / this.config.timerGranularity);
+      const progressValue = expectedValue >= 0.0 ? expectedValue : 0;
+      this.setState({
+        ...this.state,
+        progress: { value: progressValue, color: 'primary', variant: 'determinate'}
+      });
+    }
+  }
+
+  progressBarError() {
+    this.progressStopTimer();
+    this.setState({
+      ...this.state,
+      progress: { value: 100, color: 'secondary', variant: 'determinate' },
+    });
+  }
+
   _renderLoginForm() {
     const { classes } = this.props;
-    const loadingIcon = this.props.ui.success
-      ? <CircularProgress
-          className={classes.progress}
-          style={{color: green[500]}}
-        />
-      : <CircularProgress
-          className={classes.progress}
-          style={{color: blue[500]}}
-        />;
+    const progress = this.props.ui.loading ? <LinearProgress /> : <LinearProgress {...this.state.progress} />
     return (
       <Grid item sm={12} lg={12} key={'login.form'}>
         <Paper className={classes.paper}>
@@ -105,9 +158,7 @@ class LoginContainer extends Component {
               }
             />
           </FormControl>
-          {this.props.ui.loading && (
-              <div>{loadingIcon}</div>
-          )}
+          { progress }
         </Paper>
       </Grid>
     );
@@ -127,7 +178,7 @@ class LoginContainer extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  isSubmitable: isUsernamePasswordTouched(state),
+  isSubmitable: isUsernameValid(state) && isPasswordValid(state),
   ui: uiSelector(state),
 });
 
