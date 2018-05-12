@@ -39,7 +39,7 @@ def getblog_api(args) -> Response:
         last_update += timedelta(hours=23, minutes=59, seconds=59)
 
     blogs = db.session.query(BlogModel)\
-        .filter(BlogModel.last_update <= last_update)\
+        .filter(BlogModel.last_update < last_update)\
         .order_by(BlogModel.last_update.desc())\
         .limit(args['limit'])
 
@@ -55,7 +55,6 @@ def getblog_api(args) -> Response:
 def login_api(args) -> Response:
     username = args['username']
     password = args['password']
-
     user = db.session.query(UserModel)\
         .filter(UserModel.username == username)\
         .first()
@@ -72,20 +71,18 @@ def login_api(args) -> Response:
     now = datetime.utcnow()
     token = uuid.uuid4().hex
     user.login_date = now
+    user.login_expiry = now + timedelta(hours=24)
     user.token = token
     db.session.add(user)
 
     # Set Token
     res = response.ok()
-    res.set_cookie(
-        key='token',
-        value=token,
-        expires=now+timedelta(hours=24),
-    )
+    res.set_cookie(key='token', value=token, expires=user.login_expiry)
     return res
 
 
-@app.route('/api/logout', methods=['DELETE'])
+@app.route('/api/logout', methods=['GET'])
+@login_required_api
 def logout_api() -> Response:
     res = response.ok()
     if g.user:
@@ -98,11 +95,7 @@ def logout_api() -> Response:
             user.token = uuid.uuid4().hex
             db.session.add(user)
             g.user = None
-            res.set_cookie(
-                key='token',
-                value='',
-                expires=0,
-            )
+            res.set_cookie(key='token', value='', expires=0)
     return res
 
 
@@ -132,17 +125,15 @@ def register_api(args) -> Response:
         salt=salt,
         hash=hash,
         token=token,
+        login_date=now,
+        login_expiry=now+timedelta(hours=24),
         register_date=now,
     )
     db.session.add(new_user)
 
     # Set Token
     res = response.created()
-    res.set_cookie(
-        key='token',
-        value=token,
-        expires=now+timedelta(hours=24),
-    )
+    res.set_cookie(key='token', value=token, expires=new_user.login_expiry)
     return res
 
 
@@ -153,9 +144,11 @@ def before_request():
         user = db.session.query(UserModel)\
             .filter(UserModel.token == token)\
             .first()
-    else:
-        user = None
-    g.user = user
+        if user and user.login_expiry > datetime.utcnow():
+            g.user = user
+            return
+            
+    g.user = None
 
 
 @app.after_request

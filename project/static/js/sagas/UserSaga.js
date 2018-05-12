@@ -8,7 +8,7 @@ import {
 import { identitySelector } from '../selectors/UserSelector';
 import API from '../API';
 
-function *authenticateSaga() {
+function *loginSaga() {
   yield put(authRequest());
   const identity = yield select(identitySelector);
   try {
@@ -35,8 +35,18 @@ function *registerSaga(identity, error) {
   }
 }
 
+function *logoutSaga() {
+  try {
+    yield call(API.logout);
+    window.location.assign('/home');
+  } catch (error) {
+    window.location.assign('/home');
+  }
+}
+
 function *watcher() {
-  yield takeLatest(UserConstants.TRIGGER, authenticateSaga);
+  yield takeLatest(UserConstants.TRIGGER, loginSaga);
+  yield takeLatest(UserConstants.LOGOUT_TRIGGER, logoutSaga);
 }
 
 export default [watcher];

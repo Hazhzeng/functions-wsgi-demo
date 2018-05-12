@@ -25,3 +25,7 @@ export const authSuccess = () => ({
 export const authFailure = () => ({
   type: User.FAILURE,
 });
+
+export const logout = () => ({
+  type: User.LOGOUT_TRIGGER,
+});

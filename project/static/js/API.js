@@ -32,4 +32,9 @@ export default class API {
     return post_json('/api/register', {}, identity)
       .then(errorHandler);
   }
+
+  static logout() {
+    return get_json('/api/logout')
+      .then(errorHandler);
+  }
 }

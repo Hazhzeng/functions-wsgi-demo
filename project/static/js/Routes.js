@@ -5,6 +5,7 @@ import ContentContainer from './containers/ContentContainer';
 import HomeContainer from './containers/HomeContainer';
 import InfoContainer from './containers/InfoContainer';
 import LoginContainer from './containers/LoginContainer';
+import LogoutContainer from './containers/LogoutContainer';
 
 export const RouteConfig = [
   {
@@ -26,6 +27,11 @@ export const RouteConfig = [
     path: "/login",
     exact: false,
     component: LoginContainer,
+  },
+  {
+    path: "/logout",
+    exact: false,
+    component: LogoutContainer,
   },
 ];
 

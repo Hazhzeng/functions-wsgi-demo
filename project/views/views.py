@@ -14,17 +14,20 @@ def index_view():
         return render_template('index.html', user={
             'username': g.user.username,
             'login_date': g.user.login_date,
+            'login_expiry': g.user.login_expiry,
         })
     return render_template('index.html')
 
 
 @app.route('/post')
+@app.route('/logout')
 @login_required
 def post_view():
     if g.user:
         return render_template('index.html', user={
             'username': g.user.username,
             'login_date': g.user.login_date,
+            'login_expiry': g.user.login_expiry,
         })
     return render_template('index.html')
 

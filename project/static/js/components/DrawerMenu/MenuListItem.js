@@ -6,16 +6,14 @@ import HomeIcon from 'material-ui-icons/Home';
 import InfoIcon from 'material-ui-icons/InfoOutline';
 import PostIcon from 'material-ui-icons/InsertDriveFile';
 import LoginIcon from 'material-ui-icons/Input';
+import LogoutIcon from 'material-ui-icons/Link';
 
 const MenuListItemMap = {
-  home: { label: "Home", icon: <HomeIcon />, loginRequired: false },
-  info: { label: "Information", icon: <InfoIcon />, loginRequired: false },
-  post: { label: "Compose", icon: <PostIcon />, loginRequired: true },
-  login: {
-    label: "Login & Register",
-    icon: <LoginIcon />,
-    loginRequired: false
-  },
+  home: { label: "Home", icon: <HomeIcon />, credReq: false },
+  info: { label: "Information", icon: <InfoIcon />, credReq: false },
+  post: { label: "Compose", icon: <PostIcon />, credReq: true },
+  login: { label: "Login & Register", icon: <LoginIcon />, credReq: false },
+  logout: { label: "Logout", icon: <LogoutIcon />, credReq: true },
 };
 
 const enableItem = (name, item) => {
@@ -40,7 +38,7 @@ const disableItem = (name, item) => {
 
 const MenuListItem = ({ name, isLoggedIn }) => {
   const item = MenuListItemMap[name];
-  const isDisabled = item.loginRequired && !isLoggedIn;
+  const isDisabled = item.credReq && !isLoggedIn;
   return isDisabled ? disableItem(name, item) : enableItem(name, item);
 };
 

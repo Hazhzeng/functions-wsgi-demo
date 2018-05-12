@@ -7,6 +7,7 @@ def login_required(func):
     @wraps(func)
     def decorated_function(*args, **kwargs):
         if g.user is None:
+            print('USER IS NONE', flush=True)
             return redirect('/login', 302)
         return func(*args, **kwargs)
     return decorated_function

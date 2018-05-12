@@ -166,11 +166,7 @@ class LoginContainer extends Component {
 
   render() {
     return (
-      <Grid container
-        spacing={24}
-        direction="column"
-        alignItems="center"
-      >
+      <Grid container spacing={24} direction="column" alignItems="center">
         {this._renderLoginForm()}
       </Grid>
     );

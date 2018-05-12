@@ -34,6 +34,7 @@ class DrawerMenuContainer extends Component {
         <MenuListItem name='info' isLoggedIn={this.props.isLoggedIn} />
         <Divider />
         <MenuListItem name='login' isLoggedIn={this.props.isLoggedIn} />
+        <MenuListItem name='logout' isLoggedIn={this.props.isLoggedIn} />
       </List>
     );
   }
