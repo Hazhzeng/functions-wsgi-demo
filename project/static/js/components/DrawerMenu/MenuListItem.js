@@ -6,7 +6,6 @@ import HomeIcon from 'material-ui-icons/Home';
 import InfoIcon from 'material-ui-icons/InfoOutline';
 import PostIcon from 'material-ui-icons/InsertDriveFile';
 import LoginIcon from 'material-ui-icons/Input';
-import DefaultIcon from 'material-ui-icons/CheckBoxOutlineBlank';
 
 const MenuListItemMap = {
   home: { label: "Home", icon: <HomeIcon /> },
@@ -17,7 +16,7 @@ const MenuListItemMap = {
 
 const MenuListItem = ({ name }) => {
   const item = MenuListItemMap[name];
-  
+
   return (
     <Link to={name}>
       <ListItem button>

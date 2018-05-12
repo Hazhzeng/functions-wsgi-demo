@@ -8,7 +8,11 @@
         "build": "webpack --config webpack.prod.js",
         "lint": "./node_modules/.bin/eslint roject/roject"
     },
-    "keywords": ["Blog", "Personal", "Website"],
+    "keywords": [
+        "Blog",
+        "Personal",
+        "Website"
+    ],
     "author": "Roger Tsang",
     "license": "ISC",
     "devDependencies": {

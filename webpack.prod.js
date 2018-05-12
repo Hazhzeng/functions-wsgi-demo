@@ -10,9 +10,8 @@ module.exports = merge(common, {
     new UglifyJsPlugin({
       test: /\.js$/,
       exclude: ['/node_modules/', build_dir],
-      parallel: true,
-      parallel: 2,
-      sourceMap: true,
+      parallel: false,
+      sourceMap: false,
       cache: false
     }),
     new webpack.DefinePlugin({
