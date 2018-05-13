@@ -10,12 +10,6 @@ from .wrappers import login_required
 @app.route('/info')
 @app.route('/login')
 def index_view():
-    if g.user:
-        return render_template('index.html', user={
-            'username': g.user.username,
-            'login_date': g.user.login_date,
-            'login_expiry': g.user.login_expiry,
-        })
     return render_template('index.html')
 
 
@@ -23,12 +17,6 @@ def index_view():
 @app.route('/logout')
 @login_required
 def post_view():
-    if g.user:
-        return render_template('index.html', user={
-            'username': g.user.username,
-            'login_date': g.user.login_date,
-            'login_expiry': g.user.login_expiry,
-        })
     return render_template('index.html')
 
 
@@ -47,3 +35,13 @@ def before_request():
     else:
         user = None
     g.user = user
+
+@app.context_processor
+def context_user():
+    if g.user:
+        return dict(user={
+            'username': g.user.username,
+            'login_date': g.user.login_date,
+            'login_expiry': g.user.login_expiry,
+        })
+    return dict(user=None)

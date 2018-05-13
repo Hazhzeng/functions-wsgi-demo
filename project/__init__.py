@@ -1,11 +1,11 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 import os
+import json
 #import logging
 
 TEMPLATE_DIR = os.path.join('./templates')
 STATIC_DIR = os.path.join('./static')
-
 
 app = Flask(
     __name__,
@@ -15,14 +15,27 @@ app = Flask(
 )
 app.config.from_object(__name__)
 
+CONFIG_FILE = os.path.join(app.root_path, '..', 'roject.config')
+VERSION_FILE = os.path.join(app.root_path, '..', 'version.txt')
+
+with open(VERSION_FILE, 'r') as version_file:
+    version = version_file.read()
+    app.config.update(dict(
+        VERSION=version
+    ))
+
+with open(CONFIG_FILE, 'r') as config_file:
+    config = json.load(config_file)
+    app.config.update(dict(
+        SQLALCHEMY_DATABASE_URI='sqlite:////{}'\
+            .format(os.path.join(app.root_path, 'sql', 'chat.db')),
+        SECRET_KEY=config['secret_key'],
+        USERNAME=config['username'],
+        PASSWORD=config['password'],
+    ))
+
 app.config.update(dict(
-    SQLALCHEMY_DATABASE_URI='sqlite:////{}'\
-        .format(os.path.join(app.root_path, 'sql', 'chat.db')),
     SQLALCHEMY_TRACK_MODIFICATIONS='False',
-    DATABASE_INIT_SQL=os.path.join(app.root_path, 'sql', 'init.sql'),
-    SECRET_KEY='development',
-    USERNAME='admin',
-    PASSWORD='default'
 ))
 
 db = SQLAlchemy(app)
