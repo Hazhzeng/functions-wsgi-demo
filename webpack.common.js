@@ -2,10 +2,16 @@ const path = require('path');
 const webpack = require('webpack');
 const build_dir = path.resolve(__dirname, './project/static/dist');
 
+const version = require('fs').readFileSync(
+  path.resolve(__dirname, './version.txt'), 'utf8'
+).trim();
+
+console.log('webpacking website version:', version);
+
 module.exports = {
   output: {
     path: build_dir,
-    filename: '[name].bundle.js'
+    filename: `[name].bundle.${version}.js`
   },
   module: {
     rules: [

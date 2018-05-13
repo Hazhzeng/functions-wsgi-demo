@@ -16,8 +16,12 @@
 
 <body>
     <script>
+      window.context = {};
       {% if user %}
-        window.user = {{ user|tojson|safe }};
+        window.context.user = {{ user|tojson|safe }};
+      {% endif %}
+      {% if version %}
+        window.context.version = {{ version|tojson|safe }};
       {% endif %}
     </script>
 

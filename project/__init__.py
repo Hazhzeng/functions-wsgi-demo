@@ -19,7 +19,7 @@ CONFIG_FILE = os.path.join(app.root_path, '..', 'roject.config')
 VERSION_FILE = os.path.join(app.root_path, '..', 'version.txt')
 
 with open(VERSION_FILE, 'r') as version_file:
-    version = version_file.read()
+    version = version_file.readline().strip()
     app.config.update(dict(
         VERSION=version
     ))

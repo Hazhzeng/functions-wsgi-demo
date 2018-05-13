@@ -7,18 +7,18 @@ export const uiSelector = state => userSelector(state).ui;
 export const statusesSelector = state => userSelector(state).statuses;
 
 export const usernameSelector = () => (
-  window.user && window.user.username
+  window.context.user && window.context.user.username
 );
 
 export const loginExpirySelector = () => (
-  window.user && window.user.login_expiry
+  window.context.user && window.context.user.login_expiry
 );
 
 export const loginDateSelector = () => (
-  window.user && window.user.login_date
+  window.context.user && window.context.user.login_date
 );
 
-export const isUserLoggedinSelector = () => Boolean(window.user);
+export const isUserLoggedinSelector = () => Boolean(window.context.user);
 
 export const isUsernameValid = state => {
   const schema = new validator();
