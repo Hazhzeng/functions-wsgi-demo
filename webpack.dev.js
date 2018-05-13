@@ -5,6 +5,9 @@ const path = require('path');
 const build_dir = path.resolve(__dirname, './project/static/dist');
 
 module.exports = merge(common, {
+  entry: {
+    'app': path.resolve(__dirname, './project/static/js/index_dev.js'),
+  },
   devtool: 'source-map',
   devServer: {
     contentBase: build_dir,
