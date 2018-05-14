@@ -15,6 +15,7 @@ const initialState = {
     loading: false,
     success: false,
     failure: false,
+    menu: true,
   },
 };
 
@@ -46,6 +47,14 @@ const homeReducer = (state = initialState, action) => {
           ...state.ui,
           loading: false,
           failure: true,
+        }
+      };
+    case Home.TOGGLE_MENU:
+      return {
+        ...state,
+        ui: {
+          ...state.ui,
+          menu: !state.ui.menu,
         }
       };
     default:

@@ -7,6 +7,7 @@ import List from '@material-ui/core/List';
 import { withStyles } from '@material-ui/core/styles';
 
 import { isUserLoggedinSelector } from '../selectors/UserSelector';
+import { isMenuShownSelector } from '../selectors/HomeSelector';
 
 import MenuListItem from '../components/DrawerMenu/MenuListItem';
 
@@ -24,6 +25,11 @@ class DrawerMenuContainer extends Component {
     this.config = {
       anchor: 'left',
     };
+    this.switchMenuList = this.switchMenuList.bind(this);
+  }
+
+  switchMenuList(value) {
+    this.setState({ show: value });
   }
 
   _renderMenuList() {
@@ -56,15 +62,17 @@ class DrawerMenuContainer extends Component {
           variant="permanent"
           classes={{ paper: classes.drawer }}
           anchor={this.config.anchor}
+          hidden={!this.props.isMenuShown}
       >
-      {this._renderList()}
+        {this._renderList()}
       </Drawer>
     );
   }
 }
 
-const mapStateToProps = () => ({
+const mapStateToProps = state => ({
   isLoggedIn: isUserLoggedinSelector(),
+  isMenuShown: isMenuShownSelector(state),
 });
 
 const DrawerMenuRedux = connect(mapStateToProps)(DrawerMenuContainer);

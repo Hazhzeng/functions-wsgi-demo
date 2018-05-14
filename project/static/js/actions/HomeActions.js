@@ -20,3 +20,7 @@ export const pullBlogFailure = error => ({
 export const pullBlogLoading = () => ({
   type: Home.PULL_BLOG_LOADING,
 });
+
+export const toggleMenu = () => ({
+  type: Home.TOGGLE_MENU,
+});
