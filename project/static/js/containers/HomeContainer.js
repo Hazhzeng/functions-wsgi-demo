@@ -2,10 +2,10 @@ import _ from 'lodash';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import TextField from 'material-ui/TextField';
-import Grid from 'material-ui/Grid';
-import Paper from 'material-ui/Paper';
-import { withStyles } from 'material-ui/styles';
+import TextField  from '@material-ui/core/TextField';
+import Grid  from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
+import { withStyles } from '@material-ui/core/styles';
 
 import { pullBlog } from '../actions/HomeActions';
 import { blogsSelector, uiSelector } from '../selectors/HomeSelector';

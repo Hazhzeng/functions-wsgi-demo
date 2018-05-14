@@ -2,11 +2,16 @@ import _ from 'lodash';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import Grid from 'material-ui/Grid';
-import Paper from 'material-ui/Paper';
-import { withStyles } from 'material-ui/styles';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
+import { withStyles } from '@material-ui/core/styles';
 
-import { changeTitle, changeTag, changeText, submitBlog } from '../actions/BlogActions';
+import {
+  changeTitle,
+  changeTag,
+  changeText,
+  submitBlog
+} from '../actions/BlogActions';
 import Preview from '../components/Contents/Preview';
 import Editor from '../components/Contents/Editor';
 import {

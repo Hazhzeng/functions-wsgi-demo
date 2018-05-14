@@ -1,12 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
 
-import HomeIcon from 'material-ui-icons/Home';
-import InfoIcon from 'material-ui-icons/InfoOutline';
-import PostIcon from 'material-ui-icons/InsertDriveFile';
-import LoginIcon from 'material-ui-icons/Input';
-import LogoutIcon from 'material-ui-icons/Link';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+
+import HomeIcon from '@material-ui/icons/Home';
+import InfoIcon from '@material-ui/icons/InfoOutline';
+import PostIcon from '@material-ui/icons/InsertDriveFile';
+import LoginIcon from '@material-ui/icons/Input';
+import LogoutIcon from '@material-ui/icons/Link';
 
 const MenuListItemMap = {
   home: { label: "Home", icon: <HomeIcon />, credReq: false },

@@ -4,10 +4,10 @@ import AceEditor from 'react-ace';
 import 'brace/mode/markdown';
 import 'brace/theme/github';
 
-import Grid from 'material-ui/Grid';
-import TextField from 'material-ui/TextField';
-import Button from 'material-ui/Button';
-import { withStyles } from 'material-ui/styles';
+import Grid from '@material-ui/core/Grid';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import { withStyles } from '@material-ui/core/styles';
 
 const styles = theme => ({
   aceEditor: {

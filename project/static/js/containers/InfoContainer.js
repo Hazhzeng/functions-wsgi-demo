@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 
-import Avatar from 'material-ui/Avatar';
-import Grid from 'material-ui/Grid';
-import { withStyles } from 'material-ui/styles';
+import Avatar from '@material-ui/core/Avatar';
+import Grid from '@material-ui/core/Grid';
+import { withStyles } from '@material-ui/core/styles';
 
 import Blog from '../components/Contents/Blog';
 

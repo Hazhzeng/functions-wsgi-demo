@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import Divider from 'material-ui/Divider';
-import Drawer from 'material-ui/Drawer';
-import List from 'material-ui/List';
-import { withStyles } from 'material-ui/styles';
+import Divider from '@material-ui/core/Divider';
+import Drawer from '@material-ui/core/Drawer';
+import List from '@material-ui/core/List';
+import { withStyles } from '@material-ui/core/styles';
 
 import { isUserLoggedinSelector } from '../selectors/UserSelector';
 

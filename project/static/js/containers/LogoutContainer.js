@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import Grid from 'material-ui/Grid';
-import Paper from 'material-ui/Paper';
-import { LinearProgress } from 'material-ui/Progress';
-import { withStyles } from 'material-ui/styles';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
+import LinearProgress from '@material-ui/core/LinearProgress';
+import { withStyles } from '@material-ui/core/styles';
 
 import { logout } from '../actions/UserActions';
 

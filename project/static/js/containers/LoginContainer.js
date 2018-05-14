@@ -2,15 +2,16 @@ import _ from 'lodash';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import Grid from 'material-ui/Grid';
-import Paper from 'material-ui/Paper';
-import { FormControl } from 'material-ui/Form';
-import { LinearProgress } from 'material-ui/Progress';
-import Input, { InputAdornment } from 'material-ui/Input';
-import { withStyles } from 'material-ui/styles';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
+import FormControl from '@material-ui/core/FormControl';
+import LinearProgress from '@material-ui/core/LinearProgress';
+import Input from '@material-ui/core/Input';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import { withStyles } from '@material-ui/core/styles';
 
-import AccountCircle from 'material-ui-icons/AccountCircle';
-import Lock from 'material-ui-icons/Lock';
+import AccountCircle from '@material-ui/icons/AccountCircle';
+import Lock from '@material-ui/icons/Lock';
 
 import {
   changeUsername,
@@ -130,7 +131,7 @@ class LoginContainer extends Component {
     return (
       <Grid item sm={12} lg={12} key={'login.form'}>
         <Paper className={classes.paper}>
-          <FormControl className={classes.margin} >
+          <FormControl className={classes.margin} autoComplete={"off"} >
             <Input
               className={classes.margin}
               name="username"
