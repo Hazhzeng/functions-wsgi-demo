@@ -28,7 +28,7 @@ with open(CONFIG_FILE, 'r') as config_file:
     config = json.load(config_file)
     app.config.update(dict(
         SQLALCHEMY_DATABASE_URI='sqlite:////{}'\
-            .format(os.path.join(app.root_path, 'sql', 'chat.db')),
+            .format(os.path.join(app.root_path, 'sql', config['database'])),
         SECRET_KEY=config['secret_key'],
         USERNAME=config['username'],
         PASSWORD=config['password'],

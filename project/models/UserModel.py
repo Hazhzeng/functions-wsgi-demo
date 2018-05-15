@@ -1,6 +1,7 @@
 from project import db
 
 class UserModel(db.Model):
+    __tablename__ = 'user_model'
     id = db.Column(db.Integer, primary_key=True)
 
     username = db.Column(db.String(32), unique=True, nullable=False)

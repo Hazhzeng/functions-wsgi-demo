@@ -131,21 +131,29 @@ class HomeContainer extends Component {
     }
   }
 
+  blogComparator(a, b) {
+    return Date.parse(b.last_update) - Date.parse(a.last_update);
+  }
+
   render() {
     const { blogs } = this.props;
     let result = { leftBlogs: [], rightBlogs: []};
     if (blogs && blogs.length > 0) {
       result = this.dpRenderBlogs(blogs, [], [], 0, 0);
     }
-    
+
     return (
       <Grid container spacing={24} direction="row">
         {this._renderMemoryPicker()}
         <Grid item sm={12} lg={6} key="left-blog-section">
-          {result.leftBlogs.map(blog => this._renderBlog(blog))}
+          {result.rightBlogs
+            .sort(this.blogComparator)
+            .map(blog => this._renderBlog(blog))}
         </Grid>
         <Grid item sm={12} lg={6} key="right-blog-section">
-          {result.rightBlogs.map(blog => this._renderBlog(blog))}
+          {result.leftBlogs
+            .sort(this.blogComparator)
+            .map(blog => this._renderBlog(blog))}
         </Grid>
       </Grid>
     );

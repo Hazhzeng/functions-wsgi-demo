@@ -42,7 +42,6 @@ def getblog_api(args) -> Response:
         .filter(BlogModel.last_update < last_update)\
         .order_by(BlogModel.last_update.desc())\
         .limit(args['limit'])
-
     ret = [BlogSchema().dump(blog).data for blog in blogs]
     return response.ok(ret)
 
