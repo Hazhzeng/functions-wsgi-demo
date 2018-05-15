@@ -20,6 +20,7 @@ import {
   textSelector,
   isSubmittableSelector,
 } from '../selectors/BlogSelector';
+import { isPhoneSelector } from '../selectors/DeviceSelector';
 
 const styles = theme => ({
   paper: {
@@ -42,16 +43,21 @@ class ContentContainer extends Component {
 
   render() {
     const { classes } = this.props;
+    const editorPanel = this._renderLeftPanel();
+    const previewPanel = this.props.isPhone
+      ? 'Editing on phone, preview disabled.'
+      : this._renderRightPanel();
+
     return (
       <Grid container spacing={24}>
         <Grid item sm={12} lg={6}>
           <Paper className={classes.paper}>
-            {this._renderLeftPanel()}
+            {editorPanel}
           </Paper>
         </Grid>
         <Grid item sm={12} lg={6}>
           <Paper className={classes.paper}>
-            {this._renderRightPanel()}
+            {previewPanel}
           </Paper>
         </Grid>
       </Grid>
@@ -64,6 +70,7 @@ const mapStateToProps = (state) => ({
   blogTitle: titleSelector(state),
   blogText: textSelector(state),
   isSubmittable: isSubmittableSelector(state),
+  isPhone: isPhoneSelector()
 });
 
 const mapDispatchToProps = (dispatch) => ({

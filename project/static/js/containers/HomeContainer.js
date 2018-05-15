@@ -8,7 +8,12 @@ import Paper from '@material-ui/core/Paper';
 import { withStyles } from '@material-ui/core/styles';
 
 import { pullBlog } from '../actions/HomeActions';
-import { blogsSelector, uiSelector } from '../selectors/HomeSelector';
+import {
+  blogsSelector,
+  uiSelector,
+  isMenuShownSelector
+} from '../selectors/HomeSelector';
+import { isPhoneSelector } from '../selectors/DeviceSelector';
 
 import Blog from '../components/Contents/Blog';
 import { dateToString } from '../utils/format';
@@ -65,7 +70,7 @@ class HomeContainer extends Component {
   _renderMemoryPicker() {
     const { classes, loading } = this.props;
     return (
-      <Grid item sm={12} lg={12} key={'blog.today'}>
+      <Grid item xs={12} lg={12} key={'blog.today'}>
         <TextField
           id="date"
           type="date"
@@ -97,8 +102,8 @@ class HomeContainer extends Component {
       return ({
         left: heightLeft,
         right: heightRight,
-        leftBlogs: pickedLeft,
-        rightBlogs: pickedRight
+        rightSection: pickedLeft,
+        leftSection: pickedRight
       });
     }
 
@@ -136,25 +141,22 @@ class HomeContainer extends Component {
   }
 
   render() {
-    const { blogs } = this.props;
-    let result = { leftBlogs: [], rightBlogs: []};
+    const { blogs, isPhone, isMenuShown } = this.props;
+    let result = { rightSection: [], leftSection: []};
     if (blogs && blogs.length > 0) {
       result = this.dpRenderBlogs(blogs, [], [], 0, 0);
     }
+    const leftSectionRender = isPhone && isMenuShown ? null :
+      result.leftSection.sort(this.blogComparator).map(b => this._renderBlog(b))
+
+    const rightSectionRender = isPhone && isMenuShown ? null :
+      result.rightSection.sort(this.blogComparator).map(b => this._renderBlog(b))
 
     return (
       <Grid container spacing={24} direction="row">
         {this._renderMemoryPicker()}
-        <Grid item sm={12} lg={6} key="left-blog-section">
-          {result.rightBlogs
-            .sort(this.blogComparator)
-            .map(blog => this._renderBlog(blog))}
-        </Grid>
-        <Grid item sm={12} lg={6} key="right-blog-section">
-          {result.leftBlogs
-            .sort(this.blogComparator)
-            .map(blog => this._renderBlog(blog))}
-        </Grid>
+        <Grid item xs={12} lg={6} key="left-blog-section">{leftSectionRender}</Grid>
+        <Grid item xs={12} lg={6} key="right-blog-section">{rightSectionRender}</Grid>
       </Grid>
     );
   }
@@ -163,6 +165,8 @@ class HomeContainer extends Component {
 const mapStateToProps = (state) => ({
   blogs: blogsSelector(state),
   loading: uiSelector(state).loading,
+  isPhone: isPhoneSelector(),
+  isMenuShown: isMenuShownSelector(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

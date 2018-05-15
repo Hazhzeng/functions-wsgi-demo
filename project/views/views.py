@@ -1,10 +1,13 @@
 from datetime import datetime
-from flask import render_template, Response, g, jsonify, request
+from flask import render_template, Response, g, redirect, jsonify, request
 from project import app, db
 from project.models import UserModel
 from .wrappers import login_required
 
 @app.route('/')
+def root_view():
+    return redirect('/home', 302)
+
 @app.route('/index')
 @app.route('/home')
 @app.route('/info')

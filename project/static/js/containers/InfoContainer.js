@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import Avatar from '@material-ui/core/Avatar';
 import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/core/styles';
+import { isPhoneSelector } from '../selectors/DeviceSelector';
 
 import Blog from '../components/Contents/Blog';
 
@@ -22,13 +24,17 @@ class InfoContainer extends Component {
   _renderAvatar() {
     const { classes } = this.props;
     return (
-      <Grid item sm={12} lg={12} key={'info.avatar'}>
+      <Grid item xs={12} lg={12} key={'info.avatar'}>
         <Avatar src="/image/avatar.jpg" className={classes.avatar} />
       </Grid>
     );
   }
 
   _renderInfomation() {
+    const mobileHeader = this.props.isPhone
+      ? '[Mobile users do not deserve a window to the world :troll:]'
+      : '';
+
     const title = 'Who am I? What am I doing? Where will I go?';
     const text = `
       ### Who am I?
@@ -36,26 +42,20 @@ class InfoContainer extends Component {
       intentionally. That was the day when I was born.
 
       Spending most of my time struggling, got accepted by a university called
-      UNSW, a well know university but not to you.
-      I mean, it is not taken from granted for a university to get to top 50 in
-      QS ranking by dumping a lot of money into it.
+      UNSW, a well known university but not to you.
 
-      Interestingly, our university has changed its name
-      for 3 times in the most recent 4 years, ordering by time:
+      ### What am I doing?
+      4 years later, I got my Bachelar of Engineering degree.
+      Not far until I find that our university has taugh me insufficient? but
+      fundamental! knowledge, here I start my own project "Pristine".
 
-      1. University of New South Wales
-      2. University of New South Wales Australia
-      3. University of New South Wales Sydney
-
-      4  years later, I got my Bachelar of Engineering.
-      Not far until I found that uni has taugh me insufficient but
-      fundamental knowledge, here I start my web dev project.
-
-      # *WHAT A LOSER...*
+      ### Where will I go?
+      To a place where everyone belongs to, or no-one belongs to. (Deep...)
     `;
 
     return (
-      <Grid item sm={12} lg={12} key={'info.information'}>
+      <Grid item xs={12} lg={12} key={'info.information'}>
+        <pre>{mobileHeader}</pre>
         <Blog title={title} text={text} />
       </Grid>
     );
@@ -71,4 +71,10 @@ class InfoContainer extends Component {
   }
 }
 
-export default withStyles(styles)(InfoContainer)
+const mapStateToProps = () => ({
+  isPhone: isPhoneSelector(),
+});
+
+const InfoRedux = connect(mapStateToProps)(InfoContainer);
+
+export default withStyles(styles)(InfoRedux)

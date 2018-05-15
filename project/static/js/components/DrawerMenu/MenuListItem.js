@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -11,38 +12,68 @@ import PostIcon from '@material-ui/icons/InsertDriveFile';
 import LoginIcon from '@material-ui/icons/Input';
 import LogoutIcon from '@material-ui/icons/Link';
 
-const MenuListItemMap = {
-  home: { label: "Home", icon: <HomeIcon />, credReq: false },
-  info: { label: "Information", icon: <InfoIcon />, credReq: false },
-  post: { label: "Compose", icon: <PostIcon />, credReq: true },
-  login: { label: "Login & Register", icon: <LoginIcon />, credReq: false },
-  logout: { label: "Logout", icon: <LogoutIcon />, credReq: true },
-};
+import { toggleMenu } from '../../actions/HomeActions';
+import { isPhoneSelector } from '../../selectors/DeviceSelector';
 
-const enableItem = (name, item) => {
-  return (
-    <Link to={name}>
-      <ListItem button>
+class MenuListItem extends Component {
+  constructor(props) {
+    super(props);
+
+    this.MenuListItemMap = {
+      home: { label: "Home", icon: <HomeIcon />, credReq: false },
+      info: { label: "Information", icon: <InfoIcon />, credReq: false },
+      post: { label: "Compose", icon: <PostIcon />, credReq: true },
+      login: { label: "Login & Register", icon: <LoginIcon />, credReq: false },
+      logout: { label: "Logout", icon: <LogoutIcon />, credReq: true },
+    };
+
+    this._renderEnabledItem = this._renderEnabledItem.bind(this);
+    this._renderDisabledItem = this._renderDisabledItem.bind(this);
+    this.handleOnClick = this.handleOnClick.bind(this);
+  }
+
+  handleOnClick() {
+    if (this.props.isPhone) {
+      this.props.switchMenu();
+    }
+  }
+
+  _renderEnabledItem(name, item) {
+    return (
+      <Link to={name}>
+        <ListItem button onClick={this.handleOnClick}>
+          <ListItemIcon>{item.icon}</ListItemIcon>
+          <ListItemText primary={item.label} />
+        </ListItem>
+      </Link>
+    );
+  }
+
+  _renderDisabledItem(name, item) {
+    return (
+      <ListItem disabled>
         <ListItemIcon>{item.icon}</ListItemIcon>
         <ListItemText primary={item.label} />
       </ListItem>
-    </Link>
-  );
-};
+    );
+  }
 
-const disableItem = (name, item) => {
-  return (
-    <ListItem disabled>
-      <ListItemIcon>{item.icon}</ListItemIcon>
-      <ListItemText primary={item.label} />
-    </ListItem>
-  );
-};
+  render() {
+    const { name, isLoggedIn } = this.props;
+    const item = this.MenuListItemMap[name];
+    const isDisabled = item.credReq && !isLoggedIn;
+    return isDisabled
+      ? this._renderDisabledItem(name, item)
+      : this._renderEnabledItem(name, item);
+  }
+}
 
-const MenuListItem = ({ name, isLoggedIn }) => {
-  const item = MenuListItemMap[name];
-  const isDisabled = item.credReq && !isLoggedIn;
-  return isDisabled ? disableItem(name, item) : enableItem(name, item);
-};
+const mapStateToProps = () => ({
+  isPhone: isPhoneSelector(),
+});
 
-export default MenuListItem;
+const mapDispatchToProps = dispatch => ({
+  switchMenu: () => dispatch(toggleMenu()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(MenuListItem);

@@ -1,6 +1,6 @@
 import json
 from functools import wraps
-from flask import session, redirect, url_for, g
+from flask import session, redirect, g
 from project.views import response
 
 def login_required(func):
