@@ -1,7 +1,9 @@
 from marshmallow import Schema, fields, post_load
 
 class BlogObject(object):
-    def __init__(self, title, tag='', text='', last_update=''):
+    def __init__(self, id=0, user=0, title='', tag='', text='', last_update=''):
+        self.id = id
+        self.user = user
         self.title = title
         self.tag = tag
         self.text = text
@@ -15,6 +17,8 @@ class BlogSchema(Schema):
     class Meta():
         strict = True
 
+    id = fields.Integer(required=False)
+    user = fields.Integer(required=False)
     title = fields.String(required=True)
     tag = fields.String(required=False)
     text = fields.String(required=True)

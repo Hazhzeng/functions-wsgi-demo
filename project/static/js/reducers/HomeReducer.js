@@ -1,16 +1,16 @@
 import Home from '../constants/HomeConstants';
+import Blog from '../constants/BlogConstants';
 import { isPhoneSelector } from '../selectors/DeviceSelector';
 
 const initialState = {
-  blogs: [
-    /* {
-     *  title:
-     *  tag:
-     *  last_update:
-     *  text:
-     * }
-     */
-  ],
+  blogs: [/*
+    "id": 12, 
+    "last_update": "2018-05-14T22:21:00.356896+00:00", 
+    "tag": "", 
+    "text": "\u4f60\u597d\u554a", 
+    "title": "Test of UTF8", 
+    "user": 1
+  */],
   error: null,
   ui: {
     loading: false,
@@ -58,6 +58,13 @@ const homeReducer = (state = initialState, action) => {
           menu: !state.ui.menu,
         }
       };
+    case Blog.DELETE_BLOG_SUCCESS:
+      return {
+        ...state,
+        blogs: [...state.blogs.filter(blog => blog.id !== action.payload)]
+      }
+    case Blog.DELETE_BLOG_FAILURE:
+      return state;
     default:
       return state;
   }

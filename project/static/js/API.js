@@ -1,4 +1,4 @@
-import { get_json, post_json } from './utils/request';
+import { get_json, post_json, delete_json } from './utils/request';
 import { errorHandler } from './utils/errors';
 
 export default class API {
@@ -21,6 +21,12 @@ export default class API {
       .then(response => response.json())
       .then(data => Promise.resolve(data))
       .catch(error => Promise.reject(error));
+  }
+
+  static deleteBlog(blogId) {
+    return delete_json('/api/deleteblog', {}, {
+      blog_id: blogId,
+    }).then(errorHandler);
   }
 
   static authenticate(identity) {

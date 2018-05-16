@@ -6,6 +6,10 @@ export const identitySelector = state => userSelector(state).identity;
 export const uiSelector = state => userSelector(state).ui;
 export const statusesSelector = state => userSelector(state).statuses;
 
+export const userIdSelector = () => (
+  window.context.user && window.context.user.id
+);
+
 export const usernameSelector = () => (
   window.context.user && window.context.user.username
 );
@@ -46,6 +50,7 @@ export const isPasswordValid = state => {
 export default {
   identitySelector,
   uiSelector,
+  userIdSelector,
   statusesSelector,
   usernameSelector,
   loginDateSelector,

@@ -7,12 +7,14 @@ import Grid  from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import { withStyles } from '@material-ui/core/styles';
 
+import BlogControl from '../components/Contents/BlogControl';
 import { pullBlog } from '../actions/HomeActions';
 import {
   blogsSelector,
   uiSelector,
   isMenuShownSelector
 } from '../selectors/HomeSelector';
+import { userIdSelector } from '../selectors/UserSelector';
 import { isPhoneSelector } from '../selectors/DeviceSelector';
 
 import Blog from '../components/Contents/Blog';
@@ -91,6 +93,9 @@ class HomeContainer extends Component {
       <div key={blog.last_update}>
         <Paper className={classes.paper}>
           <Blog title={blog.title} time={blog.last_update} text={blog.text} />
+          <div style={{ textAlign: 'right' }}>
+            {blog.user === this.props.userId && <BlogControl blogId={blog.id}/>}
+          </div>
         </Paper>
         <hr className={classes.hr} />
       </div>
@@ -142,27 +147,47 @@ class HomeContainer extends Component {
 
   render() {
     const { blogs, isPhone, isMenuShown } = this.props;
-    let result = { rightSection: [], leftSection: []};
-    if (blogs && blogs.length > 0) {
-      result = this.dpRenderBlogs(blogs, [], [], 0, 0);
-    }
-    const leftSectionRender = isPhone && isMenuShown ? null :
-      result.leftSection.sort(this.blogComparator).map(b => this._renderBlog(b))
+    const renderContent = [this._renderMemoryPicker()];
 
-    const rightSectionRender = isPhone && isMenuShown ? null :
-      result.rightSection.sort(this.blogComparator).map(b => this._renderBlog(b))
+    if (blogs && blogs.length > 0) {
+      if (!isPhone) {
+        const result = this.dpRenderBlogs(blogs, [], [], 0, 0);
+        const leftSectionRender =
+          result.leftSection.sort(this.blogComparator).map(b => this._renderBlog(b))
+        const rightSectionRender =
+          result.rightSection.sort(this.blogComparator).map(b => this._renderBlog(b))
+        renderContent.push(
+          <Grid item xs={12} lg={6} key="left-blog-section">
+            {leftSectionRender}
+          </Grid>
+        );
+        renderContent.push(
+          <Grid item xs={12} lg={6} key="right-blog-section">
+            {rightSectionRender}
+          </Grid>
+        );
+      } else {
+        const sectionRender = isMenuShown
+          ? null
+          : blogs.sort(this.blogComparator).map(b => this._renderBlog(b));
+        renderContent.push(
+          <Grid item xs={12} lg={6} key="blog-section">
+            {sectionRender}
+          </Grid>
+        );
+      }
+    }
 
     return (
       <Grid container spacing={24} direction="row">
-        {this._renderMemoryPicker()}
-        <Grid item xs={12} lg={6} key="left-blog-section">{leftSectionRender}</Grid>
-        <Grid item xs={12} lg={6} key="right-blog-section">{rightSectionRender}</Grid>
+        {renderContent}
       </Grid>
     );
   }
 }
 
 const mapStateToProps = (state) => ({
+  userId: userIdSelector(),
   blogs: blogsSelector(state),
   loading: uiSelector(state).loading,
   isPhone: isPhoneSelector(),

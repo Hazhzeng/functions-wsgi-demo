@@ -10,6 +10,8 @@ import {
   submitBlogLoading,
   submitBlogSuccess,
   submitBlogFailure,
+  deleteBlogSuccess,
+  deleteBlogFailure,
 } from '../actions/BlogActions';
 import {
   titleSelector,
@@ -41,9 +43,20 @@ function *getBlogSaga(action) {
   }
 }
 
+function *deleteBlogSaga(action) {
+  try {
+    const blogId = action.payload;
+    yield call(API.deleteBlog, blogId);
+    yield put(deleteBlogSuccess(blogId));
+  } catch (error) {
+    yield put(deleteBlogFailure());
+  }
+}
+
 function *watcher() {
   yield takeLatest(HomeConstants.PULL_BLOG, getBlogSaga);
   yield takeLatest(BlogConstants.SUBMIT_BLOG, postBlogSaga);
+  yield takeLatest(BlogConstants.DELETE_BLOG, deleteBlogSaga);
 }
 
 export default [watcher];

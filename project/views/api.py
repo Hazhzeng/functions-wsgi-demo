@@ -23,8 +23,34 @@ def ping() -> str:
 @use_args(BlogSchema())
 def postblog_api(args) -> Response:
     new_blog = BlogModel(title=args.title, tag=args.tag, text=args.text)
+    if g.user:
+        new_blog.user = g.user.id
+
     db.session.add(new_blog)
     return response.ok()
+
+
+@app.route('/api/deleteblog', methods=['DELETE'])
+@login_required_api
+@use_args({
+    'blog_id': fields.Integer(required=True)
+})
+def deleteblog_api(args) -> Response:
+    if g.user is None:
+        return response.forbidden()
+    
+    blog = db.session.query(BlogModel)\
+        .filter(BlogModel.id == args['blog_id'])\
+        .first()
+    if blog is None:
+        return response.unprocessable_entity()
+    
+    if blog.user != g.user.id:
+        return response.forbidden()
+    
+    db.session.delete(blog)
+    db.session.flush()
+    return response.accepted()
 
 
 @app.route('/api/getblog', methods=['GET'])

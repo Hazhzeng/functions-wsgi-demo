@@ -43,6 +43,7 @@ def before_request():
 def context_user():
     if g.user:
         return dict(user={
+            'id': g.user.id,
             'username': g.user.username,
             'login_date': g.user.login_date,
             'login_expiry': g.user.login_expiry,

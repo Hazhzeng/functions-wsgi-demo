@@ -23,6 +23,10 @@ export const post_json = (url, header = {}, body = null) => {
   return _fetch('POST', url, header, body);
 }
 
+export const delete_json = (url, header = {}, body = null) => {
+  return _fetch('DELETE', url, header, body);
+}
+
 export const get_json = (url, header = {}, body = null) => {
   const urlString = urlUtil.format({
     hostname: window.location.hostname,

@@ -14,6 +14,9 @@ def is_success(code:int):
 def ok(result:Any={}, code:int=200):
     return _response(result, code)
 
+def accepted(result:Any={}, code:int=202):
+    return _response(result, code)
+
 def created(result:Any={}, code:int=201):
     return _response(result, code)
 

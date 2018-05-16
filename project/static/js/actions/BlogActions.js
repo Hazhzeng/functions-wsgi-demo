@@ -30,3 +30,17 @@ export const submitBlogSuccess = () => ({
 export const submitBlogFailure = () => ({
   type: Blog.SUBMIT_BLOG_Failure,
 });
+
+export const deleteBlog = (blogId) => ({
+  type: Blog.DELETE_BLOG,
+  payload: blogId,
+});
+
+export const deleteBlogSuccess = (blogId) => ({
+  type: Blog.DELETE_BLOG_SUCCESS,
+  payload: blogId,
+});
+
+export const deleteBlogFailure = () => ({
+  type: Blog.DELETE_BLOG_FAILURE,
+});
