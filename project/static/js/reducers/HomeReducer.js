@@ -1,4 +1,5 @@
 import Home from '../constants/HomeConstants';
+import { isPhoneSelector } from '../selectors/DeviceSelector';
 
 const initialState = {
   blogs: [
@@ -15,7 +16,7 @@ const initialState = {
     loading: false,
     success: false,
     failure: false,
-    menu: true,
+    menu: !isPhoneSelector(),
   },
 };
 

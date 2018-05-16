@@ -25,11 +25,6 @@ class DrawerMenuContainer extends Component {
     this.config = {
       anchor: 'left',
     };
-    this.switchMenuList = this.switchMenuList.bind(this);
-  }
-
-  switchMenuList(value) {
-    this.setState({ show: value });
   }
 
   _renderMenuList() {
