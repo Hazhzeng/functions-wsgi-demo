@@ -22,6 +22,11 @@ const initialState = {
 
 const homeReducer = (state = initialState, action) => {
   switch (action.type) {
+    case Home.PUSH_BLOG_SUCCESS:
+      return {
+        ...state,
+        blogs: action.payload,
+      };
     case Home.PULL_BLOG_LOADING:
       return {
         ...state,

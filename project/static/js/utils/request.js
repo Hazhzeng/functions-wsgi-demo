@@ -17,15 +17,19 @@ const _fetch = (method, url, head = {}, body = null) => {
   }
 
   return fetch(url, request_data);
-}
+};
 
 export const post_json = (url, header = {}, body = null) => {
   return _fetch('POST', url, header, body);
-}
+};
+
+export const patch_json = (url, header = {}, body = null) => {
+  return _fetch('PATCH', url, header, body);
+};
 
 export const delete_json = (url, header = {}, body = null) => {
   return _fetch('DELETE', url, header, body);
-}
+};
 
 export const get_json = (url, header = {}, body = null) => {
   const urlString = urlUtil.format({
@@ -37,7 +41,7 @@ export const get_json = (url, header = {}, body = null) => {
     }
   });
   return _fetch('GET', urlString, header);
-}
+};
 
 export default {
   post_json,

@@ -24,3 +24,18 @@ export const pullBlogLoading = () => ({
 export const toggleMenu = () => ({
   type: Home.TOGGLE_MENU,
 });
+
+export const pushBlog = (id, title, tag, text) => ({
+  type: Home.PUSH_BLOG,
+  payload: {
+    id: id,
+    title: title,
+    tag: tag,
+    text: text,
+  }
+});
+
+export const pushBlogSuccess = (blogs) => ({
+  type: Home.PUSH_BLOG_SUCCESS,
+  payload: blogs,
+})

@@ -2,6 +2,8 @@ import { call, put, select, takeLatest } from 'redux-saga/effects';
 import HomeConstants from '../constants/HomeConstants';
 import BlogConstants from '../constants/BlogConstants';
 import {
+  pushBlog,
+  pushBlogSuccess,
   pullBlogLoading,
   pullBlogSuccess,
   pullBlogFailure,
@@ -20,6 +22,7 @@ import {
   blogIdSelector,
   isAmendmentSelector,
 } from '../selectors/BlogSelector';
+import { blogsSelector } from '../selectors/HomeSelector';
 import API from '../API';
 
 function *postBlogSaga() {
@@ -36,9 +39,26 @@ function *postBlogSaga() {
       yield call(API.postBlog, title, tag, text);
     }
     yield put(submitBlogSuccess());
-    window.location.assign('/home');
+
+    if (isAmendment) {
+      yield put(pushBlog(id, title, tag, text));
+    } else {
+      window.location.assign('/home');
+    }
   } catch (error) {
     yield put(submitBlogFailure());
+  }
+}
+
+function *pushBlogSaga(action) {
+  const blogs = yield select(blogsSelector);
+  const newBlogs = [...blogs];
+  const modifiedBlog = newBlogs.filter(b => b.id === action.payload.id)[0];
+  if (modifiedBlog) {
+    modifiedBlog.title = action.payload.title;
+    modifiedBlog.tag = action.payload.tag;
+    modifiedBlog.text = action.payload.text;
+    yield put(pushBlogSuccess(newBlogs));
   }
 }
 
@@ -63,6 +83,7 @@ function *deleteBlogSaga(action) {
 }
 
 function *watcher() {
+  yield takeLatest(HomeConstants.PUSH_BLOG, pushBlogSaga);
   yield takeLatest(HomeConstants.PULL_BLOG, getBlogSaga);
   yield takeLatest(BlogConstants.SUBMIT_BLOG, postBlogSaga);
   yield takeLatest(BlogConstants.DELETE_BLOG, deleteBlogSaga);

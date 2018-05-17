@@ -1,4 +1,4 @@
-import { get_json, post_json, delete_json } from './utils/request';
+import { get_json, post_json, delete_json, patch_json } from './utils/request';
 import { errorHandler } from './utils/errors';
 
 export default class API {
@@ -8,7 +8,6 @@ export default class API {
       tag: tag,
       text: text,
     };
-
     return post_json('/api/postblog', {}, request_body).then(errorHandler);
   }
 
@@ -31,27 +30,23 @@ export default class API {
 
   static updateBlog(blogId, title, tag, text) {
     const request_body = {
-      blog_id: blogId,
+      id: blogId,
       title: title,
       tag: tag,
       text: text,
     };
-
-    return post_json('/api/updateBlog', {}, request_body).then(errorHandler);
+    return patch_json('/api/updateblog', {}, request_body).then(errorHandler);
   }
 
   static authenticate(identity) {
-    return post_json('/api/login', {}, identity)
-      .then(errorHandler);
+    return post_json('/api/login', {}, identity).then(errorHandler);
   }
 
   static register(identity) {
-    return post_json('/api/register', {}, identity)
-      .then(errorHandler);
+    return post_json('/api/register', {}, identity).then(errorHandler);
   }
 
   static logout() {
-    return get_json('/api/logout')
-      .then(errorHandler);
+    return get_json('/api/logout').then(errorHandler);
   }
 }

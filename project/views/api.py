@@ -30,15 +30,36 @@ def postblog_api(args) -> Response:
     return response.ok()
 
 
+@app.route('/api/updateblog', methods=['PATCH'])
+@login_required_api
+@use_args(BlogSchema())
+def updateblog_api(args) -> Response:
+    blog_id = args.id
+    blog = db.session.query(BlogModel)\
+        .filter(BlogModel.id == blog_id)\
+        .first()
+    
+    if blog is None:
+        return response.unprocessable_entity()
+
+    if blog.user != g.user.id:
+        return response.forbidden()
+    
+    blog.title = args.title
+    blog.tag = args.tag
+    blog.text = args.text
+
+    db.session.add(blog)
+    db.session.flush()
+    return response.accepted()
+
+
 @app.route('/api/deleteblog', methods=['DELETE'])
 @login_required_api
 @use_args({
     'blog_id': fields.Integer(required=True)
 })
 def deleteblog_api(args) -> Response:
-    if g.user is None:
-        return response.forbidden()
-    
     blog = db.session.query(BlogModel)\
         .filter(BlogModel.id == args['blog_id'])\
         .first()
