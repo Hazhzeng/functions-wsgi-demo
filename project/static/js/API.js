@@ -9,7 +9,7 @@ export default class API {
       text: text,
     };
 
-    return post_json('/api/postblog', {}, request_body);
+    return post_json('/api/postblog', {}, request_body).then(errorHandler);
   }
 
   static getBlog(date, limit=10) {
@@ -27,6 +27,17 @@ export default class API {
     return delete_json('/api/deleteblog', {}, {
       blog_id: blogId,
     }).then(errorHandler);
+  }
+
+  static updateBlog(blogId, title, tag, text) {
+    const request_body = {
+      blog_id: blogId,
+      title: title,
+      tag: tag,
+      text: text,
+    };
+
+    return post_json('/api/updateBlog', {}, request_body).then(errorHandler);
   }
 
   static authenticate(identity) {

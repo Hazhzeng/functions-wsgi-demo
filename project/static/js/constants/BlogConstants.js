@@ -9,4 +9,6 @@ export default {
   DELETE_BLOG: 'BlogConstants.DELETE_BLOG',
   DELETE_BLOG_SUCCESS: 'BlogConstants.DELETE_BLOG_SUCCESS',
   DELETE_BLOG_FAILURE: 'BlogConstants.DELETE_BLOG_FAILURE',
+  SET_AMENDMENT: 'BlogConstants.SET_AMENDMENT',
+  INITIALISE: 'BlogConstants.INITIALISE',
 };

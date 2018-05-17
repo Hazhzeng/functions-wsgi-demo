@@ -7,6 +7,7 @@ import Grid  from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import { withStyles } from '@material-ui/core/styles';
 
+import Editor from '../components/Contents/Editor';
 import BlogControl from '../components/Contents/BlogControl';
 import { pullBlog } from '../actions/HomeActions';
 import {
@@ -14,6 +15,7 @@ import {
   uiSelector,
   isMenuShownSelector
 } from '../selectors/HomeSelector';
+import { blogIdSelector } from '../selectors/BlogSelector';
 import { userIdSelector } from '../selectors/UserSelector';
 import { isPhoneSelector } from '../selectors/DeviceSelector';
 
@@ -89,13 +91,16 @@ class HomeContainer extends Component {
 
   _renderBlog(blog) {
     const { classes } = this.props;
+    const blogRender = blog.id === this.props.amendingBlogId
+      ? <Editor />
+      :(<div>
+          <Blog title={blog.title} time={blog.last_update} text={blog.text} />
+          {blog.user === this.props.userId && <BlogControl blogId={blog.id}/>}
+        </div>);
     return (
       <div key={blog.last_update}>
         <Paper className={classes.paper}>
-          <Blog title={blog.title} time={blog.last_update} text={blog.text} />
-          <div style={{ textAlign: 'right' }}>
-            {blog.user === this.props.userId && <BlogControl blogId={blog.id}/>}
-          </div>
+          {blogRender}
         </Paper>
         <hr className={classes.hr} />
       </div>
@@ -188,6 +193,7 @@ class HomeContainer extends Component {
 
 const mapStateToProps = (state) => ({
   userId: userIdSelector(),
+  amendingBlogId: blogIdSelector(state),
   blogs: blogsSelector(state),
   loading: uiSelector(state).loading,
   isPhone: isPhoneSelector(),

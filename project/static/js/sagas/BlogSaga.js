@@ -17,6 +17,8 @@ import {
   titleSelector,
   textSelector,
   tagSelector,
+  blogIdSelector,
+  isAmendmentSelector,
 } from '../selectors/BlogSelector';
 import API from '../API';
 
@@ -26,8 +28,15 @@ function *postBlogSaga() {
     const title = yield select(titleSelector);
     const text = yield select(textSelector);
     const tag = yield select(tagSelector);
-    yield call(API.postBlog, title, tag, text);
+    const id = yield select(blogIdSelector);
+    const isAmendment = yield select(isAmendmentSelector);
+    if (isAmendment) {
+      yield call(API.updateBlog, id, title, tag, text);
+    } else {
+      yield call(API.postBlog, title, tag, text);
+    }
     yield put(submitBlogSuccess());
+    window.location.assign('/home');
   } catch (error) {
     yield put(submitBlogFailure());
   }

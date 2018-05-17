@@ -44,3 +44,12 @@ export const deleteBlogSuccess = (blogId) => ({
 export const deleteBlogFailure = () => ({
   type: Blog.DELETE_BLOG_FAILURE,
 });
+
+export const setAdmentment = (blogId) => ({
+  type: Blog.SET_AMENDMENT,
+  payload: blogId,
+});
+
+export const initialise = () => ({
+  type: Blog.INITIALISE,
+});

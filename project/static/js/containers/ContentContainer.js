@@ -6,20 +6,15 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import { withStyles } from '@material-ui/core/styles';
 
-import {
-  changeTitle,
-  changeTag,
-  changeText,
-  submitBlog
-} from '../actions/BlogActions';
-import Preview from '../components/Contents/Preview';
-import Editor from '../components/Contents/Editor';
+import { initialise } from '../actions/BlogActions';
 import {
   titleSelector,
   tagSelector,
   textSelector,
-  isSubmittableSelector,
 } from '../selectors/BlogSelector';
+
+import Preview from '../components/Contents/Preview';
+import Editor from '../components/Contents/Editor';
 import { isPhoneSelector } from '../selectors/DeviceSelector';
 
 const styles = theme => ({
@@ -31,6 +26,11 @@ const styles = theme => ({
 });
 
 class ContentContainer extends Component {
+  constructor(props) {
+    super(props);
+    props.createBlog();
+  }
+
   _renderLeftPanel() {
     const props = _.omit(this.props, ['classes']);
     return <Editor {...props} />;
@@ -45,7 +45,7 @@ class ContentContainer extends Component {
     const { classes } = this.props;
     const editorPanel = this._renderLeftPanel();
     const previewPanel = this.props.isPhone
-      ? 'Editing on phone, preview disabled.'
+      ? <pre>Editing on phone, preview disabled.</pre>
       : this._renderRightPanel();
 
     return (
@@ -65,19 +65,15 @@ class ContentContainer extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
+  isPhone: isPhoneSelector(),
   blogTag: tagSelector(state),
   blogTitle: titleSelector(state),
   blogText: textSelector(state),
-  isSubmittable: isSubmittableSelector(state),
-  isPhone: isPhoneSelector()
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  handleChangeTitle: (title) => dispatch(changeTitle(title)),
-  handleChangeTag: (tag) => dispatch(changeTag(tag)),
-  handleChangeText: (text) => dispatch(changeText(text)),
-  submitBlog: () => dispatch(submitBlog()),
+const mapDispatchToProps = dispatch => ({
+  createBlog: () => dispatch(initialise()),
 });
 
 const ContentRedux =

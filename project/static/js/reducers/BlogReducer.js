@@ -4,10 +4,20 @@ const initialState = {
   title: '',
   tag: '',
   text: '',
+  id: undefined,
+  amendment: false,
 };
 
 const blogReducer = (state = initialState, action) => {
   switch (action.type) {
+    case Blog.SET_AMENDMENT:
+      return {
+        ...state,
+        id: action.payload,
+        amendment: true,
+      };
+    case Blog.INITIALISE:
+      return initialState;
     case Blog.CHANGE_TITLE:
       return {
         ...state,
