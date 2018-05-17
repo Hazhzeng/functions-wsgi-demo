@@ -7,6 +7,7 @@ import Paper from '@material-ui/core/Paper';
 import FormControl from '@material-ui/core/FormControl';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Input from '@material-ui/core/Input';
+import Tooltip from '@material-ui/core/Tooltip';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import { withStyles } from '@material-ui/core/styles';
 
@@ -131,35 +132,50 @@ class LoginContainer extends Component {
     return (
       <Grid item sm={12} lg={12} key={'login.form'}>
         <Paper className={classes.paper}>
-          <FormControl className={classes.margin} autoComplete={"off"} >
-            <Input
-              className={classes.margin}
-              name="username"
-              type="text"
-              disabled={this.props.ui.loading || this.props.ui.success}
-              error={this.props.ui.failure}
-              onChange={this.handleUsernameChange}
-              startAdornment={
-                <InputAdornment position="start">
-                  <AccountCircle />
-                </InputAdornment>
-              }
-            />
-            <Input
-              className={classes.margin}
-              name="password"
-              type="password"
-              disabled={this.props.ui.loading || this.props.ui.success}
-              error={this.props.ui.failure}
-              onChange={this.handlePasswordChange}
-              startAdornment={
-                <InputAdornment position="start">
-                  <Lock />
-                </InputAdornment>
-              }
-            />
+          <FormControl className={classes.margin} autoComplete={'off'} >
+            <Tooltip
+              title='Username requires at least 8 characters without spaces in between'
+              placement={'top'}
+            >
+              <Input
+                className={classes.margin}
+                name="username"
+                type="text"
+                disabled={this.props.ui.loading || this.props.ui.success}
+                error={this.props.ui.failure}
+                onChange={this.handleUsernameChange}
+                startAdornment={
+                  <InputAdornment position="start">
+                    <AccountCircle />
+                  </InputAdornment>
+                }
+              />
+            </Tooltip>
+            <Tooltip
+              title='Password requires at least 6 characters with lowercases and numbers'
+              placement={'bottom'}
+            >
+              <Input
+                className={classes.margin}
+                name="password"
+                type="password"
+                disabled={this.props.ui.loading || this.props.ui.success}
+                error={this.props.ui.failure}
+                onChange={this.handlePasswordChange}
+                startAdornment={
+                  <InputAdornment position="start">
+                    <Lock />
+                  </InputAdornment>
+                }
+              />
+            </Tooltip>
           </FormControl>
-          { progress }
+          <Tooltip
+            title='When all requirements are satisfied, we will login you in or register a new account for you automatically'
+            placement={'top'}
+          >
+            { progress }
+          </Tooltip>
         </Paper>
       </Grid>
     );
