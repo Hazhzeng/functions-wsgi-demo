@@ -171,7 +171,7 @@ class LoginContainer extends Component {
             </Tooltip>
           </FormControl>
           <Tooltip
-            title='When all requirements are satisfied, we will login you in or register a new account for you automatically'
+            title='Pristine will help you login or register a new account for you automatically'
             placement={'top'}
           >
             { progress }
