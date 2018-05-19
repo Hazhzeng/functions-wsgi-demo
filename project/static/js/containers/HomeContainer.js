@@ -117,7 +117,12 @@ class HomeContainer extends Component {
     const blogRender = blog.id === this.props.amendingBlogId
       ? <Editor />
       :(<div>
-          <Blog {...blog} />
+          <Blog
+            title={blog.title}
+            time={blog.last_update}
+            text={blog.text}
+            tags={blog.tags}
+          />
           {blog.user === this.props.userId && <BlogControl blogId={blog.id}/>}
         </div>);
     return (
