@@ -6,4 +6,6 @@ export default {
   PULL_BLOG_FAILURE: 'HomeConstants.PULL_BLOG_FAILURE',
   PULL_BLOG_LOADING: 'HomeConstants.PULL_BLOG_LOADING',
   TOGGLE_MENU: 'HomeConstants.TOGGLE_MENU',
+  ENABLE_TAG: 'HomeConstants.ENABLE_TAG',
+  DISABLE_TAG: 'HomeConstants.DISABLE_TAG',
 };

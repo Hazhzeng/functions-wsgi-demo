@@ -25,12 +25,12 @@ export const toggleMenu = () => ({
   type: Home.TOGGLE_MENU,
 });
 
-export const pushBlog = (id, title, tag, text) => ({
+export const pushBlog = (id, title, tags, text) => ({
   type: Home.PUSH_BLOG,
   payload: {
     id: id,
     title: title,
-    tag: tag,
+    tags: tags,
     text: text,
   }
 });
@@ -38,4 +38,14 @@ export const pushBlog = (id, title, tag, text) => ({
 export const pushBlogSuccess = (blogs) => ({
   type: Home.PUSH_BLOG_SUCCESS,
   payload: blogs,
-})
+});
+
+export const enableTag = (tag) => ({
+  type: Home.ENABLE_TAG,
+  payload: tag,
+});
+
+export const disableTag = (tag) => ({
+  type: Home.DISABLE_TAG,
+  payload: tag,
+});

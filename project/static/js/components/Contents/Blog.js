@@ -4,6 +4,7 @@ import hljs from 'highlight.js';
 import 'highlight.js/styles/atom-one-light.css';
 
 import { leadingZeros } from '../../utils/format';
+import TagList from '../TagList';
 
 class Blog extends React.Component {
   constructor(props) {
@@ -28,8 +29,13 @@ class Blog extends React.Component {
   _renderTitle() {
     const { title } = this.props;
     if (!title) return null;
-
     return <h3>{title}</h3>;
+  }
+
+  _renderTags() {
+    const { tags } = this.props;
+    if (!tags) return null;
+    return <TagList tags={tags} readOnly />
   }
 
   _renderTime() {
@@ -59,6 +65,7 @@ class Blog extends React.Component {
     return (
       <div>
         {this._renderTitle()}
+        {this._renderTags()}
         {this._renderTime()}
         {this._renderMarkdown()}
       </div>

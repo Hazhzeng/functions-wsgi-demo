@@ -38,7 +38,7 @@ class BlogControl extends Component {
     const blog = this.props.blogSelect(this.props.blogId);
     this.props.edit(blog.id);
     this.props.editTitle(blog.title);
-    this.props.editTag(blog.tag);
+    this.props.editTag(blog.tags.join(' '));
     this.props.editText(blog.text);
   }
 

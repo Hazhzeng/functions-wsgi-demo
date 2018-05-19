@@ -6,11 +6,12 @@ const initialState = {
   blogs: [/*
     "id": 12, 
     "last_update": "2018-05-14T22:21:00.356896+00:00", 
-    "tag": "", 
+    "tags": ["tag 1", "tag 2"], 
     "text": "\u4f60\u597d\u554a", 
     "title": "Test of UTF8", 
     "user": 1
   */],
+  enableTags: [],
   error: null,
   ui: {
     loading: false,
@@ -22,6 +23,16 @@ const initialState = {
 
 const homeReducer = (state = initialState, action) => {
   switch (action.type) {
+    case Home.ENABLE_TAG:
+      return {
+        ...state,
+        enableTags: [...new Set(state.enableTags.push(action.payload))],
+      };
+    case Home.DISABLE_TAG:
+      return {
+        ...state,
+        enableTags: state.enableTags.filter(tag => tag !== action.payload),
+      };
     case Home.PUSH_BLOG_SUCCESS:
       return {
         ...state,

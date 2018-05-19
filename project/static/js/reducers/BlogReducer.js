@@ -38,7 +38,7 @@ const blogReducer = (state = initialState, action) => {
     case Blog.SUBMIT_BLOG_SUCCESS:
       return {
         title: '',
-        tag: '',
+        tags: [],
         text: '',
       };
     case Blog.SUBMIT_BLOG_FAILURE:

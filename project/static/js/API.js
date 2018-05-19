@@ -2,10 +2,10 @@ import { get_json, post_json, delete_json, patch_json } from './utils/request';
 import { errorHandler } from './utils/errors';
 
 export default class API {
-  static postBlog(title, tag, text) {
+  static postBlog(title, tags, text) {
     const request_body = {
       title: title,
-      tag: tag,
+      tag: JSON.stringify(tags),
       text: text,
     };
     return post_json('/api/postblog', {}, request_body).then(errorHandler);
@@ -28,11 +28,11 @@ export default class API {
     }).then(errorHandler);
   }
 
-  static updateBlog(blogId, title, tag, text) {
+  static updateBlog(blogId, title, tags, text) {
     const request_body = {
       id: blogId,
       title: title,
-      tag: tag,
+      tag: JSON.stringify(tags),
       text: text,
     };
     return patch_json('/api/updateblog', {}, request_body).then(errorHandler);
