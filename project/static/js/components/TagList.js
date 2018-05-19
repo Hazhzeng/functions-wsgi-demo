@@ -12,6 +12,7 @@ class TagList extends Component {
   constructor(props) {
     super(props);
     this.config = {
+      selectedTags: props.selectedTags,
       readOnly: !props.readOnly,
     };
   }

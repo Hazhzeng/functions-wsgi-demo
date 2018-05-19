@@ -7,6 +7,7 @@ import {
   pullBlogLoading,
   pullBlogSuccess,
   pullBlogFailure,
+  setAvailableTags,
 } from '../actions/HomeActions';
 import {
   changeProcessedTags,
@@ -26,6 +27,12 @@ import {
 import { blogsSelector } from '../selectors/HomeSelector';
 import API from '../API';
 
+const calculateAvailableTags = blogs => {
+  const tags = [];
+  blogs.map(blog => tags.push(...blog.tags));
+  return [...new Set(tags)];
+};
+
 function *postBlogSaga() {
   yield put(submitBlogLoading());
   try {
@@ -44,6 +51,9 @@ function *postBlogSaga() {
 
     if (isAmendment) {
       yield put(pushBlog(id, title, tags, text));
+      const blogs = yield select(blogsSelector);
+      const availableTags = yield call(calculateAvailableTags, blogs);
+      yield put(setAvailableTags(availableTags));
     } else {
       window.location.assign('/home');
     }
@@ -76,6 +86,8 @@ function *getBlogSaga(action) {
       }
       delete blogs.tag;
     });
+    const availableTags = yield call(calculateAvailableTags, blogs);
+    yield put(setAvailableTags(availableTags));
     yield put(pullBlogSuccess(blogs));
   } catch (error) {
     yield put(pullBlogFailure(error));

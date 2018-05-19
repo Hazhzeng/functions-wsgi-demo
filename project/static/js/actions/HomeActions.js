@@ -49,3 +49,8 @@ export const disableTag = (tag) => ({
   type: Home.DISABLE_TAG,
   payload: tag,
 });
+
+export const setAvailableTags = (tags) => ({
+  type: Home.SET_AVAILABLE_TAG,
+  payload: tags,
+});

@@ -9,20 +9,20 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
 
-import TagList from '../TagList';
+import TagList from './TagList';
 import {
   changeTitle,
   changeTag,
   changeText,
   submitBlog,
-} from '../../actions/BlogActions';
+} from '../actions/BlogActions';
 
 import {
   titleSelector,
   tagsSelector,
   textSelector,
   isSubmittableSelector,
-} from '../../selectors/BlogSelector';
+} from '../selectors/BlogSelector';
 
 const styles = theme => ({
   aceEditor: {

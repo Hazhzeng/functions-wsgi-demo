@@ -8,4 +8,5 @@ export default {
   TOGGLE_MENU: 'HomeConstants.TOGGLE_MENU',
   ENABLE_TAG: 'HomeConstants.ENABLE_TAG',
   DISABLE_TAG: 'HomeConstants.DISABLE_TAG',
+  SET_AVAILABLE_TAG: 'HomeConstants.SET_AVAILABLE_TAG',
 };

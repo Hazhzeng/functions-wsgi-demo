@@ -12,8 +12,8 @@ import PostIcon from '@material-ui/icons/InsertDriveFile';
 import LoginIcon from '@material-ui/icons/Input';
 import LogoutIcon from '@material-ui/icons/Link';
 
-import { toggleMenu } from '../../actions/HomeActions';
-import { isPhoneSelector } from '../../selectors/DeviceSelector';
+import { toggleMenu } from '../actions/HomeActions';
+import { isPhoneSelector } from '../selectors/DeviceSelector';
 
 class MenuListItem extends Component {
   constructor(props) {

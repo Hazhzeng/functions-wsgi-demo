@@ -2,11 +2,9 @@ import React from 'react';
 import MarkdownIt from 'markdown-it';
 import hljs from 'highlight.js';
 import 'highlight.js/styles/atom-one-light.css';
+import { leadingZeros } from '../utils/format';
 
-import { leadingZeros } from '../../utils/format';
-import TagList from '../TagList';
-
-class Blog extends React.Component {
+class Preview extends React.Component {
   constructor(props) {
     super(props);
     this.mdi = new MarkdownIt({
@@ -27,23 +25,12 @@ class Blog extends React.Component {
   }
 
   _renderTitle() {
-    const { title } = this.props;
-    if (!title) return null;
-    return <h3>{title}</h3>;
-  }
+    const { blogTitle } = this.props;
+    if (!blogTitle) {
+      return <span>Waiting for your story here</span>;
+    }
 
-  _renderTags() {
-    const { tags } = this.props;
-    if (!tags) return null;
-    return <TagList tags={tags} readOnly />
-  }
-
-  _renderTime() {
-    const { time } = this.props;
-    if (!time) return null;
-
-    const t = new Date(time);
-
+    const t = new Date();
     const year = t.getFullYear();
     const month = leadingZeros(t.getMonth() + 1, 2);
     const day = leadingZeros(t.getDate(), 2);
@@ -51,12 +38,17 @@ class Blog extends React.Component {
     const minute = leadingZeros(t.getMinutes(), 2);
     const second = leadingZeros(t.getSeconds(), 2);
 
-    return <pre>{year}-{month}-{day} {hour}:{minute}:{second}</pre>;
+    return (
+      <div>
+        <h3>{blogTitle}</h3>
+        <pre>{year}-{month}-{day} {hour}:{minute}:{second}</pre>
+      </div>
+    );
   }
 
   _renderMarkdown() {
-    const { text } = this.props;
-    const context = this.mdi.render(text);
+    const { blogText } = this.props;
+    const context = this.mdi.render(blogText);
     const result = {__html: `${context}`};
     return <div dangerouslySetInnerHTML={result} />;
   }
@@ -65,12 +57,10 @@ class Blog extends React.Component {
     return (
       <div>
         {this._renderTitle()}
-        {this._renderTags()}
-        {this._renderTime()}
         {this._renderMarkdown()}
       </div>
     );
   }
 }
 
-export default Blog;
+export default Preview;

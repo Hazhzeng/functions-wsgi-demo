@@ -11,9 +11,9 @@ import {
   changeText,
   deleteBlog,
   setAdmentment,
-} from '../../actions/BlogActions';
+} from '../actions/BlogActions';
 
-import { blogSelector } from '../../selectors/HomeSelector';
+import { blogSelector } from '../selectors/HomeSelector';
 
 const styles = theme => ({
   button: {

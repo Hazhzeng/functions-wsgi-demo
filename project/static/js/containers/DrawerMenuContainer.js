@@ -9,7 +9,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { isUserLoggedinSelector } from '../selectors/UserSelector';
 import { isMenuShownSelector } from '../selectors/HomeSelector';
 
-import MenuListItem from '../components/DrawerMenu/MenuListItem';
+import MenuListItem from '../components/MenuListItem';
 
 const styles = theme => ({
   drawer: {

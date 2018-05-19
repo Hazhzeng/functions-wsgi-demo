@@ -11,7 +11,8 @@ const initialState = {
     "title": "Test of UTF8", 
     "user": 1
   */],
-  enableTags: [],
+  availableTags: [],
+  enabledTags: [],
   error: null,
   ui: {
     loading: false,
@@ -26,12 +27,17 @@ const homeReducer = (state = initialState, action) => {
     case Home.ENABLE_TAG:
       return {
         ...state,
-        enableTags: [...new Set(state.enableTags.push(action.payload))],
+        enableTags: [...new Set(state.enabledTags.push(action.payload))],
       };
     case Home.DISABLE_TAG:
       return {
         ...state,
-        enableTags: state.enableTags.filter(tag => tag !== action.payload),
+        enableTags: state.enabledTags.filter(tag => tag !== action.payload),
+      };
+    case Home.SET_AVAILABLE_TAG:
+      return {
+        ...state,
+        availableTags: action.payload.sort(),
       };
     case Home.PUSH_BLOG_SUCCESS:
       return {

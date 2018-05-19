@@ -7,19 +7,21 @@ import Grid  from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import { withStyles } from '@material-ui/core/styles';
 
-import Editor from '../components/Contents/Editor';
-import BlogControl from '../components/Contents/BlogControl';
+import Blog from '../components/Blog';
+import TagList from '../components/TagList';
+import Editor from '../components/Editor';
+import BlogControl from '../components/BlogControl';
 import { pullBlog } from '../actions/HomeActions';
 import {
   blogsSelector,
   uiSelector,
-  isMenuShownSelector
+  isMenuShownSelector,
+  availableTagsSelector,
 } from '../selectors/HomeSelector';
 import { blogIdSelector } from '../selectors/BlogSelector';
 import { userIdSelector } from '../selectors/UserSelector';
 import { isPhoneSelector } from '../selectors/DeviceSelector';
 
-import Blog from '../components/Contents/Blog';
 import { dateToString } from '../utils/format';
 
 const styles = theme => ({
@@ -71,10 +73,10 @@ class HomeContainer extends Component {
     this.props.pull(this.state.date);
   }
 
-  _renderMemoryPicker() {
+  _renderDatetimePicker() {
     const { classes, loading } = this.props;
     return (
-      <Grid item xs={12} lg={12} key={'blog.today'}>
+      <Grid item xs={12} lg={12} key={'home.date_time_picker'}>
         <TextField
           id="date"
           type="date"
@@ -85,6 +87,14 @@ class HomeContainer extends Component {
           disabled={loading}
           error={!this.state.isDateValid}
         />
+      </Grid>
+    );
+  }
+
+  _renderTagList() {
+    return (
+      <Grid item xs={12} lg={12} key={'home.available_tags'}>
+        <TagList tags={this.props.tags}/>
       </Grid>
     );
   }
@@ -152,7 +162,10 @@ class HomeContainer extends Component {
 
   render() {
     const { blogs, isPhone, isMenuShown } = this.props;
-    const renderContent = [this._renderMemoryPicker()];
+    const renderContent = [
+      this._renderDatetimePicker(),
+      this._renderTagList(),
+    ];
 
     if (blogs && blogs.length > 0) {
       if (!isPhone) {
@@ -195,6 +208,7 @@ const mapStateToProps = (state) => ({
   userId: userIdSelector(),
   amendingBlogId: blogIdSelector(state),
   blogs: blogsSelector(state),
+  tags: availableTagsSelector(state),
   loading: uiSelector(state).loading,
   isPhone: isPhoneSelector(),
   isMenuShown: isMenuShownSelector(state),

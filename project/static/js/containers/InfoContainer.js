@@ -6,7 +6,7 @@ import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/core/styles';
 import { isPhoneSelector } from '../selectors/DeviceSelector';
 
-import Blog from '../components/Contents/Blog';
+import Blog from '../components/Blog';
 
 const styles = () => ({
   avatar: {

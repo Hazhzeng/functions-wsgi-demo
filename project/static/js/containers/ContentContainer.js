@@ -12,8 +12,8 @@ import {
   textSelector,
 } from '../selectors/BlogSelector';
 
-import Preview from '../components/Contents/Preview';
-import Editor from '../components/Contents/Editor';
+import Preview from '../components/Preview';
+import Editor from '../components/Editor';
 import { isPhoneSelector } from '../selectors/DeviceSelector';
 
 const styles = theme => ({
