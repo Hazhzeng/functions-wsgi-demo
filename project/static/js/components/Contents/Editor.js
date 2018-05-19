@@ -9,6 +9,7 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
 
+import TagList from '../TagList';
 import {
   changeTitle,
   changeTag,
@@ -18,7 +19,7 @@ import {
 
 import {
   titleSelector,
-  tagSelector,
+  tagsSelector,
   textSelector,
   isSubmittableSelector,
 } from '../../selectors/BlogSelector';
@@ -27,7 +28,7 @@ const styles = theme => ({
   aceEditor: {
     marginTop: theme.spacing.unit * 2,
     marginBottom: theme.spacing.unit * 2,
-  }
+  },
 });
 
 class Editor extends React.Component {
@@ -61,17 +62,20 @@ class Editor extends React.Component {
     );
   }
 
-  _renderTag() {
-    const { blogTag, handleChangeTag } = this.props;
+  _renderTags() {
+    const { blogTags, handleChangeTag } = this.props;
+    const blogTagsValue = blogTags.join(' ');
+
     return (
       <Grid item sm={12} lg={12} key={'editor.tag'}>
         <TextField
           label="tag"
           margin="normal"
-          value={blogTag}
+          value={blogTagsValue}
           onChange={(event) => handleChangeTag(event.target.value)}
           fullWidth
         />
+        <TagList tags={blogTags} readOnly />
       </Grid>
     );
   }
@@ -106,7 +110,7 @@ class Editor extends React.Component {
       >
         <form>
           {this._renderTitle()}
-          {this._renderTag()}
+          {this._renderTags()}
           {this._renderAceEditor()}
           <Button
             color="primary"
@@ -125,7 +129,7 @@ class Editor extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  blogTag: tagSelector(state),
+  blogTags: tagsSelector(state),
   blogTitle: titleSelector(state),
   blogText: textSelector(state),
   isSubmittable: isSubmittableSelector(state),

@@ -2,7 +2,7 @@ const blogSelector = (state) => state.BlogReducer;
 
 export const titleSelector = state => blogSelector(state).title;
 export const textSelector = state => blogSelector(state).text;
-export const tagSelector = state => blogSelector(state).tag;
+export const tagsSelector = state => blogSelector(state).tags;
 export const blogIdSelector = state => blogSelector(state).id;
 
 export const isSubmittableSelector = state => {
@@ -16,7 +16,7 @@ export const isAmendmentSelector = state => {
 export default {
   titleSelector,
   textSelector,
-  tagSelector,
+  tagsSelector,
   blogIdSelector,
   isSubmittableSelector,
   isAmendmentSelector,

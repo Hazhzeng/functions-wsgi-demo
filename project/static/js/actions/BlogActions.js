@@ -10,6 +10,11 @@ export const changeTag = (tag) => ({
   payload: tag,
 });
 
+export const changeProcessedTags = (tags) => ({
+  type: Blog.CHANGE_PROCESSED_TAGS,
+  payload: tags,
+});
+
 export const changeText = (text) => ({
   type: Blog.CHANGE_TEXT,
   payload: text,

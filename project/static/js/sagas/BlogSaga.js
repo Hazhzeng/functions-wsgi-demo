@@ -9,6 +9,7 @@ import {
   pullBlogFailure,
 } from '../actions/HomeActions';
 import {
+  changeProcessedTags,
   submitBlogLoading,
   submitBlogSuccess,
   submitBlogFailure,
@@ -18,7 +19,7 @@ import {
 import {
   titleSelector,
   textSelector,
-  tagSelector,
+  tagsSelector,
   blogIdSelector,
   isAmendmentSelector,
 } from '../selectors/BlogSelector';
@@ -30,18 +31,18 @@ function *postBlogSaga() {
   try {
     const title = yield select(titleSelector);
     const text = yield select(textSelector);
-    const tag = yield select(tagSelector);
+    const tags = yield select(tagsSelector);
     const id = yield select(blogIdSelector);
     const isAmendment = yield select(isAmendmentSelector);
     if (isAmendment) {
-      yield call(API.updateBlog, id, title, tag, text);
+      yield call(API.updateBlog, id, title, tags, text);
     } else {
-      yield call(API.postBlog, title, tag, text);
+      yield call(API.postBlog, title, tags, text);
     }
     yield put(submitBlogSuccess());
 
     if (isAmendment) {
-      yield put(pushBlog(id, title, tag, text));
+      yield put(pushBlog(id, title, tags, text));
     } else {
       window.location.assign('/home');
     }
@@ -82,11 +83,23 @@ function *deleteBlogSaga(action) {
   }
 }
 
+function *processTagSaga(action) {
+  const tags = action.payload.substring(0, 50);
+  const tagsEndWithSpace = action.payload.endsWith(' ');
+  const sanitisedTags = tags.replace(/(?!\\_|\\-)\W/g, ' ');
+  const tagTrim = sanitisedTags.trim().toLowerCase();
+  const tagWithSpace = tagsEndWithSpace ? tagTrim + ' ' : tagTrim;
+  const tagArray = tagWithSpace.split(' ').slice(0, 5);
+  const tagArrayUnique = [...new Set(tagArray)];
+  yield put(changeProcessedTags(tagArrayUnique));
+}
+
 function *watcher() {
   yield takeLatest(HomeConstants.PUSH_BLOG, pushBlogSaga);
   yield takeLatest(HomeConstants.PULL_BLOG, getBlogSaga);
   yield takeLatest(BlogConstants.SUBMIT_BLOG, postBlogSaga);
   yield takeLatest(BlogConstants.DELETE_BLOG, deleteBlogSaga);
+  yield takeLatest(BlogConstants.CHANGE_TAG, processTagSaga);
 }
 
 export default [watcher];

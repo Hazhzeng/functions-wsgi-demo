@@ -9,7 +9,6 @@ import { withStyles } from '@material-ui/core/styles';
 import { initialise } from '../actions/BlogActions';
 import {
   titleSelector,
-  tagSelector,
   textSelector,
 } from '../selectors/BlogSelector';
 
@@ -67,7 +66,6 @@ class ContentContainer extends Component {
 
 const mapStateToProps = state => ({
   isPhone: isPhoneSelector(),
-  blogTag: tagSelector(state),
   blogTitle: titleSelector(state),
   blogText: textSelector(state),
 });
