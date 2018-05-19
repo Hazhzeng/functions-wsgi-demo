@@ -98,7 +98,12 @@ function *deleteBlogSaga(action) {
   try {
     const blogId = action.payload;
     yield call(API.deleteBlog, blogId);
-    yield put(deleteBlogSuccess(blogId));
+
+    const oldBlogs = yield select(blogsSelector);
+    const newBlogs = oldBlogs.filter(blog => blog.id !== blogId);
+    const availableTags = yield call(calculateAvailableTags, newBlogs);
+    yield put(setAvailableTags(availableTags));
+    yield put(deleteBlogSuccess(newBlogs));
   } catch (error) {
     yield put(deleteBlogFailure());
   }

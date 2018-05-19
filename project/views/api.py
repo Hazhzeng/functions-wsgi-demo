@@ -1,5 +1,5 @@
 import hashlib, uuid
-from flask import Response, g, session, request
+from flask import Response, g, session, request, json
 from dateutil import parser
 from datetime import datetime, timedelta
 from webargs import fields
@@ -8,7 +8,7 @@ from webargs.flaskparser import use_args
 from project import app, db
 from project.views import response
 from project.schema import BlogSchema
-from project.models import BlogModel, UserModel
+from project.models import BlogModel, UserModel, TagModel
 
 from .wrappers import login_required_api
 
@@ -25,6 +25,18 @@ def postblog_api(args) -> Response:
     new_blog = BlogModel(title=args.title, tag=args.tag, text=args.text)
     if g.user:
         new_blog.user = g.user.id
+    
+    # Handle tags and blog-tag relationship
+    if args.tag:
+        tags = json.loads(args.tag)
+        for tag in tags:
+            db_tag = db.session.query(TagModel)\
+                .filter(TagModel.tag == tag)\
+                .scalar()
+            if db_tag is None:
+                db_tag = TagModel(tag=tag)
+                db.session.add(db_tag)
+            new_blog.tags.append(db_tag)
 
     db.session.add(new_blog)
     return response.ok()
@@ -68,6 +80,9 @@ def deleteblog_api(args) -> Response:
     
     if blog.user != g.user.id:
         return response.forbidden()
+    
+    for tag in blog.tags:
+        blog.tags.remove(tag)
     
     db.session.delete(blog)
     db.session.flush()

@@ -83,7 +83,7 @@ const homeReducer = (state = initialState, action) => {
     case Blog.DELETE_BLOG_SUCCESS:
       return {
         ...state,
-        blogs: [...state.blogs.filter(blog => blog.id !== action.payload)]
+        blogs: action.payload,
       }
     case Blog.DELETE_BLOG_FAILURE:
       return state;

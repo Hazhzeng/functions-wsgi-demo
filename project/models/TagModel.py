@@ -7,7 +7,7 @@ from .BlogTagAssociation import BlogTagAssociation
 class TagModel(db.Model):
     __tablename__ = 'tag_model'
     id = db.Column(db.Integer, primary_key=True)
-    tag = db.Column(db.String(128), unique=False, nullable=True)
+    tag = db.Column(db.String(128), unique=True, nullable=False)
     date_added = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     
     blogs = relationship('BlogModel',

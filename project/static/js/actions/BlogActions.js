@@ -41,9 +41,9 @@ export const deleteBlog = (blogId) => ({
   payload: blogId,
 });
 
-export const deleteBlogSuccess = (blogId) => ({
+export const deleteBlogSuccess = (blogs) => ({
   type: Blog.DELETE_BLOG_SUCCESS,
-  payload: blogId,
+  payload: blogs,
 });
 
 export const deleteBlogFailure = () => ({
