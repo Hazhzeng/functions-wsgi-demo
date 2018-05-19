@@ -27,12 +27,12 @@ const homeReducer = (state = initialState, action) => {
     case Home.ENABLE_TAG:
       return {
         ...state,
-        enableTags: [...new Set(state.enabledTags.push(action.payload))],
+        enabledTags: [...new Set([...state.enabledTags, action.payload])],
       };
     case Home.DISABLE_TAG:
       return {
         ...state,
-        enableTags: state.enabledTags.filter(tag => tag !== action.payload),
+        enabledTags: state.enabledTags.filter(tag => tag !== action.payload),
       };
     case Home.SET_AVAILABLE_TAG:
       return {

@@ -17,6 +17,7 @@ import {
   uiSelector,
   isMenuShownSelector,
   availableTagsSelector,
+  enabledTagsSelector,
 } from '../selectors/HomeSelector';
 import { blogIdSelector } from '../selectors/BlogSelector';
 import { userIdSelector } from '../selectors/UserSelector';
@@ -94,13 +95,25 @@ class HomeContainer extends Component {
   _renderTagList() {
     return (
       <Grid item xs={12} lg={12} key={'home.available_tags'}>
-        <TagList tags={this.props.tags}/>
+        <TagList
+          tags={this.props.availableTags}
+          selectedTags={this.props.enabledTags}
+        />
       </Grid>
     );
   }
 
   _renderBlog(blog) {
-    const { classes } = this.props;
+    const { classes, enabledTags } = this.props;
+    
+    // Tag list filter
+    if (enabledTags.length > 0) {
+      if (_.intersection(blog.tags, enabledTags).length === 0) {
+        return null;
+      }
+    }
+
+    // Inline editor render
     const blogRender = blog.id === this.props.amendingBlogId
       ? <Editor />
       :(<div>
@@ -208,7 +221,8 @@ const mapStateToProps = (state) => ({
   userId: userIdSelector(),
   amendingBlogId: blogIdSelector(state),
   blogs: blogsSelector(state),
-  tags: availableTagsSelector(state),
+  availableTags: availableTagsSelector(state),
+  enabledTags: enabledTagsSelector(state),
   loading: uiSelector(state).loading,
   isPhone: isPhoneSelector(),
   isMenuShown: isMenuShownSelector(state),

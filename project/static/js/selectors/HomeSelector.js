@@ -11,6 +11,9 @@ export const blogSelector = (id) => state => {
 export const availableTagsSelector =
   state => homeSelector(state).availableTags;
 
+export const enabledTagsSelector =
+  state => homeSelector(state).enabledTags;
+
 export const isMenuShownSelector = state => homeSelector(state).ui.menu;
 
 export default {
@@ -19,4 +22,5 @@ export default {
   uiSelector,
   isMenuShownSelector,
   availableTagsSelector,
+  enabledTagsSelector,
 };

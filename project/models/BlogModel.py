@@ -4,6 +4,8 @@ from datetime import datetime
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import relationship
 
+from .BlogTagAssociation import BlogTagAssociation
+
 class BlogModel(db.Model):
     __tablename__ = 'blog_model'
     id = db.Column(db.Integer, primary_key=True)
@@ -15,6 +17,11 @@ class BlogModel(db.Model):
             default=datetime.utcnow)
 
     author = relationship('UserModel')
+    tags = relationship('TagModel',
+        secondary=BlogTagAssociation,
+        back_populates='blogs',
+        uselist=True,
+    )
 
     def __repr__(self):
         return '<Blog {} @ {}>'.format(self.title, self.last_update)
