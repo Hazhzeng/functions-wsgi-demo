@@ -34,7 +34,7 @@ class InfoContainer extends Component {
       <Grid item xs={12} lg={12} key={'github.avatar'}>
         For a more serious introduction of what Pristine is about,
         tease the Octocat!
-        <a href="https://github.com/RogerTsang/Pristine">
+        <a href="https://github.com/RogerTsang/Pristine" target="_blank">
           <Avatar src="/image/github.jpg" className={classes.avatar} />
         </a>
       </Grid>
