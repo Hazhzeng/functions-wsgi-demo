@@ -6,9 +6,10 @@ const build_dir = path.resolve(__dirname, './project/static/dist');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = merge(common, {
-  entry: {
-    'app': path.resolve(__dirname, './project/static/js/index_prod.js'),
-  },
+  entry: [
+    path.resolve(__dirname, './project/static/js/index_prod.js'),
+    'babel-polyfill',
+  ],
   plugins: [
     new UglifyJsPlugin({
       test: /\.js$/,
