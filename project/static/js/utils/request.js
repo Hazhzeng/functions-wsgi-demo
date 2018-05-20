@@ -34,7 +34,6 @@ export const delete_json = (url, header = {}, body = null) => {
 export const get_json = (url, header = {}, body = null) => {
   const urlString = urlUtil.format({
     hostname: window.location.hostname,
-    port: window.location.hostname === 'dev.rogertsang.info' ? 5001 : 80,
     pathname: url,
     query: {
       ...body,
