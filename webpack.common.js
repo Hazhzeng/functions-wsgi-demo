@@ -11,7 +11,7 @@ console.log('webpacking website version:', version);
 module.exports = {
   output: {
     path: build_dir,
-    filename: `[name].bundle.${version}.js`
+    filename: `app.bundle.${version}.js`
   },
   module: {
     rules: [
