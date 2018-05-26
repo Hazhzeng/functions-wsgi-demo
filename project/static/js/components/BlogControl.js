@@ -12,7 +12,7 @@ import {
   deleteBlog,
   setAdmentment,
 } from '../actions/BlogActions';
-
+import { isPhoneSelector } from '../selectors/DeviceSelector';
 import { blogSelector } from '../selectors/HomeSelector';
 
 const styles = theme => ({
@@ -43,15 +43,22 @@ class BlogControl extends Component {
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes, isMobile } = this.props;
+    const editButton = isMobile ? null : (
+      <IconButton className={classes.button} onClick={this.handleEdit}>
+        <EditIcon />
+      </IconButton>
+    );
+    const removeButton = (
+      <IconButton className={classes.button} onClick={this.handleDelete}>
+        <DeleteIcon />
+      </IconButton>
+    );
+    
     return (
       <div style={{ textAlign: 'right' }}>
-        <IconButton className={classes.button} onClick={this.handleEdit}>
-          <EditIcon />
-        </IconButton>
-        <IconButton className={classes.button} onClick={this.handleDelete}>
-          <DeleteIcon />
-        </IconButton>
+        {editButton}
+        {removeButton}
       </div>
     )
   }
@@ -59,6 +66,7 @@ class BlogControl extends Component {
 
 const mapStateToProps = state => ({
   blogSelect: (id) => blogSelector(id)(state),
+  isMobile: isPhoneSelector(),
 });
 
 const mapDispatchToProps = dispatch => ({
