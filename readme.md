@@ -27,6 +27,11 @@ Shall let our ideas flow, but not keeping an eye on who bores them.
 - Neat user interface using **[material-ui-next](https://material-ui-next.com/) (hugs)**
 
 ---
+## Usage
+1. Pure markdown rendering. Personally, I recommend **[markdown cheetsheet by adam-p](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet)**
+2. LaTeX mathematics. Using **`$inline formula$`** or **```math block formula```** for math rendering. Special thanks to **[markdown-it-latex by tylingsoft](https://github.com/tylingsoft/markdown-it-latex)**
+
+---
 ## About this repo and about me
 I post my personal website here as an example. Please use with cautious. **[https://rogerzeng.com](https://rogerzeng.com)**
 
