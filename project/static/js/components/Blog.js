@@ -1,10 +1,12 @@
 import React from 'react';
 import MarkdownIt from 'markdown-it';
+import MarkdownItLatex from 'markdown-it-latex';
 import hljs from 'highlight.js';
 import 'highlight.js/styles/atom-one-light.css';
-
 import { leadingZeros } from '../utils/format';
 import TagList from './TagList';
+
+import 'markdown-it-latex/dist/index.css';
 
 class Blog extends React.Component {
   constructor(props) {
@@ -24,6 +26,7 @@ class Blog extends React.Component {
         return '';
       }
     });
+    this.mdi = this.mdi.use(MarkdownItLatex);
   }
 
   _renderTitle() {

@@ -1,8 +1,11 @@
 import React from 'react';
 import MarkdownIt from 'markdown-it';
+import MarkdownItLatex from 'markdown-it-latex';
 import hljs from 'highlight.js';
 import 'highlight.js/styles/atom-one-light.css';
 import { leadingZeros } from '../utils/format';
+
+import 'markdown-it-latex/dist/index.css';
 
 class Preview extends React.Component {
   constructor(props) {
@@ -22,6 +25,7 @@ class Preview extends React.Component {
         return '';
       }
     });
+    this.mdi = this.mdi.use(MarkdownItLatex);
   }
 
   _renderTitle() {
