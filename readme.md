@@ -30,9 +30,10 @@ Shall let our ideas flow, but not keeping an eye on who bores them.
 ## Usage
 1. Pure markdown rendering. Personally, I recommend **[markdown cheetsheet by adam-p](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet)**
 2. LaTeX mathematics. Using **`$inline formula$`** or **```math block formula```** for math rendering. Special thanks to **[markdown-it-latex by tylingsoft](https://github.com/tylingsoft/markdown-it-latex)**
+3. Acually, the markdown-it-latex is powered by **[KaTeX](https://github.com/Khan/KaTeX)**. Here a round of applause to it.
 
 ---
 ## About this repo and about me
-I post my personal website here as an example. Please use with cautious. **[https://rogerzeng.com](https://rogerzeng.com)**
+I post my personal website here as an example. Please use with caution. **[https://rogerzeng.com](https://rogerzeng.com)**
 
 For any suggestions or improvements, please raise an issue or contact **[zenghanzhang46@gmail.com](mailto://zenghanzhang46@gmail.com)**
