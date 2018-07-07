@@ -25,7 +25,7 @@ def postblog_api(args) -> Response:
     new_blog = BlogModel(title=args.title, tag=args.tag, text=args.text)
     if g.user:
         new_blog.user = g.user.id
-    
+
     # Handle tags and blog-tag relationship
     if args.tag:
         tags = json.loads(args.tag)
@@ -50,16 +50,17 @@ def updateblog_api(args) -> Response:
     blog = db.session.query(BlogModel)\
         .filter(BlogModel.id == blog_id)\
         .first()
-    
+
     if blog is None:
         return response.unprocessable_entity()
 
     if blog.user != g.user.id:
         return response.forbidden()
-    
+
     blog.title = args.title
     blog.tag = args.tag
     blog.text = args.text
+    blog.last_update = datetime.utcnow()
 
     db.session.add(blog)
     db.session.flush()
@@ -77,13 +78,13 @@ def deleteblog_api(args) -> Response:
         .first()
     if blog is None:
         return response.unprocessable_entity()
-    
+
     if blog.user != g.user.id:
         return response.forbidden()
-    
+
     for tag in blog.tags:
         blog.tags.remove(tag)
-    
+
     db.session.delete(blog)
     db.session.flush()
     return response.accepted()
@@ -92,19 +93,25 @@ def deleteblog_api(args) -> Response:
 @app.route('/api/getblog', methods=['GET'])
 @use_args({
     'date': fields.String(),
+    'tag': fields.String(),
     'limit': fields.Integer(required=True)
 })
 def getblog_api(args) -> Response:
-    last_update = datetime.utcnow()
+    blogs = db.session.query(BlogModel).order_by(BlogModel.last_update.desc())
     if 'date' in args:
         last_update = parser.parse(args['date'])
         last_update += timedelta(hours=23, minutes=59, seconds=59)
+        blogs = blogs.filter(BlogModel.last_update <= last_update)
 
-    blogs = db.session.query(BlogModel)\
-        .filter(BlogModel.last_update < last_update)\
-        .order_by(BlogModel.last_update.desc())\
-        .limit(args['limit'])
-    ret = [BlogSchema().dump(blog).data for blog in blogs]
+    if 'tag' in args:
+        tag = args['tag']
+        blogs = blogs.filter(BlogModel.tag == tag)
+
+    if 'limit' in args:
+        limit = args['limit']
+        blogs = blogs.limit(limit)
+
+    ret = [BlogSchema().dump(blog).data for blog in blogs.all()]
     return response.ok(ret)
 
 
@@ -114,7 +121,7 @@ def getblog_api(args) -> Response:
     'password': fields.String(required=True)
 })
 def login_api(args) -> Response:
-    username = args['username']
+    username = args['username'].lower()
     password = args['password']
     user = db.session.query(UserModel)\
         .filter(UserModel.username == username)\
@@ -150,7 +157,7 @@ def logout_api() -> Response:
         user = db.session.query(UserModel)\
             .filter(UserModel.id == g.user.id)\
             .first()
-        
+
         if user:
             # Refresh token
             user.token = uuid.uuid4().hex
@@ -166,7 +173,7 @@ def logout_api() -> Response:
     'password': fields.String(required=True)
 })
 def register_api(args) -> Response:
-    username = args['username']
+    username = args['username'].lower()
     password = args['password']
 
     user = db.session.query(UserModel)\
@@ -208,7 +215,7 @@ def before_request():
         if user and user.login_expiry > datetime.utcnow():
             g.user = user
             return
-            
+
     g.user = None
 
 
