@@ -31,7 +31,6 @@ class DrawerMenuContainer extends Component {
     return (
       <List component="nav">
         <MenuListItem name='home' isLoggedIn={this.props.isLoggedIn} />
-        <MenuListItem name='history' isLoggedIn={this.props.isLoggedIn} />
         <MenuListItem name='post' isLoggedIn={this.props.isLoggedIn} />
         <MenuListItem name='info' isLoggedIn={this.props.isLoggedIn} />
         <Divider />

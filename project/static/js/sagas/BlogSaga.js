@@ -77,7 +77,7 @@ function *pushBlogSaga(action) {
 function *getBlogSaga(action) {
   yield put(pullBlogLoading());
   try {
-    const blogs = yield call(API.getBlog, action.payload.date, 10);
+    const blogs = yield call(API.getBlog, action.payload.date, 20);
     blogs.map(blog => {
       try {
         blog.tags = JSON.parse(blog.tag || '[]');
