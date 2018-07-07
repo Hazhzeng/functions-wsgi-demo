@@ -12,7 +12,7 @@ const initialState = {
     "user": 1
   */],
   availableTags: [],
-  enabledTags: [],
+  selectedTag: '',
   error: null,
   ui: {
     loading: false,

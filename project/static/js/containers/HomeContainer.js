@@ -105,7 +105,7 @@ class HomeContainer extends Component {
 
   _renderBlog(blog) {
     const { classes, enabledTags } = this.props;
-    
+
     // Tag list filter
     if (enabledTags.length > 0) {
       if (_.intersection(blog.tags, enabledTags).length === 0) {
