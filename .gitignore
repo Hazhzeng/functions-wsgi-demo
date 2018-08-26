@@ -4,6 +4,7 @@
 version.txt
 roject.config
 project/static/dist/
+project/static/*.html
 project/sql/*.db
 
 ### Python ###

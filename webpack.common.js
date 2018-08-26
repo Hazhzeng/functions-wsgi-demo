@@ -1,42 +1,34 @@
-const path = require('path');
-const webpack = require('webpack');
-const build_dir = path.resolve(__dirname, './project/static/dist');
-
-const version = require('fs').readFileSync(
-  path.resolve(__dirname, './version.txt'), 'utf8'
-).trim();
-
-console.log('webpacking website version:', version);
+let path = require('path');
+let webpack = require('webpack');
+let HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  output: {
-    path: build_dir,
-    filename: `app.bundle.${version}.js`
+  resolve: {
+    extensions: ['.ts', '.tsx']
   },
+  entry: path.resolve(__dirname, 'project', 'static', 'ts', 'index.ts'),
+  output: {
+    path: path.resolve(__dirname, 'project', 'static', 'dist'),
+    chunkFilename: '[name].bundle.js',
+    filename: '[name].[contenthash].js'
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      filename: path.resolve(__dirname, 'project', 'static', 'index.html'),
+      template: path.resolve(__dirname, 'project', 'templates', 'layout.html'),
+    }),
+  ],
   module: {
     rules: [
-    {
-      enforce: 'pre',
-      test: /\.js$/,
-      exclude: ['/node_modules/', build_dir],
-      loader: 'eslint-loader',
-      options: {
-        quite: true,
+      {
+        test: /\.(ts|tsx)$/,
+        exclude: /node_modules/,
+        loader: 'awesome-typescript-loader',
       },
-    },
-    {
-      test: /\.js$/,
-      exclude: /node_modules/,
-      loader: 'babel-loader',
-      options: {
-        presets:['es2015', 'react', 'stage-0', 'stage-3'],
-        plugins: ['react-hot-loader/babel'],
+      {
+        test: /\.(jpg|jpeg|png|gif|svg|ico)$/,
+        loader: 'file-loader',
       },
-    },
-    {
-      test: /\.css$/,
-      use: ['style-loader', 'css-loader']
-    }
     ]
   },
 };

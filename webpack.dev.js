@@ -1,16 +1,13 @@
-const webpack = require('webpack');
-const merge = require('webpack-merge');
-const common = require('./webpack.common.js');
-const path = require('path');
-const build_dir = path.resolve(__dirname, './project/static/dist');
+let webpack = require('webpack');
+let merge = require('webpack-merge');
+let common = require('./webpack.common.js');
+let path = require('path');
 
 module.exports = merge(common, {
-  entry: {
-    'app': path.resolve(__dirname, './project/static/js/index_dev.js'),
-  },
-  devtool: 'source-map',
+  mode: 'development',
+  devtool: 'inline-source-map',
   devServer: {
-    contentBase: build_dir,
+    contentBase: path.resolve(__dirname, 'dist'),
     hot: true
   },
   plugins: [

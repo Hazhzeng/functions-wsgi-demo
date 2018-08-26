@@ -4,8 +4,8 @@ import os
 import json
 #import logging
 
-TEMPLATE_DIR = os.path.join('./templates')
-STATIC_DIR = os.path.join('./static')
+TEMPLATE_DIR = os.path.join('.', 'static')
+STATIC_DIR = os.path.join('.', 'static')
 
 app = Flask(
     __name__,

@@ -11,7 +11,7 @@ cd ~/$PROJECT
 echo "$VERSION" > version.txt
 pip install -r requirements.txt
 
-npm install
+npm install --production
 npm run build
 
 sudo systemctl restart roject
