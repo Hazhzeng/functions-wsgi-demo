@@ -13,20 +13,20 @@ const connectedRouterMiddleware = routerMiddleware(history);
 
 export let store = undefined;
 if (websiteMode === 'development') {
-    store = createStore(
-        connectRouter(history)(ApplicationState),
-        compose(
-            applyMiddleware(sagaMiddleware, connectedRouterMiddleware),
-            window['devToolsExtension'] ? window['devToolsExtension']() : f => f
-        )
-    );
+  store = createStore(
+    connectRouter(history)(ApplicationState),
+    compose(
+      applyMiddleware(sagaMiddleware, connectedRouterMiddleware),
+      window['devToolsExtension'] ? window['devToolsExtension']() : f => f
+    )
+  );
 } else if (websiteMode === 'production') {
-    store = createStore(
-        connectRouter(history)(ApplicationState),
-        applyMiddleware(sagaMiddleware, connectedRouterMiddleware)
-    );
+  store = createStore(
+    connectRouter(history)(ApplicationState),
+    applyMiddleware(sagaMiddleware, connectedRouterMiddleware)
+  );
 } else {
-    throw new Error('Failed to initialise due to unknown websiteMode');
+  throw new Error('Failed to initialise due to unknown websiteMode');
 }
 
 sagaMiddleware.run(sagaWatchers);

@@ -9,24 +9,24 @@ import { store, history } from './store';
 import App from './app';
 
 const render = () => {
-    ReactDOM.render(
-        <AppContainer>
-            <Provider store={store}>
-                <App history={history} />
-            </Provider>
-        </AppContainer>,
-        document.getElementById('app')
-    );
+  ReactDOM.render(
+    <AppContainer>
+      <Provider store={store}>
+        <App history={history} />
+      </Provider>
+    </AppContainer>,
+    document.getElementById('app')
+  );
 }
 
 render();
 
 if (module.hot) {
-    module.hot.accept('./App', () => {
-        render()
-    })
+  module.hot.accept('./App', () => {
+    render()
+  })
 
-    module.hot.accept('./reducers', () => {
-        store.replaceReducer(connectRouter(history)(ApplicationState))
-    })
+  module.hot.accept('./reducers', () => {
+    store.replaceReducer(connectRouter(history)(ApplicationState))
+  })
 }

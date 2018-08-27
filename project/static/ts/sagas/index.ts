@@ -4,6 +4,6 @@ const sagas = [
 
 ];
 
-export default function *root() {
-    yield sagas.map(saga => fork(saga));
+export default function* root() {
+  yield sagas.map(saga => fork(saga));
 } 

@@ -1,6 +1,6 @@
 interface IActionBase {
-    type: string,
-    payload: any,
+  type: string,
+  payload: any,
 };
 
 export default IActionBase;
