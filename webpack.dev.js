@@ -12,7 +12,9 @@ module.exports = merge(common, {
   },
   plugins: [
     new webpack.DefinePlugin({
-      'process.env.NODE:ENV': '"development"',
+      'process.env': {
+        'PRISTINE_MODE': '"development"',
+      }
     })
   ],
 });

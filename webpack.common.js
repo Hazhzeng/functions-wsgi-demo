@@ -4,9 +4,9 @@ let HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   resolve: {
-    extensions: ['.ts', '.tsx']
+    extensions: ['.ts', '.tsx', '.js']
   },
-  entry: path.resolve(__dirname, 'project', 'static', 'ts', 'index.ts'),
+  entry: path.resolve(__dirname, 'project', 'static', 'ts', 'index.tsx'),
   output: {
     path: path.resolve(__dirname, 'project', 'static', 'dist'),
     chunkFilename: '[name].bundle.js',

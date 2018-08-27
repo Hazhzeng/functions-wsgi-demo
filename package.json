@@ -5,6 +5,7 @@
     "main": "index.js",
     "scripts": {
         "start": "webpack-dev-server --hot --inline --open --config webpack.dev.js",
+        "watch": "webpack --watch --config webpack.dev.js",
         "build": "webpack --config webpack.prod.js"
     },
     "keywords": [
@@ -18,9 +19,11 @@
     "devDependencies": {
         "@material-ui/core": "^1.5.1",
         "@material-ui/icons": "^2.0.3",
+        "@types/node": "^10.9.2",
         "@types/react": "^16.4.11",
         "@types/react-dom": "^16.0.7",
         "@types/react-router-dom": "^4.3.0",
+        "@types/webpack-env": "^1.13.6",
         "awesome-typescript-loader": "^5.2.0",
         "babel-core": "^6.26.3",
         "babel-preset-env": "^1.7.0",
@@ -35,6 +38,7 @@
         "webpack-merge": "^4.1.2"
     },
     "dependencies": {
+        "connected-react-router": "^4.4.1",
         "file-loader": "^2.0.0",
         "highlight.js": "^9.12.0",
         "lodash": "^4.17.5",

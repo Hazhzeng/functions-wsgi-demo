@@ -6,7 +6,9 @@ module.exports = merge(common, {
   mode: 'production',
   plugins: [
     new webpack.DefinePlugin({
-      'process.env.NODE:ENV': '"production"',
+      'process.env': {
+        'PRISTINE_MODE': '"production"',
+      }
     })
   ],
 });
