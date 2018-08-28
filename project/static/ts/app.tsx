@@ -13,6 +13,7 @@ const App = ({ history }: AppProps) => (
     <div>
       <Switch>
         {routes.map(route => <Route
+          key={route.key}
           path={route.path}
           exact={route.exact}
           component={route.component}
