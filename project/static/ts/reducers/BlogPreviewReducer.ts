@@ -1,5 +1,11 @@
-import { IBlogPreview } from '../models';
 import IActionBase from '../actions/ActionBase';
+
+export interface IBlogPreview {
+  title: string,
+  tags: string[],
+  text: string,
+  update: string,
+}
 
 const initialState = (): IBlogPreview => ({
   title: undefined,

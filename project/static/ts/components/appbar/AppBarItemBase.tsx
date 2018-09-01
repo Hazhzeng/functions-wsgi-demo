@@ -16,9 +16,8 @@ export interface IAppBarItemBaseProps {
   onHoverAction?: EventListener,
 };
 
-export class AppBarItemBase extends React.PureComponent<IAppBarItemBaseProps> {  
-  // virtual
-  protected renderIcon() {
+export class AppBarItemBase extends React.PureComponent<IAppBarItemBaseProps> {
+  protected renderIcon() /* virtual */ {
     return <Menu />;
   }
 
@@ -28,5 +27,11 @@ export class AppBarItemBase extends React.PureComponent<IAppBarItemBaseProps> {
         {this.renderIcon()}
       </IconButton>
     );
+  }
+}
+
+declare namespace JSX {
+  interface IntrinsicElements {
+    foo: { requiredProp: string; optionalProp?: number }
   }
 }
