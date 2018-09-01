@@ -16,13 +16,6 @@ app = Flask(
 app.config.from_object(__name__)
 
 CONFIG_FILE = os.path.join(app.root_path, '..', 'roject.config')
-VERSION_FILE = os.path.join(app.root_path, '..', 'version.txt')
-
-with open(VERSION_FILE, 'r') as version_file:
-    version = version_file.readline().strip()
-    app.config.update(dict(
-        VERSION=version
-    ))
 
 with open(CONFIG_FILE, 'r') as config_file:
     config = json.load(config_file)
@@ -39,9 +32,6 @@ app.config.update(dict(
 ))
 
 db = SQLAlchemy(app)
-
-#logging.basicConfig(format='%(asctime)-15s %(message)s')
-#logger = logging.getLogger('Roject Logger')
 
 import project.views.views
 import project.views.api

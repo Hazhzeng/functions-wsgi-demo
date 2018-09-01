@@ -49,7 +49,3 @@ def context_user():
             'login_expiry': g.user.login_expiry,
         })
     return dict(user=None)
-
-@app.context_processor
-def context_version():
-    return dict(version=app.config['VERSION'])

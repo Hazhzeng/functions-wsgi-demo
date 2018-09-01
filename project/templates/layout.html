@@ -37,9 +37,6 @@
       {% if user %}
         window.context.user = {{ user|tojson|safe }};
       {% endif %}
-      {% if version %}
-        window.context.version = {{ version|tojson|safe }};
-      {% endif %}
     </script>
 
     <div id="app"></div>

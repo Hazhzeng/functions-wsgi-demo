@@ -1,16 +1,20 @@
+/* eslint-disable */
 let path = require('path');
 let webpack = require('webpack');
 let HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   resolve: {
-    extensions: ['.ts', '.tsx', '.js']
+    alias: {
+      base: path.resolve(__dirname, 'project', 'static', 'src'),
+    },
+    extensions: ['.js', '.jsx']
   },
-  entry: path.resolve(__dirname, 'project', 'static', 'ts', 'index.tsx'),
+  entry: path.resolve(__dirname, 'project', 'static', 'src', 'index.jsx'),
   output: {
     path: path.resolve(__dirname, 'project', 'static', 'dist'),
     chunkFilename: '[name].bundle.js',
-    filename: '[name].[contenthash].js'
+    filename: '[name].[hash].js'
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -21,9 +25,9 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(ts|tsx)$/,
+        test: /\.(js|jsx)$/,
         exclude: /node_modules/,
-        loader: 'awesome-typescript-loader',
+        loader: 'babel-loader',
       },
       {
         test: /\.(jpg|jpeg|png|gif|svg|ico)$/,
