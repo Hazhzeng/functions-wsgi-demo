@@ -1,5 +1,5 @@
 const initialState = {
-  current: ViewConstants.VIEW_INITIALISED,
+  blogsById: {}
 };
 
 export default (state = initialState, action) => {
