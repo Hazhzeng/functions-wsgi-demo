@@ -5,7 +5,11 @@ import { ApplicationBar } from '../components/appbar';
 class Appbar extends React.PureComponent {
   render() {
     return (
-      <ApplicationBar title="Pristine" view={this.props.view}/>
+      <ApplicationBar
+        title="Pristine"
+        view={this.props.view}
+        progress={this.props.progress}
+      />
     )
   }
 }
@@ -13,5 +17,6 @@ class Appbar extends React.PureComponent {
 export const AppbarContainer = connect(
   state => ({
     view: state.view.currentView,
+    progress: state.ui.progress,
   })
 )(Appbar);

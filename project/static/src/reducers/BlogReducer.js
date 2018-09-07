@@ -1,5 +1,6 @@
 const initialState = {
-  blogsById: {}
+  blogsById: {},
+  blogsEditingById: {}
 };
 
 export default (state = initialState, action) => {

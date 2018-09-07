@@ -5,7 +5,29 @@ export const definition = {
   EDIT_BLOG_BY_ID: `[${prefix}]EDIT_BLOG_BY_ID`,
   SAVE_BLOG_BY_ID: `[${prefix}]SAVE_BLOG_BY_ID`,
   DISGARD_ALL_DRAFTS: `[${prefix}]DISGARD_ALL_DRAFTS`,
+
+  GET_ALL_BLOGS: `[${prefix}]GET_ALL_BLOGS`,
+  GET_ALL_BLOGS_SUCCESS: `[${prefix}]GET_ALL_BLOGS->SUCCESS`,
+  GET_ALL_BLOGS_FAILURE: `[${prefix}]GET_ALL_BLOGS->FAILURE`,
 };
+
+export const getAllBlogs = () => ({
+  type: definition.GET_ALL_BLOGS,
+});
+
+export const getAllBlogsSuccess = (blogData) => ({
+  type: definition.GET_ALL_BLOGS_SUCCESS,
+  payload: {
+    data: blogData
+  },
+});
+
+export const getAllBlogsFailure = (errorMessage) => ({
+  type: definition.GET_ALL_BLOGS_FAILURE,
+  payload: {
+    error: errorMessage
+  },
+});
 
 export const pushBlogById = (id, content) => ({
   type: definition.PUSH_BLOG_BY_ID,

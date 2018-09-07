@@ -7,7 +7,6 @@ from webargs.flaskparser import use_args
 
 from project import app, db
 from project.views import response
-from project.schema import BlogSchema
 from project.models import BlogModel, UserModel, TagModel
 
 from .wrappers import login_required_api
@@ -20,7 +19,9 @@ def ping() -> str:
 
 @app.route('/api/postblog', methods=['POST'])
 @login_required_api
-@use_args(BlogSchema())
+@use_args({
+    'id': fields.Integer()
+})
 def postblog_api(args) -> Response:
     new_blog = BlogModel(title=args.title, tag=args.tag, text=args.text)
     if g.user:
@@ -44,7 +45,9 @@ def postblog_api(args) -> Response:
 
 @app.route('/api/updateblog', methods=['PATCH'])
 @login_required_api
-@use_args(BlogSchema())
+@use_args({
+    'id': fields.Integer()
+})
 def updateblog_api(args) -> Response:
     blog_id = args.id
     blog = db.session.query(BlogModel)\
@@ -111,8 +114,7 @@ def getblog_api(args) -> Response:
         limit = args['limit']
         blogs = blogs.limit(limit)
 
-    ret = [BlogSchema().dump(blog).data for blog in blogs.all()]
-    return response.ok(ret)
+    return response.ok()
 
 
 @app.route('/api/login', methods=['POST'])

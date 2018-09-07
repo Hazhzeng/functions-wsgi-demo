@@ -1,9 +1,8 @@
-import { fork } from "redux-saga/effects";
-
-const sagas = [
-
-];
+import { all } from 'redux-saga/effects';
+import BlogSaga from './BlogSaga';
 
 export default function *root() {
-  yield sagas.map(saga => fork(saga));
+  yield all([
+    ...BlogSaga
+  ]);
 }

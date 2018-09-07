@@ -10,7 +10,8 @@ class TagModel(db.Model):
     tag = db.Column(db.String(128), unique=True, nullable=False)
     date_added = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     
-    blogs = relationship('BlogModel',
+    blogs = relationship(
+        'BlogModel',
         secondary=BlogTagAssociation,
         back_populates='tags',
         uselist=True,

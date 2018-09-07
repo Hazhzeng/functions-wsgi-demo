@@ -11,8 +11,8 @@ import BlogButton from './AppBarItemBlog';
 import EditButton from './AppBarItemEdit';
 
 class ApplicationBar extends React.PureComponent {
-  _renderProgressBar(progress) {
-    return <LoadingIndicator progressNumber={progress} />
+  _renderProgressBar() {
+    return <LoadingIndicator progress={this.props.progress} />
   }
 
   _renderTitle() {
@@ -42,7 +42,7 @@ class ApplicationBar extends React.PureComponent {
       <div className={this.props.classes.root}>
         <AppBar position={'fixed'}>
           <Toolbar>
-            {this._renderProgressBar(50)}
+            {this._renderProgressBar()}
             {this._renderTitle()}
             {this._renderAppBarItems()}
           </Toolbar>
@@ -55,6 +55,7 @@ class ApplicationBar extends React.PureComponent {
 ApplicationBar.propTypes = {
   title: PropTypes.string,
   view: PropTypes.string.isRequired,
+  progress: PropTypes.number.isRequired,
   classes: PropTypes.object.isRequired,
 }
 
