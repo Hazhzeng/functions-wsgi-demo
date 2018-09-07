@@ -19,16 +19,20 @@ CONFIG_FILE = os.path.join(app.root_path, '..', 'roject.config')
 with open(CONFIG_FILE, 'r') as config_file:
     config = json.load(config_file)
     app.config.update(dict(
-        SQLALCHEMY_DATABASE_URI='sqlite:////{}'\
-            .format(os.path.join(app.root_path, 'sql', config['database'])),
-        SECRET_KEY=config['secret_key'],
-        USERNAME=config['username'],
-        PASSWORD=config['password'],
+        SQLALCHEMY_DATABASE_URI=''
+        '{dialect}+{driver}://{username}:{password}@{host}:{port}/{database}'\
+            .format(
+                dialect=config['dialect'],
+                driver=config['driver'],
+                username=config['username'],
+                password=config['password'],
+                host=config['host'],
+                port=config['port'],
+                database=config['database'],
+            ),
     ))
 
-app.config.update(dict(
-    SQLALCHEMY_TRACK_MODIFICATIONS='False',
-))
+app.config.update(dict(SQLALCHEMY_TRACK_MODIFICATIONS='False'))
 
 db = SQLAlchemy(app)
 

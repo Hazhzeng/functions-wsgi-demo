@@ -29,7 +29,7 @@ class BlogModel(db.Model):
         nullable=True
     )
     last_update = db.Column(
-        'LastUpdateUtc'
+        'LastUpdateUtc',
         db.DateTime,
         nullable=False,
         default=datetime.utcnow
