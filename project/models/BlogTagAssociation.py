@@ -1,7 +1,20 @@
 from project import db
 from sqlalchemy import ForeignKey
 
-BlogTagAssociation = db.Table('blog_tag_association', db.Model.metadata,
-    db.Column('blog_id', db.Integer, ForeignKey('BlogModel.id')),
-    db.Column('tag_id', db.Integer, ForeignKey('TagModel.id'))
-)
+class BlogTagAssociation(db.Model):
+    __tablename__ = 'blog_tag'
+    id = db.Column(
+        'Id',
+        db.Integer,
+        primary_key=True
+    )
+    blog_id = db.Column(
+        'BlogId',
+        db.Integer,
+        ForeignKey('BlogModel.id')
+    )
+    tag_id = db.Column(
+        'TagId',
+        db.Integer,
+        ForeignKey('TagModel.id')
+    )

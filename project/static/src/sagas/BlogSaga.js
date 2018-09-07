@@ -1,12 +1,15 @@
-import { definition, getAllBlogsSuccess } from '../actions/BlogActions';
-import { put, takeLatest } from 'redux-saga/effects';
+import { call, put, takeLatest } from 'redux-saga/effects';
+import Api from '../api';
+import { definition as blog, getAllBlogsSuccess } from '../actions/BlogActions';
+import { pushProgress } from '../actions/UiActions';
 
 function *getAllBlogsSaga() {
-  yield put(getAllBlogsSuccess('blogs'));
+  yield put(pushProgress(0));
+  const data = yield call(Api.getAllBlogs);
+  yield put(getAllBlogsSuccess(data));
+  yield put(pushProgress(100));
 }
 
-function *watcher() {
-  yield takeLatest(definition.GET_ALL_BLOGS, getAllBlogsSaga)
-}
-
-export default [watcher];
+export default [
+  takeLatest(blog.GET_ALL_BLOGS, getAllBlogsSaga)
+];

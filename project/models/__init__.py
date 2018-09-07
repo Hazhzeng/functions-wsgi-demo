@@ -7,4 +7,9 @@ from .BlogTagAssociation import BlogTagAssociation
 
 db.create_all()
 
-__all__ = ['BlogModel', 'UserModel', 'TagModel', 'BlogTagAssociation']
+__all__ = [
+    'BlogModel',
+    'UserModel',
+    'TagModel',
+    'BlogTagAssociation',
+]

@@ -1,5 +1,6 @@
 import hashlib, uuid
 from flask import Response, g, session, request, json
+from flask.views import MethodView
 from dateutil import parser
 from datetime import datetime, timedelta
 from webargs import fields
@@ -13,9 +14,17 @@ from .wrappers import login_required_api
 
 
 @app.route('/api/ping', methods=['GET'])
-def ping() -> str:
+def ping():
     return response.ok('pong')
 
+@app.route('/api/blog', methods=['GET'])
+def blog_get():
+    blogs = db.session.query(
+        BlogModel
+    ).order_by(
+        BlogModel.last_update.desc()
+    ).all()
+    return response.ok(blogs)
 
 @app.route('/api/postblog', methods=['POST'])
 @login_required_api

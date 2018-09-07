@@ -9,7 +9,7 @@ export default (state = initialState, action) => {
   switch (action.type) {
     case definition.PUSH_PROGRESS:
       return _.assignIn(state, {
-        progress: Math.min(state.progress, action.payload.percentage)
+        progress: action.payload.percentage
       });
     default:
       return state;

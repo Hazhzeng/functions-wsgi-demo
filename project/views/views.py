@@ -8,18 +8,16 @@ from .wrappers import login_required
 def root_view():
     return redirect('/home', 302)
 
-@app.route('/index')
+
 @app.route('/home')
-@app.route('/info')
-@app.route('/login')
-def index_view():
+def logout_view():
     return render_template('index.html')
 
 
-@app.route('/post')
+@app.route('/edit')
 @app.route('/logout')
 @login_required
-def post_view():
+def login_view():
     return render_template('index.html')
 
 

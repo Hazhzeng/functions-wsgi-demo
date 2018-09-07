@@ -5,15 +5,28 @@ from sqlalchemy.orm import relationship
 from .BlogTagAssociation import BlogTagAssociation
 
 class TagModel(db.Model):
-    __tablename__ = 'tag_model'
-    id = db.Column(db.Integer, primary_key=True)
-    tag = db.Column(db.String(128), unique=True, nullable=False)
-    date_added = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    __tablename__ = 'tag'
+    id = db.Column(
+        'Id',
+        db.Integer,
+        primary_key=True
+    )
+    tag = db.Column(
+        'Tag',
+        db.String(128),
+        unique=True,
+        nullable=False
+    )
+    date_added = db.Column(
+        'DateAddedUtc',
+        db.DateTime,
+        nullable=False,
+        default=datetime.utcnow
+    )
     
     blogs = relationship(
         'BlogModel',
         secondary=BlogTagAssociation,
-        back_populates='tags',
         uselist=True,
     )
 
