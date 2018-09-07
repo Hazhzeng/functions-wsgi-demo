@@ -1,4 +1,4 @@
-const prefix = 'BlogAction';
+const prefix = 'Blog';
 
 export const definition = {
   PUSH_BLOG_BY_ID: `[${prefix}]PUSH_BLOG_BY_ID`,
@@ -7,28 +7,28 @@ export const definition = {
   DISGARD_ALL_DRAFTS: `[${prefix}]DISGARD_ALL_DRAFTS`,
 };
 
-export const push_blog_by_id = (id, content) => ({
-  action: definition.PUSH_BLOG_BY_ID,
+export const pushBlogById = (id, content) => ({
+  type: definition.PUSH_BLOG_BY_ID,
   payload: {
     id,
     content,
   }
 });
 
-export const edit_blog_by_id = (id) => ({
-  action: definition.EDIT_BLOG_BY_ID,
+export const editBlogById = (id) => ({
+  type: definition.EDIT_BLOG_BY_ID,
   payload: {
     id,
   }
 });
 
-export const save_blog_by_id = (id) => ({
-  action: definition.SAVE_BLOG_BY_ID,
+export const saveBlogById = (id) => ({
+  type: definition.SAVE_BLOG_BY_ID,
   payload: {
     id,
   }
 });
 
-export const disgard_all_drafts = () => ({
-  action: definition.DISGARD_ALL_DRAFTS,
+export const disgardAllDrafts = () => ({
+  type: definition.DISGARD_ALL_DRAFTS,
 });

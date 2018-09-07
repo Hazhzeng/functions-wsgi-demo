@@ -1,8 +1,10 @@
 import { combineReducers } from 'redux';
-import BlogPreviewReducer from './reducers/BlogPreviewReducer';
+import BlogReducer from './reducers/BlogReducer';
 import ViewReducer from './reducers/ViewReducer';
+import UiReducer from './reducers/UiReducer';
 
 export const ApplicationState = combineReducers({
-  blogPreview: BlogPreviewReducer,
+  blog: BlogReducer,
   view: ViewReducer,
+  ui: UiReducer,
 });

@@ -6,11 +6,9 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import LoadingIndicator from './LoadingIndicator';
 
-import {
-  BlogAppBarItem,
-  AccountAppBarItem,
-  EditAppBarItem,
-} from './AppBarItems';
+import AccountButton from './AppBarItemAccount';
+import BlogButton from './AppBarItemBlog';
+import EditButton from './AppBarItemEdit';
 
 class ApplicationBar extends React.PureComponent {
   _renderProgressBar(progress) {
@@ -24,7 +22,7 @@ class ApplicationBar extends React.PureComponent {
         color='inherit'
         className={this.props.classes.flex}
       >
-        Title
+        {this.props.title}
       </Typography>
     );
   }
@@ -32,9 +30,9 @@ class ApplicationBar extends React.PureComponent {
   _renderAppBarItems() {
     return (
       <div>
-        <BlogAppBarItem />
-        <EditAppBarItem />
-        <AccountAppBarItem />
+        <BlogButton />
+        <EditButton />
+        <AccountButton />
       </div>
     );
   }

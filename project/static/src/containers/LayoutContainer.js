@@ -8,7 +8,7 @@ class Layout extends React.PureComponent {
   render() {
     return (
       <div>
-        <ApplicationBar />
+        <ApplicationBar title="Pristine" />
         <Grid container spacing={24}>
           <BlogEditor />
           <BlogPreview title='title' tags={[]} time='2018-09-01' text='text' />

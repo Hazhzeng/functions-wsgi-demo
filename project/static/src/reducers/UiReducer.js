@@ -1,8 +1,5 @@
 const initialState = {
-  title: undefined,
-  tags: undefined,
-  text: undefined,
-  update: undefined,
+  current: undefined,
 };
 
 export default (state = initialState, action) => {
