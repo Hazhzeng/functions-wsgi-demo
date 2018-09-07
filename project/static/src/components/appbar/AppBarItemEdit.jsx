@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import IconButton from '@material-ui/core/IconButton';
-import { EditOutlined } from '@material-ui/icons';
+import { EditOutlined, EditSharp } from '@material-ui/icons';
 import { view, changeView } from '../../actions/ViewActions';
 
 class AppBarItemEdit extends React.Component {
@@ -15,6 +15,9 @@ class AppBarItemEdit extends React.Component {
   }
 
   renderIcon() {
+    if (this.props.view === view.EDIT_VIEW) {
+      return <EditSharp />;
+    }
     return <EditOutlined />;
   }
 

@@ -1,10 +1,10 @@
-import { LayoutContainer } from './containers';
+import { HomePage } from './pages';
 
 export default [
   {
-    key: 'main_container',
+    key: 'home',
     path: '/home',
     exact: true,
-    component: LayoutContainer,
+    component: HomePage,
   }
 ];

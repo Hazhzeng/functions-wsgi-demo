@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import IconButton from '@material-ui/core/IconButton';
-import { CalendarTodayOutlined } from '@material-ui/icons';
+import { CalendarTodayOutlined, CalendarTodaySharp } from '@material-ui/icons';
 import { view, changeView } from '../../actions/ViewActions';
 
 class AppBarItemBlog extends React.Component {
@@ -15,6 +15,9 @@ class AppBarItemBlog extends React.Component {
   }
 
   renderIcon() {
+    if (this.props.view === view.BLOG_VIEW) {
+      return <CalendarTodaySharp />;
+    }
     return <CalendarTodayOutlined />;
   }
 

@@ -30,9 +30,9 @@ class ApplicationBar extends React.PureComponent {
   _renderAppBarItems() {
     return (
       <div>
-        <BlogButton />
-        <EditButton />
-        <AccountButton />
+        <BlogButton view={this.props.view} />
+        <EditButton view={this.props.view} />
+        <AccountButton view={this.props.view} />
       </div>
     );
   }
@@ -40,9 +40,9 @@ class ApplicationBar extends React.PureComponent {
   render() {
     return (
       <div className={this.props.classes.root}>
-        <AppBar position={'static'}>
+        <AppBar position={'fixed'}>
           <Toolbar>
-            {this._renderProgressBar(100)}
+            {this._renderProgressBar(50)}
             {this._renderTitle()}
             {this._renderAppBarItems()}
           </Toolbar>
@@ -54,6 +54,7 @@ class ApplicationBar extends React.PureComponent {
 
 ApplicationBar.propTypes = {
   title: PropTypes.string,
+  view: PropTypes.string.isRequired,
   classes: PropTypes.object.isRequired,
 }
 
