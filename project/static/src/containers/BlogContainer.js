@@ -10,7 +10,7 @@ class Blog extends React.PureComponent {
 
   render() {
     return (
-      <BlogPreviewList />
+      <BlogPreviewList blogs={this.props.blogs} />
     );
   }
 }
@@ -19,6 +19,7 @@ export const BlogContainer = connect(
   state => ({
     view: state.view.currentView,
     progress: state.ui.progress,
+    blogs: Object.values(state.blog.blogsById),
   }),
   dispatch => ({
     getAllBlogs: () => dispatch(getAllBlogs())

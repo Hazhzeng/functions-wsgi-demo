@@ -21,7 +21,7 @@ class BlogModel(db.Model):
     )
     text = db.Column(
         'Text',
-        db.String(8192),
+        db.Text,
         unique=False,
         nullable=True
     )

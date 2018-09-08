@@ -9,9 +9,12 @@ from webargs.flaskparser import use_args
 from project import app, db
 from project.views import response
 from project.models import BlogModel, UserModel, TagModel
+from project.handlers.blog_handlers import (
+    get_all_blogs,
+    serialise_blogs
+)
 
 from .wrappers import login_required_api
-
 
 @app.route('/api/ping', methods=['GET'])
 def ping():
@@ -19,12 +22,8 @@ def ping():
 
 @app.route('/api/blog', methods=['GET'])
 def blog_get():
-    blogs = db.session.query(
-        BlogModel
-    ).order_by(
-        BlogModel.last_update.desc()
-    ).all()
-    return response.ok(blogs)
+    blogs = get_all_blogs()
+    return response.ok(serialise_blogs(blogs))
 
 @app.route('/api/postblog', methods=['POST'])
 @login_required_api
