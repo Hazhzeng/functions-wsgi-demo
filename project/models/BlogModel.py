@@ -1,9 +1,6 @@
 from project import db
 from datetime import datetime
 
-from sqlalchemy import ForeignKey
-from sqlalchemy.orm import relationship
-
 class BlogModel(db.Model):
     __tablename__ = 'blog'
     id = db.Column(
@@ -14,7 +11,7 @@ class BlogModel(db.Model):
     author_id = db.Column(
         'AuthorId',
         db.Integer,
-        ForeignKey('user_model.id')
+        db.ForeignKey('user.Id')
     )
     title = db.Column(
         'Title',
@@ -29,21 +26,22 @@ class BlogModel(db.Model):
         nullable=True
     )
     last_update = db.Column(
-        'LastUpdateUtc',
+        'LastUpdateDateUtc',
         db.DateTime,
         nullable=False,
         default=datetime.utcnow
     )
 
-    author = relationship(
+    author = db.relationship(
         'UserModel',
-        primaryjoin='BlogModel.user==UserModel.id',
-        uselist=False
+        primaryjoin='UserModel.id==BlogModel.author_id',
+        uselist=False,
     )
-    tags = relationship(
+    tags = db.relationship(
         'TagModel',
-        primaryjoin='BlogModel.id==BlogTagAssociation.blog_id',
-        secondaryjoin='TagModel.id==BlogTagAssociation.tag_id',
+        primaryjoin='BlogTagAssociation.tag_id==TagModel.id',
+        secondary='blog_tag_map',
+        secondaryjoin='BlogModel.id==BlogTagAssociation.blog_id',
         uselist=True,
     )
 

@@ -1,6 +1,5 @@
 from project import db
 from datetime import datetime
-from sqlalchemy.orm import relationship
 
 from .BlogTagAssociation import BlogTagAssociation
 
@@ -22,12 +21,6 @@ class TagModel(db.Model):
         db.DateTime,
         nullable=False,
         default=datetime.utcnow
-    )
-    
-    blogs = relationship(
-        'BlogModel',
-        secondary=BlogTagAssociation,
-        uselist=True,
     )
 
     def __repr__(self):
