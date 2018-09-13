@@ -1,8 +1,8 @@
 create table user (
 	Id INT auto_increment primary key,
 	Username VARCHAR(32) not null,
-	Salt VARCHAR(32) not null,
-	Hash CHAR(32) null,
+	Salt CHAR(32) not null,
+	Hash CHAR(128) null,
 	Token CHAR(32) null,
 	RegistrationDateUtc DATETIME null,
 	LoginDateUtc DATETIME null,

@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -39,7 +40,7 @@ class ApplicationBar extends React.PureComponent {
 
   render() {
     return (
-      <div className={this.props.classes.root}>
+      <Grid item sm={12} lg={12} className={this.props.classes.root}>
         <AppBar position={'fixed'}>
           <Toolbar>
             {this._renderProgressBar()}
@@ -47,7 +48,7 @@ class ApplicationBar extends React.PureComponent {
             {this._renderAppBarItems()}
           </Toolbar>
         </AppBar>
-      </div>
+      </Grid>
     );
   }
 }

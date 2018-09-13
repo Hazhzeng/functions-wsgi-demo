@@ -11,7 +11,13 @@ export default (state = initialState, action) => {
     case definition.GET_ALL_BLOGS_SUCCESS: {
       const newBlogsById = {};
       action.payload.data.blogs.map(blog => {
-        newBlogsById[blog.id] = blog
+        newBlogsById[blog.id] = {
+          id: blog.id,
+          authorId: blog.author_id,
+          text: blog.text,
+          title: blog.title,
+          updateDate: blog.update_date,
+        }
       });
       return _.assignIn(state, {
         blogsById: newBlogsById

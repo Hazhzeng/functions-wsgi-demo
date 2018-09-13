@@ -14,6 +14,10 @@ const theme = createMuiTheme({
       main: '#5c2d1f',
     },
   },
+  typography: {
+    fontSize: 24,
+    htmlFontSize: 20,
+  }
 });
 
 const App = ({ history }) => (

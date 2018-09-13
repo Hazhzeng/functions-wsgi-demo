@@ -20,7 +20,8 @@ def serialise_blogs(blogs: List[BlogModel]) -> Dict[str, any]:
     for blog in blogs:
         result['blogs'].append({
             'id': blog.id,
-            'author': blog.author_id,
+            'author_id': blog.author_id,
+            'title': blog.title,
             'text': blog.text,
             'update_date': blog.last_update
         })

@@ -68,7 +68,7 @@ class BlogPreview extends React.PureComponent {
   render() {
     return (
       <Grid item sm={12} lg={6}>
-        <Paper elevation={3} className={this.props.classes.paper}>
+        <Paper elevation={1} className={this.props.classes.paper}>
           <Typography variant='title' component='h3'>
             {this._renderTitle()}
           </Typography>
@@ -97,9 +97,11 @@ BlogPreview.propType = {
 
 const styles = (theme) => ({
   paper: {
-    padding: theme.spacing.unit * 2,
+    padding: theme.spacing.unit * 5,
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
+    marginTop: theme.spacing.unit * 3,
+    marginBottom: theme.spacing.unit * 3,
   }
 });
 
