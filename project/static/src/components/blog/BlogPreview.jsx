@@ -68,7 +68,7 @@ class BlogPreview extends React.PureComponent {
   render() {
     return (
       <Grid item sm={12} lg={6}>
-        <Paper elevation={1} className={this.props.classes.paper}>
+        <Paper className={this.props.classes.paper}>
           <Typography variant='title' component='h3'>
             {this._renderTitle()}
           </Typography>

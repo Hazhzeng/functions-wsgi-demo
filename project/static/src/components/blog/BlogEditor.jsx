@@ -61,7 +61,7 @@ class BlogEditor extends React.PureComponent {
 
   render() {
     return (
-      <Grid item sm={12} lg={8}>
+      <Grid item sm={10} lg={6}>
         {this._renderTitleEditor()}
         {this._renderTagEditor()}
         {this._renderAceEditor()}

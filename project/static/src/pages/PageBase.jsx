@@ -4,7 +4,7 @@ import { AppbarContainer } from '../containers';
 
 export class PageBase extends React.PureComponent {
   renderIf() {
-    throw new Error('renderIf needs to be implemented');
+    return true;
   }
 
   renderComponent() {
@@ -13,7 +13,13 @@ export class PageBase extends React.PureComponent {
 
   render() {
     return (
-      <Grid container spacing={24}>
+      <Grid
+        container
+        spacing={24}
+        direction="row"
+        justify="flex-start"
+        alignItems="flex-start"
+      >
         <AppbarContainer />
         {this.renderIf() && this.renderComponent()}
       </Grid>

@@ -5,19 +5,19 @@ import TextField from '@material-ui/core/TextField';
 
 import { withStyles } from '@material-ui/core/styles';
 
-class AccountEmailField extends React.Component {
+class AccountPasswordField extends React.Component {
   render() {
     return (
       <Grid item sm={8} lg={7}>
         <TextField
-          id="email"
+          id="password"
+          type="password"
           value={this.props.value}
           label={this.props.label}
           onChange={this.props.handleChange}
           className={this.props.classes.textField}
           margin="normal"
           fullWidth
-          autoFocus
           required
         />
       </Grid>
@@ -25,7 +25,7 @@ class AccountEmailField extends React.Component {
   }
 }
 
-AccountEmailField.propTypes = {
+AccountPasswordField.propTypes = {
   value: PropTypes.string,
   label: PropTypes.string,
   handleChange: PropTypes.func,
@@ -33,8 +33,9 @@ AccountEmailField.propTypes = {
 
 const styles = (theme) => ({
   textField: {
-    marginTop: theme.spacing.unit * 20,
+    marginTop: theme.spacing.unit * 16,
   }
 });
 
-export const AccountEmailFieldWithStyle = withStyles(styles)(AccountEmailField);
+export const AccountPasswordFieldWithStyle =
+  withStyles(styles)(AccountPasswordField);
