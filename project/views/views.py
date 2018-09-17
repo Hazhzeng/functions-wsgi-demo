@@ -4,12 +4,14 @@ from project import app, db
 from project.models import UserModel
 from .wrappers import login_required
 
+
 @app.route('/')
-def root_view():
-    return redirect('/home', 302)
+def index():
+    return redirect('/articles')
 
 
-@app.route('/home')
+@app.route('/articles')
+@app.route('/account')
 def logout_view():
     return render_template('index.html')
 

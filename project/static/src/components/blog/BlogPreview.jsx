@@ -101,7 +101,6 @@ const styles = (theme) => ({
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
     marginTop: theme.spacing.unit * 3,
-    marginBottom: theme.spacing.unit * 3,
   }
 });
 

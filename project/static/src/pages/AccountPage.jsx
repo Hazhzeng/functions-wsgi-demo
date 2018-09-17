@@ -1,22 +1,22 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PageBase from './PageBase';
-import { BlogContainer } from '../containers';
+import { AccountContainer } from '../containers';
 import { view } from '../actions/ViewActions';
 
-class Home extends PageBase {
+class Account extends PageBase {
   renderIf() {
-    const renderOnView = [view.BLOG_VIEW];
+    const renderOnView = [view.ACCOUNT_VIEW];
     return renderOnView.includes(this.props.view);
   }
 
   renderComponent() {
-    return <BlogContainer />;
+    return <AccountContainer />;
   }
 }
 
-export const HomePage = connect(
+export const AccountPage = connect(
   state => ({
     view: state.view.currentView
   })
-)(Home);
+)(Account);

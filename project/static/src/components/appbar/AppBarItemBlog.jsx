@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import IconButton from '@material-ui/core/IconButton';
 import { CalendarTodayOutlined, CalendarTodaySharp } from '@material-ui/icons';
 import { view, changeView } from '../../actions/ViewActions';
+import { changeRoute } from '../../actions/RouteActions';
 
 class AppBarItemBlog extends React.Component {
   constructor(props) {
@@ -12,6 +13,7 @@ class AppBarItemBlog extends React.Component {
 
   handleClick() {
     this.props.changeViewToBlogViewer();
+    this.props.changeRoute('/articles');
   }
 
   renderIcon() {
@@ -37,6 +39,7 @@ class AppBarItemBlog extends React.Component {
 export default connect(
   null,
   dispatch => ({
-    changeViewToBlogViewer: () => dispatch(changeView(view.BLOG_VIEW))
+    changeViewToBlogViewer: () => dispatch(changeView(view.BLOG_VIEW)),
+    changeRoute: routePath => dispatch(changeRoute(routePath)),
   })
 )(AppBarItemBlog)
