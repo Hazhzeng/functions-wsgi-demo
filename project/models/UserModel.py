@@ -32,7 +32,7 @@ class UserModel(db.Model):
         nullable=True
     )
     register_date = db.Column(
-        'RegisterationDateUtc',
+        'RegistrationDateUtc',
         db.DateTime,
         nullable=True
     )

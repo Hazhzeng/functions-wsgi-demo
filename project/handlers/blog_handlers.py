@@ -9,7 +9,9 @@ def get_all_blogs() -> List[BlogModel]:
     return blogs
 
 def get_blog_by_id(id: int) -> BlogModel:
-    blog = db.session.query(BlogModel).filter(BlogModel.id == id).first()
+    blog = db.session.query(BlogModel).filter(
+        BlogModel.id == id
+    ).first()
     if not blog:
         raise BlogNotFoundException
     return blog

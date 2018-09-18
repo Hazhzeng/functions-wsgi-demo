@@ -13,6 +13,13 @@ from project.handlers.blog_handlers import (
     get_all_blogs,
     serialise_blogs
 )
+from project.handlers.account_handlers import (
+    is_valid_email,
+    get_user_by_email
+)
+from project.handlers.exceptions import (
+    UserNotFoundException
+)
 
 from .wrappers import login_required_api
 
@@ -24,6 +31,25 @@ def ping():
 def blog_get():
     blogs = get_all_blogs()
     return response.ok(serialise_blogs(blogs))
+
+@app.route('/api/account/<email>', methods=['GET'])
+def account_email_get(email: str):
+    isEmail = is_valid_email(email)
+    if not isEmail:
+        return response.bad_request({
+            'error': 'Email address is malformed'
+        })
+    
+    try:
+        user = get_user_by_email(email)
+    except UserNotFoundException:
+        return response.ok({
+            'status': 'unregistered'
+        })
+    
+    return response.ok({
+        'status': 'registered'
+    })
 
 @app.route('/api/postblog', methods=['POST'])
 @login_required_api

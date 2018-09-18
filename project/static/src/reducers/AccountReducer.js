@@ -2,7 +2,7 @@ import _ from 'lodash';
 import { definition, status } from '../actions/AccountActions';
 
 const initialState = {
-  accountStatus: status.LOGGED_OUT,
+  status: status.LOGGED_OUT,
   tempEmail: null,
   tempPassword: null,
 };
@@ -16,6 +16,13 @@ export default (state = initialState, action) => {
     case definition.CHANGE_PASSWORD:
       return _.assignIn(state, {
         tempPassword: action.payload.password
+      })
+    case definition.CHECK_EMAIL_SUCCESS:
+      return _.assignIn(state, {
+        status:
+          action.payload.status === 'registered' ?
+            status.AWAITING_LOGIN :
+            status.AWAITING_REGISTER
       })
     default:
       return state;

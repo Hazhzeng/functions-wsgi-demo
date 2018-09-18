@@ -6,6 +6,7 @@ import { pushProgress } from '../actions/UiActions';
 function *getAllBlogsSaga() {
   yield put(pushProgress(0));
   const data = yield call(Api.getAllBlogs);
+  yield put(pushProgress(50));
   yield put(getAllBlogsSuccess(data));
   yield put(pushProgress(100));
 }
