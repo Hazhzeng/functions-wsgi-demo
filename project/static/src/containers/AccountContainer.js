@@ -4,30 +4,25 @@ import {
   AccountEmailField,
   AccountPasswordField,
 } from '../components/account';
+import {
+  changeEmail,
+  changePassword,
+} from '../actions/AccountActions';
 
 class Account extends React.PureComponent {
   constructor(props) {
     super(props);
-    this.state = {
-      email: '',
-      password: '',
-    };
+
     this.handleEmailChange = this.handleEmailChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
   }
 
   handleEmailChange(event) {
-    this.setState({
-      email: event.target.value,
-      password: this.state.password,
-    });
+    this.props.changeEmail(event.target.value);
   }
 
   handlePasswordChange(event) {
-    this.setState({
-      email: this.state.email,
-      password: event.target.value,
-    });
+    this.props.changePassword(event.target.value);
   }
 
   render() {
@@ -35,13 +30,13 @@ class Account extends React.PureComponent {
       <AccountEmailField
         key="account_email_field"
         label="Please enter your email"
-        value={this.state.email}
+        value={this.props.email}
         handleChange={this.handleEmailChange}
       />,
       <AccountPasswordField
         key="account_password_field"
         label="Please enter your password"
-        value={this.state.password}
+        value={this.props.password}
         handleChange={this.handlePasswordChange}
       />
     ];
@@ -52,5 +47,11 @@ export const AccountContainer = connect(
   state => ({
     view: state.view.currentView,
     progress: state.ui.progress,
+    email: state.account.tempEmail || '',
+    password: state.account.tempPassword || '',
+  }),
+  dispatch => ({
+    changeEmail: email => dispatch(changeEmail(email)),
+    changePassword: password => dispatch(changePassword(password)),
   })
 )(Account);
