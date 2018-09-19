@@ -8,7 +8,7 @@ import { withStyles } from '@material-ui/core/styles';
 class AccountPasswordField extends React.Component {
   render() {
     return (
-      <Grid item sm={8} lg={7}>
+      <Grid item xs={12}>
         <TextField
           id="password"
           type="password"
@@ -33,7 +33,7 @@ AccountPasswordField.propTypes = {
 
 const styles = (theme) => ({
   textField: {
-    marginTop: theme.spacing.unit * 16,
+    marginTop: theme.spacing.unit * 12,
   }
 });
 

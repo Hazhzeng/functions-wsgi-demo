@@ -5,3 +5,7 @@ export {
 export {
   AccountPasswordFieldWithStyle as AccountPasswordField
 } from './AccountPasswordField';
+
+export {
+  AccountActionButtonWithStyle as AccountActionButton
+} from './AccountActionButton';

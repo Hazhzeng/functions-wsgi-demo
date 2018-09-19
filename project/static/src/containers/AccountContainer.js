@@ -3,8 +3,10 @@ import { connect } from 'react-redux';
 import {
   AccountEmailField,
   AccountPasswordField,
+  AccountActionButton,
 } from '../components/account';
 import {
+  status as accountStatus,
   checkEmail,
   changeEmail,
   changePassword,
@@ -17,6 +19,7 @@ class Account extends React.PureComponent {
     this.handleEmailCheck = this.handleEmailCheck.bind(this);
     this.handleEmailChange = this.handleEmailChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleEmailCheck() {
@@ -29,6 +32,28 @@ class Account extends React.PureComponent {
 
   handlePasswordChange(event) {
     this.props.changePassword(event.target.value);
+  }
+
+  handleSubmit() {
+
+  }
+
+  _getActionButtonLabel(status) {
+    const label = {
+      [accountStatus.LOGGED_OUT]: 'Awaiting email...',
+      [accountStatus.LOGGED_IN]: 'You\'ve already logged in...',
+      [accountStatus.AWAITING_LOGIN]: 'Login ┬─┬ノ( º _ ºノ)',
+      [accountStatus.AWAITING_REGISTER]: 'Register (╯°. °）╯︵ ┻━┻',
+    }
+    return label[status];
+  }
+
+  _isActionButtonDisabled(status) {
+    const disabledStatuses = [
+      accountStatus.LOGGED_IN,
+      accountStatus.LOGGED_OUT
+    ];
+    return disabledStatuses.includes(status);
   }
 
   render() {
@@ -46,7 +71,12 @@ class Account extends React.PureComponent {
         value={this.props.password}
         handleChange={this.handlePasswordChange}
       />,
-      <div key="status">{this.props.status}</div>
+      <AccountActionButton
+        key="account_action_button"
+        value={this._getActionButtonLabel(this.props.status)}
+        disabled={this._isActionButtonDisabled(this.props.status)}
+        handleClick={this.props.handleSubmit}
+      />
     ];
   }
 }

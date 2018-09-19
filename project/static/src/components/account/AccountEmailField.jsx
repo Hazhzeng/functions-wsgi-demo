@@ -8,7 +8,7 @@ import { withStyles } from '@material-ui/core/styles';
 class AccountEmailField extends React.Component {
   render() {
     return (
-      <Grid item sm={8} lg={7}>
+      <Grid item xs={12}>
         <TextField
           id="email"
           value={this.props.value}
@@ -35,7 +35,7 @@ AccountEmailField.propTypes = {
 
 const styles = (theme) => ({
   textField: {
-    marginTop: theme.spacing.unit * 20,
+    marginTop: theme.spacing.unit * 12,
   }
 });
 
