@@ -14,6 +14,7 @@ class AccountEmailField extends React.Component {
           value={this.props.value}
           label={this.props.label}
           onChange={this.props.handleChange}
+          onFocus={this.props.handleFocus}
           className={this.props.classes.textField}
           margin="normal"
           fullWidth
@@ -29,6 +30,7 @@ AccountEmailField.propTypes = {
   value: PropTypes.string,
   label: PropTypes.string,
   handleChange: PropTypes.func,
+  handleFocus: PropTypes.func,
 };
 
 const styles = (theme) => ({

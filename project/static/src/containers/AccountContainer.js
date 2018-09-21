@@ -24,12 +24,14 @@ class Account extends React.PureComponent {
   }
 
   handleEmailChange(event) {
-    this.props.changeEmail(event.target.value);
-    this.props.checkEmail(event.target.value);
+    const email = event.target.value;
+    this.props.changeEmail(email);
+    this.props.checkEmail(email);
   }
 
   handlePasswordChange(event) {
-    this.props.changePassword(event.target.value);
+    const password = event.target.value;
+    this.props.changePassword(password);
   }
 
   handleSubmit() {
@@ -62,11 +64,12 @@ class Account extends React.PureComponent {
   }
 
   _isActionButtonDisabled(status) {
+    const isProcessing = this.props.progress < 100;
     const disabledStatuses = [
       accountStatus.LOGGED_IN,
       accountStatus.LOGGED_OUT
     ];
-    return disabledStatuses.includes(status);
+    return disabledStatuses.includes(status) || isProcessing;
   }
 
   render() {
@@ -76,6 +79,7 @@ class Account extends React.PureComponent {
         label="Please enter your email"
         value={this.props.email}
         handleChange={this.handleEmailChange}
+        handleFocus={this.handleEmailChange}
       />,
       <AccountPasswordField
         key="account_password_field"

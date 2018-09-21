@@ -5,6 +5,7 @@ export const definition = {
   CHANGE_PASSWORD: `[${prefix}]CHANGE_PASSWORD`,
 
   CHECK_EMAIL: `[${prefix}]CHECK_EMAIL`,
+  CHECK_EMAIL_ON_HOLD: `[${prefix}]CHECK_EMAIL->ON_HOLD`,
   CHECK_EMAIL_SUCCESS: `[${prefix}]CHECK_EMAIL->SUCCESS`,
   CHECK_EMAIL_FAILURE: `[${prefix}]CHECK_EMAIL->FAILURE`,
 
@@ -43,6 +44,10 @@ export const checkEmail = email => ({
   payload: {
     email
   }
+});
+
+export const checkEmailOnHold = () => ({
+  type: definition.CHECK_EMAIL_ON_HOLD,
 });
 
 export const checkEmailSuccess = emailStatus => ({
