@@ -7,6 +7,14 @@ export const definition = {
   CHECK_EMAIL: `[${prefix}]CHECK_EMAIL`,
   CHECK_EMAIL_SUCCESS: `[${prefix}]CHECK_EMAIL->SUCCESS`,
   CHECK_EMAIL_FAILURE: `[${prefix}]CHECK_EMAIL->FAILURE`,
+
+  LOGIN: `[${prefix}]LOGIN`,
+  LOGIN_SUCCESS: `[${prefix}]LOGIN->SUCCESS`,
+  LOGIN_FAILURE: `[${prefix}]LOGIN->FAILURE`,
+
+  REGISTER: `[${prefix}]REGISTER`,
+  REGISTER_SUCCESS: `[${prefix}]REGISTER->SUCCESS`,
+  REGISTER_FAILURE: `[${prefix}]REGISTER->FAILURE`,
 };
 
 export const status = {
@@ -47,3 +55,35 @@ export const checkEmailSuccess = emailStatus => ({
 export const checkEmailFailure = () => ({
   type: definition.CHECK_EMAIL_FAILURE,
 })
+
+export const login = (email, password) => ({
+  type: definition.LOGIN,
+  payload: {
+    email,
+    password,
+  }
+});
+
+export const loginSuccess = () => ({
+  type: definition.LOGIN_SUCCESS,
+});
+
+export const loginFailure = () => ({
+  type: definition.LOGIN_FAILURE,
+});
+
+export const register = (email, password) => ({
+  type: definition.REGISTER,
+  payload: {
+    email,
+    password,
+  },
+});
+
+export const registerSuccess = () => ({
+  type: definition.REGISTER_SUCCESS,
+});
+
+export const registerFailure = () => ({
+  type: definition.REGISTER_FAILURE,
+});

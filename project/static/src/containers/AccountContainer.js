@@ -10,24 +10,22 @@ import {
   checkEmail,
   changeEmail,
   changePassword,
+  login,
+  register,
 } from '../actions/AccountActions';
 
 class Account extends React.PureComponent {
   constructor(props) {
     super(props);
 
-    this.handleEmailCheck = this.handleEmailCheck.bind(this);
     this.handleEmailChange = this.handleEmailChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleEmailCheck() {
-    this.props.checkEmail(this.props.email);
-  }
-
   handleEmailChange(event) {
     this.props.changeEmail(event.target.value);
+    this.props.checkEmail(event.target.value);
   }
 
   handlePasswordChange(event) {
@@ -35,15 +33,30 @@ class Account extends React.PureComponent {
   }
 
   handleSubmit() {
-
+    const { email, password } = this.props;
+    if (this.props.status === accountStatus.AWAITING_LOGIN) {
+      this.props.loginAccount(email, password);
+    } else {
+      this.props.registerAccount(email, password);
+    }
   }
 
   _getActionButtonLabel(status) {
     const label = {
       [accountStatus.LOGGED_OUT]: 'Awaiting email...',
-      [accountStatus.LOGGED_IN]: 'You\'ve already logged in...',
-      [accountStatus.AWAITING_LOGIN]: 'Login ┬─┬ノ( º _ ºノ)',
       [accountStatus.AWAITING_REGISTER]: 'Register (╯°. °）╯︵ ┻━┻',
+      [accountStatus.AWAITING_LOGIN]: 'Login ┬─┬ノ( º _ ºノ)',
+      [accountStatus.LOGGED_IN]: 'You\'ve already logged in...',
+    }
+    return label[status];
+  }
+
+  _getPasswordLabel(status) {
+    const label = {
+      [accountStatus.LOGGED_OUT]: 'Please enter a password',
+      [accountStatus.AWAITING_REGISTER]: 'Please select a new password',
+      [accountStatus.AWAITING_LOGIN]: 'Please enter your password',
+      [accountStatus.LOGGED_IN]: 'No password is required',
     }
     return label[status];
   }
@@ -63,19 +76,18 @@ class Account extends React.PureComponent {
         label="Please enter your email"
         value={this.props.email}
         handleChange={this.handleEmailChange}
-        handleBlur={this.handleEmailCheck}
       />,
       <AccountPasswordField
         key="account_password_field"
-        label="Please enter your password"
+        label={this._getPasswordLabel(this.props.status)}
         value={this.props.password}
         handleChange={this.handlePasswordChange}
       />,
       <AccountActionButton
         key="account_action_button"
         value={this._getActionButtonLabel(this.props.status)}
-        disabled={this._isActionButtonDisabled(this.props.status)}
-        handleClick={this.props.handleSubmit}
+        isDisabled={this._isActionButtonDisabled(this.props.status)}
+        handleClick={this.handleSubmit}
       />
     ];
   }
@@ -93,5 +105,7 @@ export const AccountContainer = connect(
     checkEmail: email => dispatch(checkEmail(email)),
     changeEmail: email => dispatch(changeEmail(email)),
     changePassword: password => dispatch(changePassword(password)),
+    loginAccount: (email, password) => dispatch(login(email, password)),
+    registerAccount: (email, password) => dispatch(register(email, password)),
   })
 )(Account);

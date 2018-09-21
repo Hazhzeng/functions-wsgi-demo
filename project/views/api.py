@@ -15,7 +15,11 @@ from project.handlers.blog_handlers import (
 )
 from project.handlers.account_handlers import (
     is_valid_email,
-    get_user_by_email
+    is_account_credential_valid,
+    get_user_by_email,
+    login_account,
+    register_account,
+    logout_user,
 )
 from project.handlers.exceptions import (
     UserNotFoundException
@@ -32,24 +36,114 @@ def blog_get():
     blogs = get_all_blogs()
     return response.ok(serialise_blogs(blogs))
 
+@app.route('/api/account', methods=['POST'])
+@use_args({
+    'email': fields.String(required=True),
+    'password': fields.String(required=True)
+})
+def account_post(args):
+    username = args.get('email', '').lower()
+    password = args.get('password', '')
+    if not username or not password:
+        return response.bad_request(
+            'Either email or password field is empty'
+        )
+
+    isEmail = is_valid_email(username)
+    if not isEmail:
+        return response.bad_request(
+            'Email address is malformed'
+        )
+
+    user = get_user_by_email(username)
+    if user is not None:
+        return response.unprocessable_entity(
+            'Email address has already been registered'
+        )
+
+    new_user = register_account(username, password)
+    res = response.created()
+    res.set_cookie(
+        key='identity_token',
+        value=new_user.token,
+        expires=new_user.login_expiry,
+    )
+    return res
+
+@app.route('/api/account/<email>', methods=['POST'])
+@use_args({
+    'password': fields.String(required=True)
+})
+def login_api(args, email: str) -> Response:
+    username = email.lower()
+    password = args.get('password', '')
+    if not username or not password:
+        return response.bad_request(
+            'Either email or password field is empty'
+        )
+
+    isEmail = is_valid_email(username)
+    if not isEmail:
+        return response.bad_request(
+            'Email address is malformed'
+        )
+
+    isCredentialValid = is_account_credential_valid(username, password)
+    if not isCredentialValid:
+        return response.forbidden(
+            'Email and password combination cannot be found'
+        )
+
+    refreshed_user = login_account(username)
+
+    res = response.ok()
+    res.set_cookie(
+        key='identity_token',
+        value=refreshed_user.token,
+        expires=refreshed_user.login_expiry,
+    )
+    return res
+
 @app.route('/api/account/<email>', methods=['GET'])
 def account_email_get(email: str):
     isEmail = is_valid_email(email)
     if not isEmail:
-        return response.bad_request({
-            'error': 'Email address is malformed'
-        })
-    
-    try:
-        user = get_user_by_email(email)
-    except UserNotFoundException:
+        return response.bad_request(
+            'Email address is malformed'
+        )
+
+    user = get_user_by_email(email)
+    if user is None:
         return response.ok({
             'status': 'unregistered'
         })
-    
-    return response.ok({
-        'status': 'registered'
-    })
+    else:
+        return response.ok({
+            'status': 'registered'
+        })
+
+@app.route('/api/account/<email>', methods=['PATCH'])
+@login_required_api
+@use_args({
+    'action': fields.String(required=True),
+})
+def account_email_patch(args, email: str):
+    action = args.get('action')
+    if action is None:
+        return
+
+    if not g.user:
+        return response.ok()
+
+    if action == 'logout':
+        logout_user(g.user.id)
+        g.user = None
+        res.set_cookie(key='identity_token', value='', expires=0)
+        return res
+
+    return response.bad_request(
+        'Action cannot be handled properly'
+    )
 
 @app.route('/api/postblog', methods=['POST'])
 @login_required_api
@@ -150,100 +244,9 @@ def getblog_api(args) -> Response:
 
     return response.ok()
 
-
-@app.route('/api/login', methods=['POST'])
-@use_args({
-    'username': fields.String(required=True),
-    'password': fields.String(required=True)
-})
-def login_api(args) -> Response:
-    username = args['username'].lower()
-    password = args['password']
-    user = db.session.query(UserModel)\
-        .filter(UserModel.username == username)\
-        .first()
-    if user is None:
-        return response.unauthorized()
-    else:
-        expected_hash = user.hash
-        calculated_hash = hashlib.sha512(
-            (username + password + user.salt).encode('utf-8')
-        ).hexdigest()
-        if expected_hash != calculated_hash:
-            return response.forbidden()
-
-    now = datetime.utcnow()
-    token = uuid.uuid4().hex
-    user.login_date = now
-    user.login_expiry = now + timedelta(hours=24)
-    user.token = token
-    db.session.add(user)
-
-    # Set Token
-    res = response.ok()
-    res.set_cookie(key='token', value=token, expires=user.login_expiry)
-    return res
-
-
-@app.route('/api/logout', methods=['GET'])
-@login_required_api
-def logout_api() -> Response:
-    res = response.ok()
-    if g.user:
-        user = db.session.query(UserModel)\
-            .filter(UserModel.id == g.user.id)\
-            .first()
-
-        if user:
-            # Refresh token
-            user.token = uuid.uuid4().hex
-            db.session.add(user)
-            g.user = None
-            res.set_cookie(key='token', value='', expires=0)
-    return res
-
-
-@app.route('/api/register', methods=['POST'])
-@use_args({
-    'username': fields.String(required=True),
-    'password': fields.String(required=True)
-})
-def register_api(args) -> Response:
-    username = args['username'].lower()
-    password = args['password']
-
-    user = db.session.query(UserModel)\
-        .filter(UserModel.username == username)\
-        .first()
-    if user is not None:
-        return response.unprocessable_entity()
-
-    now = datetime.utcnow()
-    token = uuid.uuid4().hex
-    salt = uuid.uuid4().hex
-    hash = hashlib.sha512(
-        (username + password + salt).encode('utf-8')
-    ).hexdigest()
-    new_user = UserModel(
-        username=username,
-        salt=salt,
-        hash=hash,
-        token=token,
-        login_date=now,
-        login_expiry=now+timedelta(hours=24),
-        register_date=now,
-    )
-    db.session.add(new_user)
-
-    # Set Token
-    res = response.created()
-    res.set_cookie(key='token', value=token, expires=new_user.login_expiry)
-    return res
-
-
 @app.before_request
 def before_request():
-    token = request.cookies.get('token')
+    token = request.cookies.get('identity_token')
     if token is not None:
         user = db.session.query(UserModel)\
             .filter(UserModel.token == token)\

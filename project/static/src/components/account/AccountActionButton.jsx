@@ -12,10 +12,10 @@ class AccountActionButton extends React.Component {
         <Button
           id="submit"
           type="submit"
-          disabled={this.props.disabled}
+          disabled={this.props.isDisabled}
           className={this.props.classes.button}
           onClick={this.props.handleClick}
-          variant={this.props.disabled ? 'text' : 'contained'}
+          variant={this.props.isDisabled ? 'text' : 'contained'}
           fullWidth
         >
           {this.props.value}
@@ -27,7 +27,7 @@ class AccountActionButton extends React.Component {
 
 AccountActionButton.propTypes = {
   value: PropTypes.string,
-  disabled: PropTypes.bool,
+  isDisabled: PropTypes.bool,
   handleClick: PropTypes.func,
 };
 
