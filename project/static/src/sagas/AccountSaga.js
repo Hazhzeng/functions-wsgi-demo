@@ -4,6 +4,7 @@ import {
   definition as account,
   checkEmailSuccess, checkEmailFailure, checkEmailOnHold,
   loginSuccess, loginFailure,
+  logoutSuccess, logoutFailure,
   registerSuccess, registerFailure,
 } from '../actions/AccountActions';
 import { pushProgress } from '../actions/UiActions';
@@ -64,10 +65,27 @@ function *postRegisterLogin() {
   const password = yield select(state => state.account.tempPassword);
   try {
     const data = yield call(Api.loginAccount, email, password);
-    yield put(pushProgress(70));
+    yield put(pushProgress(30));
     yield put(loginSuccess(data))
   } catch (error) {
     yield put(loginFailure(error))
+  }
+  yield put(pushProgress(100));
+}
+
+function *logoutSaga() {
+  yield put(pushProgress(0));
+
+  try {
+    const loggedInUser = yield select(state => state.account.loggedInUserById);
+    const user = Object.values(loggedInUser)[0];
+    if (user) {
+      yield call(Api.logoutAccount, user.email);
+      yield put(pushProgress(30));
+      yield put(logoutSuccess());
+    }
+  } catch (error) {
+    yield put(logoutFailure(error));
   }
   yield put(pushProgress(100));
 }
@@ -76,6 +94,7 @@ export default [
   takeLatest(account.CHECK_EMAIL, checkEmailSaga),
   takeLatest(account.LOGIN, loginSaga),
   takeLatest(account.REGISTER, registerSaga),
+  takeLatest(account.LOGOUT, logoutSaga),
 
   takeLatest(account.REGISTER_SUCCESS, postRegisterLogin),
 ];

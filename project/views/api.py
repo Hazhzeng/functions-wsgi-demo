@@ -96,7 +96,12 @@ def login_api(args, email: str) -> Response:
 
     refreshed_user = login_account(username)
 
-    res = response.ok()
+    res = response.ok({
+        'id': refreshed_user.id,
+        'email': refreshed_user.username,
+        'login': refreshed_user.login_date,
+        'expiry': refreshed_user.login_expiry,
+    })
     res.set_cookie(
         key='identity_token',
         value=refreshed_user.token,
@@ -138,6 +143,7 @@ def account_email_patch(args, email: str):
     if action == 'logout':
         logout_user(g.user.id)
         g.user = None
+        res = response.accepted()
         res.set_cookie(key='identity_token', value='', expires=0)
         return res
 

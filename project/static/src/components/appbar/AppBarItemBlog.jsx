@@ -37,7 +37,9 @@ class AppBarItemBlog extends React.Component {
 }
 
 export default connect(
-  null,
+  state => ({
+    view: state.view.currentView,
+  }),
   dispatch => ({
     changeViewToBlogViewer: () => dispatch(changeView(view.BLOG_VIEW)),
     changeRoute: routePath => dispatch(changeRoute(routePath)),

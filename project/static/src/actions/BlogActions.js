@@ -15,10 +15,10 @@ export const getAllBlogs = () => ({
   type: definition.GET_ALL_BLOGS,
 });
 
-export const getAllBlogsSuccess = (blogData) => ({
+export const getAllBlogsSuccess = (data) => ({
   type: definition.GET_ALL_BLOGS_SUCCESS,
   payload: {
-    data: blogData
+    response: data
   },
 });
 

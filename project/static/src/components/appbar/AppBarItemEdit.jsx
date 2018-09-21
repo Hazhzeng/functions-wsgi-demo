@@ -37,7 +37,9 @@ class AppBarItemEdit extends React.Component {
 }
 
 export default connect(
-  null,
+  state => ({
+    view: state.view.currentView,
+  }),
   dispatch => ({
     changeViewToEditor: () => dispatch(changeView(view.EDIT_VIEW)),
     changeRoute: routePath => dispatch(changeRoute(routePath)),

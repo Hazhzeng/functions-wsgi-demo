@@ -16,6 +16,10 @@ export const definition = {
   REGISTER: `[${prefix}]REGISTER`,
   REGISTER_SUCCESS: `[${prefix}]REGISTER->SUCCESS`,
   REGISTER_FAILURE: `[${prefix}]REGISTER->FAILURE`,
+
+  LOGOUT: `[${prefix}]LOGOUT`,
+  LOGOUT_SUCCESS: `[${prefix}]LOGOUT->SUCCESS`,
+  LOGOUT_FAILURE: `[${prefix}]LOGOUT->FAILURE`,
 };
 
 export const status = {
@@ -69,8 +73,11 @@ export const login = (email, password) => ({
   }
 });
 
-export const loginSuccess = () => ({
+export const loginSuccess = (data) => ({
   type: definition.LOGIN_SUCCESS,
+  payload: {
+    response: data
+  },
 });
 
 export const loginFailure = () => ({
@@ -91,4 +98,16 @@ export const registerSuccess = () => ({
 
 export const registerFailure = () => ({
   type: definition.REGISTER_FAILURE,
+});
+
+export const logout = () => ({
+  type: definition.LOGOUT,
+});
+
+export const logoutSuccess = () => ({
+  type: definition.LOGOUT_SUCCESS,
+});
+
+export const logoutFailure = () => ({
+  type: definition.LOGOUT_FAILURE,
 });

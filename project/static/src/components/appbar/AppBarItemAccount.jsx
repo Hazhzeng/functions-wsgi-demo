@@ -4,6 +4,7 @@ import IconButton from '@material-ui/core/IconButton';
 import { AccountCircleOutlined, AccountCircleSharp } from '@material-ui/icons';
 import { view, changeView } from '../../actions/ViewActions';
 import { changeRoute } from '../../actions/RouteActions';
+import { status } from '../../actions/AccountActions';
 
 class AppBarItemAccount extends React.Component {
   constructor(props) {
@@ -24,6 +25,10 @@ class AppBarItemAccount extends React.Component {
   }
 
   render() {
+    if (this.props.status === status.LOGGED_IN) {
+      return null;
+    }
+
     return (
       <IconButton
         color='inherit'
@@ -37,7 +42,10 @@ class AppBarItemAccount extends React.Component {
 }
 
 export default connect(
-  null,
+  state => ({
+    view: state.view.currentView,
+    status: state.account.status,
+  }),
   dispatch => ({
     changeViewToAccount: () => dispatch(changeView(view.ACCOUNT_VIEW)),
     changeRoute: routePath => dispatch(changeRoute(routePath)),

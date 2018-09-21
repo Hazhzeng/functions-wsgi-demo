@@ -10,7 +10,7 @@ export default (state = initialState, action) => {
   switch (action.type) {
     case definition.GET_ALL_BLOGS_SUCCESS: {
       const newBlogsById = {};
-      action.payload.data.blogs.map(blog => {
+      action.payload.response.blogs.map(blog => {
         newBlogsById[blog.id] = {
           id: blog.id,
           authorId: blog.author_id,

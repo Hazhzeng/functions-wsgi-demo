@@ -2,6 +2,7 @@ import {
   get_request,
   post_request,
   response_handler,
+  patch_request,
 } from './utils';
 
 export default {
@@ -12,7 +13,7 @@ export default {
 
   getAccountEmail: email => {
     return get_request(`/api/account/${email}`)
-      .then(response_handler)
+      .then(response_handler);
   },
 
   registerAccount: (email, password) => {
@@ -21,7 +22,7 @@ export default {
       password,
     };
     return post_request('/api/account', {}, body)
-      .then(response_handler)
+      .then(response_handler);
   },
 
   loginAccount: (email, password) => {
@@ -29,6 +30,14 @@ export default {
       password,
     };
     return post_request(`/api/account/${email}`, {}, body)
-      .then(response_handler)
-  }
+      .then(response_handler);
+  },
+
+  logoutAccount: email => {
+    const body = {
+      action: 'logout'
+    };
+    return patch_request(`/api/account/${email}`, {}, body)
+      .then(response_handler);
+  },
 }

@@ -7,6 +7,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import LoadingIndicator from './LoadingIndicator';
 
+import LogoutButton from './AppBarItemLogout';
 import AccountButton from './AppBarItemAccount';
 import BlogButton from './AppBarItemBlog';
 import EditButton from './AppBarItemEdit';
@@ -31,9 +32,10 @@ class ApplicationBar extends React.PureComponent {
   _renderAppBarItems() {
     return (
       <div>
-        <BlogButton view={this.props.view} />
-        <EditButton view={this.props.view} />
-        <AccountButton view={this.props.view} />
+        <BlogButton />
+        <EditButton />
+        <AccountButton />
+        <LogoutButton />
       </div>
     );
   }
@@ -55,7 +57,6 @@ class ApplicationBar extends React.PureComponent {
 
 ApplicationBar.propTypes = {
   title: PropTypes.string,
-  view: PropTypes.string.isRequired,
   progress: PropTypes.number.isRequired,
   classes: PropTypes.object.isRequired,
 }
