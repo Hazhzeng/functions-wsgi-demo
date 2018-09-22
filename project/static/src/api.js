@@ -6,6 +6,16 @@ import {
 } from './utils';
 
 export default {
+  submitBlog: (title, tag, text) => {
+    const body = {
+      title,
+      tag,
+      text,
+    };
+    return post_request('/api/blog', {}, body)
+      .then(response_handler)
+  },
+
   getAllBlogs: () => {
     return get_request('/api/blog')
       .then(response_handler)

@@ -32,6 +32,15 @@ export default (state = initialState, action) => {
         }
       });
     }
+    case definition.CHANGE_BLOG_TAG: {
+      const oldDraft = state.draftById[action.payload.id] || {};
+      oldDraft.tag = action.payload.tag;
+      return _.assignIn(state, {
+        draftById: {
+          [action.payload.id]: oldDraft,
+        }
+      });
+    }
     case definition.CHANGE_BLOG_TEXT: {
       const oldDraft = state.draftById[action.payload.id] || {};
       oldDraft.text = action.payload.text;

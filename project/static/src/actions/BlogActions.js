@@ -13,7 +13,26 @@ export const definition = {
   GET_ALL_BLOGS: `[${prefix}]GET_ALL_BLOGS`,
   GET_ALL_BLOGS_SUCCESS: `[${prefix}]GET_ALL_BLOGS->SUCCESS`,
   GET_ALL_BLOGS_FAILURE: `[${prefix}]GET_ALL_BLOGS->FAILURE`,
+
+  SUBMIT_BLOG: `[${prefix}]SUBMIT_BLOG`,
+  SUBMIT_BLOG_SUCCESS: `[${prefix}]SUBMIT_BLOG->SUCCESS`,
+  SUBMIT_BLOG_FAILURE: `[${prefix}]SUBMIT_BLOG->FAILURE`,
 };
+
+export const submitBlog = (id=null) => ({
+  type: definition.SUBMIT_BLOG,
+  payload: {
+    id
+  }
+});
+
+export const submitBlogSuccess = () => ({
+  type: definition.SUBMIT_BLOG_SUCCESS,
+});
+
+export const submitBlogFailure = () => ({
+  type: definition.SUBMIT_BLOG_FAILURE,
+});
 
 export const changeBlogTitle = (title, id=null) => ({
   type: definition.CHANGE_BLOG_TITLE,

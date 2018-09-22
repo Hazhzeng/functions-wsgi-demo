@@ -10,6 +10,7 @@ from project import app, db
 from project.views import response
 from project.models import BlogModel, UserModel, TagModel
 from project.handlers.blog_handlers import (
+    add_blog,
     get_all_blogs,
     serialise_blogs
 )
@@ -137,9 +138,6 @@ def account_email_patch(args, email: str):
     if action is None:
         return
 
-    if not g.user:
-        return response.ok()
-
     if action == 'logout':
         logout_user(g.user.id)
         g.user = None
@@ -151,6 +149,32 @@ def account_email_patch(args, email: str):
         'Action cannot be handled properly'
     )
 
+@app.route('/api/blog', methods=['POST'])
+@login_required_api
+@use_args({
+    'title': fields.String(required=True),
+    'tag': fields.String(),
+    'text': fields.String(),
+})
+def blog_post(args):
+    title = args.get('title')
+    tag = args.get('tag', '')
+    text = args.get('text', '')
+    if not title:
+        return response.unprocessable_entity(
+            'Blog title cannot be empty'
+        )
+
+    new_blog = add_blog(g.user.id, title, tag, text)
+    return response.created({
+        'id': new_blog.id,
+        'title': new_blog.title,
+        'update': new_blog.last_update,
+    })
+
+# ==================
+# Line of Revolution
+# ==================
 @app.route('/api/postblog', methods=['POST'])
 @login_required_api
 @use_args({

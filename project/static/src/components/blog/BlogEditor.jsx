@@ -1,8 +1,9 @@
 import React from 'react';
-import Grid from '@material-ui/core/Grid';
-import TextField from '@material-ui/core/TextField';
 import PropTypes from 'prop-types';
 import AceEditor from 'react-ace';
+import Grid from '@material-ui/core/Grid';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
 
 import 'brace/mode/markdown';
@@ -41,11 +42,26 @@ class BlogEditor extends React.PureComponent {
       <TextField
         label="Tags"
         value={this.props.tag}
-        onChange={this.handleChangeTag}
+        onChange={this.props.handleChangeTag}
         className={this.props.classes.text}
         margin="normal"
         fullWidth
       />
+    );
+  }
+
+  _renderEditorControlPanel() {
+    return (
+      <div>
+        <Button
+          variant="outlined"
+          color="primary"
+          className={this.props.classes.button}
+          onClick={this.props.handleSubmit}
+        >
+          Submit
+        </Button>
+      </div>
     );
   }
 
@@ -80,6 +96,7 @@ class BlogEditor extends React.PureComponent {
         {this._renderTitleEditor()}
         {this._renderTagEditor()}
         {this._renderAceEditor()}
+        {this._renderEditorControlPanel()}
       </Grid>
     );
   }
@@ -89,12 +106,16 @@ BlogEditor.propType = {
   title: PropTypes.string,
   tag: PropTypes.string,
   text: PropTypes.string,
+  handleSubmit: PropTypes.func,
   handleChangeTitle: PropTypes.func,
   handleChangeTag: PropTypes.func,
   handleChangeText: PropTypes.func,
 }
 
 const styles = (theme) => ({
+  button: {
+    margin: theme.spacing.unit,
+  },
   editor: {
     margin: theme.spacing.unit,
     padding: theme.spacing.unit * 2,

@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { BlogEditor, BlogPreview } from '../components/blog';
 import {
+  submitBlog,
   changeBlogTitle,
   changeBlogTag,
   changeBlogText,
@@ -14,6 +15,7 @@ class Compose extends React.PureComponent {
     this.handleChangeTitle = this.handleChangeTitle.bind(this);
     this.handleChangeTag = this.handleChangeTag.bind(this);
     this.handleChangeText = this.handleChangeText.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleChangeTitle(event) {
@@ -28,6 +30,10 @@ class Compose extends React.PureComponent {
     this.props.changeText(value);
   }
 
+  handleSubmit() {
+    this.props.submitBlog(null);
+  }
+
   render() {
     return [
       <BlogEditor
@@ -35,6 +41,7 @@ class Compose extends React.PureComponent {
         title={this.props.blogTitle}
         tag={this.props.blogTag}
         text={this.props.blogText}
+        handleSubmit={this.handleSubmit}
         handleChangeTitle={this.handleChangeTitle}
         handleChangeTag={this.handleChangeTag}
         handleChangeText={this.handleChangeText}
@@ -57,6 +64,7 @@ export const ComposeContainer = connect(
     blogText: (state.blog.draftById[null] || {}).text || '',
   }),
   dispatch => ({
+    submitBlog: id => dispatch(submitBlog(id)),
     changeTitle: title => dispatch(changeBlogTitle(title)),
     changeTag: tag => dispatch(changeBlogTag(tag)),
     changeText: text => dispatch(changeBlogText(text)),
