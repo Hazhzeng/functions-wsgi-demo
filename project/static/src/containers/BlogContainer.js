@@ -19,7 +19,7 @@ export const BlogContainer = connect(
   state => ({
     view: state.view.currentView,
     progress: state.ui.progress,
-    blogs: Object.values(state.blog.blogsById),
+    blogs: Object.values(state.blog.blogById),
   }),
   dispatch => ({
     getAllBlogs: () => dispatch(getAllBlogs())

@@ -37,6 +37,14 @@
     {% if user %}
       window.context.user = {{ user|tojson|safe }};
     {% endif %}
+
+    window.context.viewport_width = Math.max(
+      document.documentElement.clientWidth, window.innerWidth || 0
+    );
+
+    window.context.viewport_height = Math.max(
+      document.documentElement.clientHeight, window.innerHeight || 0
+    );
   </script>
 
   <div id="app"></div>

@@ -1,4 +1,4 @@
-import { HomePage, AccountPage } from './pages';
+import { HomePage, AccountPage, ComposePage } from './pages';
 
 export default [
   {
@@ -12,5 +12,11 @@ export default [
     path: '/account',
     exact: true,
     component: AccountPage,
+  },
+  {
+    key: 'compose',
+    path: '/compose',
+    exact: true,
+    component: ComposePage,
   }
 ];

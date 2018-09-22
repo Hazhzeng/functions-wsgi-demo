@@ -3,6 +3,7 @@ let path = require('path');
 let webpack = require('webpack');
 let merge = require('webpack-merge');
 let common = require('./webpack.common.js');
+let CleanWebpackPlugin = require('clean-webpack-plugin');
 
 module.exports = merge(common, {
   mode: 'development',
@@ -21,5 +22,6 @@ module.exports = merge(common, {
       include: path.resolve(__dirname, 'project', 'static', 'src'),
       exclude: path.resolve(__dirname, 'node_modules'),
     }),
+    new CleanWebpackPlugin(),
   ]
 });

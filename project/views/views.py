@@ -16,7 +16,7 @@ def logout_view():
     return render_template('index.html')
 
 
-@app.route('/edit')
+@app.route('/compose')
 @app.route('/logout')
 @login_required
 def login_view():

@@ -49,8 +49,11 @@ class BlogPreview extends React.PureComponent {
 
   _renderTime() {
     const { time } = this.props;
-    const datetimeMoment = moment(time);
+    if (!time) {
+      return null;
+    }
 
+    const datetimeMoment = moment(time);
     if (!datetimeMoment.isValid()) {
       return null;
     }
@@ -67,7 +70,7 @@ class BlogPreview extends React.PureComponent {
 
   render() {
     return (
-      <Grid item xs={12}>
+      <Grid item xs={12} lg={6}>
         <Paper className={this.props.classes.paper}>
           <Typography variant='title' component='h3'>
             {this._renderTitle()}
@@ -92,7 +95,6 @@ BlogPreview.propType = {
   tags: PropTypes.arrayOf(PropTypes.string),
   time: PropTypes.string,
   text: PropTypes.string,
-  classes: PropTypes.object.isRequired,
 }
 
 const styles = (theme) => ({

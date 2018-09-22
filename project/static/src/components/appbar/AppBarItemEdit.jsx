@@ -4,6 +4,7 @@ import IconButton from '@material-ui/core/IconButton';
 import { EditOutlined, EditSharp } from '@material-ui/icons';
 import { view, changeView } from '../../actions/ViewActions';
 import { changeRoute } from '../../actions/RouteActions';
+import { status } from '../../actions/AccountActions';
 
 class AppBarItemEdit extends React.Component {
   constructor(props) {
@@ -24,6 +25,10 @@ class AppBarItemEdit extends React.Component {
   }
 
   render() {
+    if (this.props.status !== status.LOGGED_IN) {
+      return null;
+    }
+
     return (
       <IconButton
         color='inherit'
@@ -39,6 +44,7 @@ class AppBarItemEdit extends React.Component {
 export default connect(
   state => ({
     view: state.view.currentView,
+    status: state.account.status,
   }),
   dispatch => ({
     changeViewToEditor: () => dispatch(changeView(view.EDIT_VIEW)),

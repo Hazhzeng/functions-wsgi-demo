@@ -42,7 +42,7 @@ class ApplicationBar extends React.PureComponent {
 
   render() {
     return (
-      <Grid item sm={12} lg={12} className={this.props.classes.root}>
+      <Grid item xs={12} lg={12} className={this.props.classes.root}>
         <AppBar position={'fixed'}>
           <Toolbar>
             {this._renderProgressBar()}
@@ -58,7 +58,6 @@ class ApplicationBar extends React.PureComponent {
 ApplicationBar.propTypes = {
   title: PropTypes.string,
   progress: PropTypes.number.isRequired,
-  classes: PropTypes.object.isRequired,
 }
 
 const styles = (theme) => ({
