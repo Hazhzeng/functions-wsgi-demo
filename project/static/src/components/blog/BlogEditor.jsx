@@ -4,6 +4,12 @@ import AceEditor from 'react-ace';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import InputLabel from '@material-ui/core/InputLabel';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import Input from '@material-ui/core/Input';
+import IconButton from '@material-ui/core/IconButton';
+import PlaylistAdd from '@material-ui/icons/PlaylistAdd';
+import FormControl from '@material-ui/core/FormControl';
 import { withStyles } from '@material-ui/core/styles';
 
 import 'brace/mode/markdown';
@@ -39,14 +45,21 @@ class BlogEditor extends React.PureComponent {
 
   _renderTagEditor() {
     return (
-      <TextField
-        label="Tags"
-        value={this.props.tag}
-        onChange={this.props.handleChangeTag}
-        className={this.props.classes.text}
-        margin="normal"
-        fullWidth
-      />
+      <FormControl className={this.props.classes.tag}>
+        <InputLabel htmlFor="adornment-tag-input">Tag</InputLabel>
+        <Input
+          id="adornment-tag-input"
+          value={this.props.tag}
+          onChange={this.props.handleChangeTag}
+          endAdornment={
+            <InputAdornment position="end">
+              <IconButton onClick={this.props.handleCommitTag}>
+                <PlaylistAdd />
+              </IconButton>
+            </InputAdornment>
+          }
+        />
+      </FormControl>
     );
   }
 
@@ -110,6 +123,7 @@ BlogEditor.propType = {
   handleChangeTitle: PropTypes.func,
   handleChangeTag: PropTypes.func,
   handleChangeText: PropTypes.func,
+  handleCommitTag: PropTypes.func,
 }
 
 const styles = (theme) => ({
@@ -117,6 +131,10 @@ const styles = (theme) => ({
     margin: theme.spacing.unit,
   },
   editor: {
+    margin: theme.spacing.unit,
+    padding: theme.spacing.unit * 2,
+  },
+  tag: {
     margin: theme.spacing.unit,
     padding: theme.spacing.unit * 2,
   },
