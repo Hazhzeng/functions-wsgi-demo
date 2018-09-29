@@ -1,6 +1,7 @@
 import { put, takeLatest } from 'redux-saga/effects';
 import { push } from 'connected-react-router'
 import { view, changeView } from '../actions/ViewActions';
+import { definition as blog } from '../actions/BlogActions';
 import { definition as route } from '../actions/RouteActions';
 import { definition as account } from '../actions/AccountActions';
 
@@ -19,9 +20,15 @@ function *routeLogoutSuccessSaga() {
   yield put(changeView(view.BLOG_VIEW));
 }
 
+function *routeSubmitBlogSuccessSaga() {
+  yield put(push('/articles'));
+  yield put(changeView(view.BLOG_VIEW));
+}
+
 export default [
   takeLatest(route.CHANGE_ROUTE, changeRouteSaga),
 
   takeLatest(account.LOGIN_SUCCESS, routeLoginSuccessSaga),
   takeLatest(account.LOGOUT_SUCCESS, routeLogoutSuccessSaga),
+  takeLatest(blog.SUBMIT_BLOG_SUCCESS, routeSubmitBlogSuccessSaga),
 ];

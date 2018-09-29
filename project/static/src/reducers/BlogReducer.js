@@ -8,6 +8,13 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    case definition.DISGARD_ALL_DRAFTS: {
+      const drafts = state.draftById;
+      delete drafts[null];
+      return _.assignIn(state, {
+        draftById: drafts
+      });
+    }
     case definition.DELETE_BLOG_TAG: {
       const oldDraft = state.draftById[action.payload.id] || {};
       const tagsSet = new Set(oldDraft.tags || []);

@@ -2,6 +2,7 @@ import { call, put, select, takeLatest } from 'redux-saga/effects';
 import Api from '../api';
 import {
   definition as blog,
+  disgardAllDrafts,
   getAllBlogsSuccess, getAllBlogsFailure,
   submitBlogSuccess, submitBlogFailure,
 } from '../actions/BlogActions';
@@ -34,7 +35,12 @@ function *submitBlogSaga(action) {
   yield put(pushProgress(100));
 }
 
+function *deleteDraftSaga() {
+  yield put(disgardAllDrafts());
+}
+
 export default [
   takeLatest(blog.GET_ALL_BLOGS, getAllBlogsSaga),
   takeLatest(blog.SUBMIT_BLOG, submitBlogSaga),
+  takeLatest(blog.SUBMIT_BLOG_SUCCESS, deleteDraftSaga),
 ];

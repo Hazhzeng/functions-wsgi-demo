@@ -97,6 +97,7 @@ class BlogEditor extends React.PureComponent {
           color="primary"
           className={this.props.classes.button}
           onClick={this.props.handleSubmit}
+          fullWidth
         >
           Submit
         </Button>
