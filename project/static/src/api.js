@@ -6,10 +6,10 @@ import {
 } from './utils';
 
 export default {
-  submitBlog: (title, tag, text) => {
+  submitBlog: (title, tags, text) => {
     const body = {
       title,
-      tag,
+      tags,
       text,
     };
     return post_request('/api/blog', {}, body)

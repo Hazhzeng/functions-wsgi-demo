@@ -23,9 +23,9 @@ function *submitBlogSaga(action) {
   yield put(pushProgress(0));
   try {
     const { id } = action.payload;
-    const { title, tag, text } = yield select(state => state.blog.draftById[id]);
+    const { title, tags, text } = yield select(state => state.blog.draftById[id]);
     yield put(pushProgress(30));
-    const data = yield call(Api.submitBlog, title, tag, text);
+    const data = yield call(Api.submitBlog, title, tags, text);
     yield put(pushProgress(70));
     yield put(submitBlogSuccess(data));
   } catch (error) {

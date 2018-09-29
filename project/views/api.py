@@ -153,19 +153,19 @@ def account_email_patch(args, email: str):
 @login_required_api
 @use_args({
     'title': fields.String(required=True),
-    'tag': fields.String(),
+    'tags': fields.List(fields.String()),
     'text': fields.String(),
 })
 def blog_post(args):
     title = args.get('title')
-    tag = args.get('tag', '')
+    tags = args.get('tags', [])
     text = args.get('text', '')
     if not title:
         return response.unprocessable_entity(
             'Blog title cannot be empty'
         )
 
-    new_blog = add_blog(g.user.id, title, tag, text)
+    new_blog = add_blog(g.user.id, title, tags, text)
     return response.created({
         'id': new_blog.id,
         'title': new_blog.title,

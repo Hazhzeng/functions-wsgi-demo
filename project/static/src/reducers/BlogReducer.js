@@ -39,6 +39,7 @@ export default (state = initialState, action) => {
         newBlogById[blog.id] = {
           id: blog.id,
           authorId: blog.author_id,
+          tags: blog.tags,
           text: blog.text,
           title: blog.title,
           updateDate: blog.update_date,

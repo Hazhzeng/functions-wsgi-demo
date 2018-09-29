@@ -7,6 +7,7 @@ export class BlogPreviewList extends React.PureComponent {
       <BlogPreview
         key={blog.id}
         title={blog.title}
+        tags={blog.tags}
         time={blog.updateDate}
         text={blog.text}
       />

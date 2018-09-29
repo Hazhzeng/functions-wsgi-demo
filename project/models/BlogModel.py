@@ -39,9 +39,7 @@ class BlogModel(db.Model):
     )
     tags = db.relationship(
         'TagModel',
-        primaryjoin='BlogTagAssociation.tag_id==TagModel.id',
         secondary='blog_tag_map',
-        secondaryjoin='BlogModel.id==BlogTagAssociation.blog_id',
         uselist=True,
     )
 
