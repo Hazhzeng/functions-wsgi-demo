@@ -76,14 +76,14 @@ class BlogEditor extends React.PureComponent {
           id="adornment-tag-input"
           value={this.props.tag}
           onChange={this.props.handleChangeTag}
-          startAdornment={
-            <InputAdornment position="start">
+          endAdornment={
+            <InputAdornment position="end">
               <IconButton onClick={this.props.handleCommitTag}>
                 <PlaylistAdd />
               </IconButton>
+              {this._renderTagChips()}
             </InputAdornment>
           }
-          endAdornment={this._renderTagChips()}
         />
       </FormControl>
     );
