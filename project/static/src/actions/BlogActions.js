@@ -1,6 +1,8 @@
 const prefix = 'Blog';
 
 export const definition = {
+  COMMIT_BLOG_TAG: `[${prefix}]COMMIT_BLOG_TAG`,
+  DELETE_BLOG_TAG: `[${prefix}]DELETE_BLOG_TAG`,
   PUSH_BLOG_BY_ID: `[${prefix}]PUSH_BLOG_BY_ID`,
   EDIT_BLOG_BY_ID: `[${prefix}]EDIT_BLOG_BY_ID`,
   SAVE_BLOG_BY_ID: `[${prefix}]SAVE_BLOG_BY_ID`,
@@ -18,6 +20,21 @@ export const definition = {
   SUBMIT_BLOG_SUCCESS: `[${prefix}]SUBMIT_BLOG->SUCCESS`,
   SUBMIT_BLOG_FAILURE: `[${prefix}]SUBMIT_BLOG->FAILURE`,
 };
+
+export const deleteBlogTag = (id=null, tag=null) => ({
+  type: definition.DELETE_BLOG_TAG,
+  payload: {
+    id,
+    tag
+  }
+});
+
+export const commitBlogTag = (id=null) => ({
+  type: definition.COMMIT_BLOG_TAG,
+  payload: {
+    id
+  }
+});
 
 export const submitBlog = (id=null) => ({
   type: definition.SUBMIT_BLOG,

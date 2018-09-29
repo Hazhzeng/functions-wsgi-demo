@@ -8,6 +8,31 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    case definition.DELETE_BLOG_TAG: {
+      const oldDraft = state.draftById[action.payload.id] || {};
+      const tagsSet = new Set(oldDraft.tags || []);
+      tagsSet.delete(action.payload.tag);
+      oldDraft.tags = Array.from(tagsSet);
+      return _.assignIn(state, {
+        draftById: {
+          [action.payload.id]: oldDraft,
+        }
+      });
+    }
+    case definition.COMMIT_BLOG_TAG: {
+      const oldDraft = state.draftById[action.payload.id] || {};
+      if (oldDraft.tag) {
+        const tagsSet = new Set(oldDraft.tags || []);
+        tagsSet.add(oldDraft.tag);
+        oldDraft.tags = Array.from(tagsSet);
+        oldDraft.tag = '';
+      }
+      return _.assignIn(state, {
+        draftById: {
+          [action.payload.id]: oldDraft,
+        }
+      });
+    }
     case definition.GET_ALL_BLOGS_SUCCESS: {
       const newBlogById = {};
       action.payload.response.blogs.map(blog => {

@@ -10,6 +10,7 @@ import Input from '@material-ui/core/Input';
 import IconButton from '@material-ui/core/IconButton';
 import PlaylistAdd from '@material-ui/icons/PlaylistAdd';
 import FormControl from '@material-ui/core/FormControl';
+import Chip from '@material-ui/core/Chip';
 import { withStyles } from '@material-ui/core/styles';
 
 import 'brace/mode/markdown';
@@ -28,6 +29,12 @@ class BlogEditor extends React.PureComponent {
         Math.floor((window.context.viewport_width - 200) / 2) :
         viewport_width,
     }
+
+    this.handleDeleteTagGenerator = this.handleDeleteTagGenerator.bind(this);
+  }
+
+  handleDeleteTagGenerator(tag) {
+    return () => this.props.handleDeleteTag(tag);
   }
 
   _renderTitleEditor() {
@@ -43,6 +50,24 @@ class BlogEditor extends React.PureComponent {
     );
   }
 
+  _renderTagChips() {
+    if (!this.props.tags || this.props.tags.length === 0) {
+      return null;
+    }
+
+    return this.props.tags.map(tag => (
+      <Chip
+        key={tag}
+        label={tag}
+        clickable
+        className={this.props.classes.chip}
+        onDelete={this.handleDeleteTagGenerator(tag)}
+        color="primary"
+        variant="outlined"
+      />
+    ));
+  }
+
   _renderTagEditor() {
     return (
       <FormControl className={this.props.classes.tag}>
@@ -51,13 +76,14 @@ class BlogEditor extends React.PureComponent {
           id="adornment-tag-input"
           value={this.props.tag}
           onChange={this.props.handleChangeTag}
-          endAdornment={
-            <InputAdornment position="end">
+          startAdornment={
+            <InputAdornment position="start">
               <IconButton onClick={this.props.handleCommitTag}>
                 <PlaylistAdd />
               </IconButton>
             </InputAdornment>
           }
+          endAdornment={this._renderTagChips()}
         />
       </FormControl>
     );
@@ -118,10 +144,12 @@ class BlogEditor extends React.PureComponent {
 BlogEditor.propType = {
   title: PropTypes.string,
   tag: PropTypes.string,
+  tags: PropTypes.arrayOf(PropTypes.string),
   text: PropTypes.string,
   handleSubmit: PropTypes.func,
   handleChangeTitle: PropTypes.func,
   handleChangeTag: PropTypes.func,
+  handleDeleteTag: PropTypes.func,
   handleChangeText: PropTypes.func,
   handleCommitTag: PropTypes.func,
 }
@@ -144,6 +172,9 @@ const styles = (theme) => ({
   },
   grid: {
     marginTop: theme.spacing.unit * 5,
+  },
+  chip: {
+    margin: theme.spacing.unit / 2,
   }
 });
 

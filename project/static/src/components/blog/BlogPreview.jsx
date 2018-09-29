@@ -11,6 +11,7 @@ import MarkdownItLatex from 'markdown-it-latex';
 import 'highlight.js/styles/atom-one-light.css';
 import 'markdown-it-latex/dist/index.css';
 
+import Chip from '@material-ui/core/Chip';
 import { withStyles } from '@material-ui/core/styles';
 
 class BlogPreview extends React.PureComponent {
@@ -43,8 +44,20 @@ class BlogPreview extends React.PureComponent {
 
   _renderTags() {
     const { tags } = this.props;
-    if (!tags) return null;
-    return tags.join(',');
+
+    if (!tags || tags.length === 0) {
+      return null;
+    }
+
+    return tags.map(tag => (
+      <Chip
+        key={tag}
+        label={tag}
+        className={this.props.classes.chip}
+        color="primary"
+        variant="outlined"
+      />
+    ));
   }
 
   _renderTime() {
@@ -103,6 +116,9 @@ const styles = (theme) => ({
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
     marginTop: theme.spacing.unit * 3,
+  },
+  chip: {
+    margin: theme.spacing.unit / 2,
   }
 });
 

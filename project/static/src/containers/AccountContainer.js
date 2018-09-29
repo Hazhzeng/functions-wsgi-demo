@@ -77,7 +77,7 @@ class Account extends React.PureComponent {
       <AccountEmailField
         key="account_email_field"
         label="Please enter your email"
-        tooltip="A proper email is required to help determine if you are a new user"
+        tooltip="A proper email is required for login or signup"
         value={this.props.email}
         hasError={false}
         handleChange={this.handleEmailChange}
@@ -86,7 +86,7 @@ class Account extends React.PureComponent {
       <AccountPasswordField
         key="account_password_field"
         label={this._getPasswordLabel(this.props.status)}
-        tooltip="A password must contain 1 uppercase, 1 lowercase, 1 digit and at least 8 characters"
+        tooltip="A password must at least contain 1 uppercase, 1 lowercase, 1 digit and 8 characters"
         hasError={false}
         value={this.props.password}
         handleChange={this.handlePasswordChange}
