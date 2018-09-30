@@ -12,7 +12,8 @@ from project.models import BlogModel, UserModel, TagModel
 from project.handlers.blog_handlers import (
     add_blog,
     get_all_blogs,
-    serialise_blogs
+    serialise_blogs,
+    delete_blog_by_model,
 )
 from project.handlers.account_handlers import (
     is_valid_email,
@@ -23,6 +24,7 @@ from project.handlers.account_handlers import (
     logout_user,
 )
 from project.handlers.exceptions import (
+    BlogNotFoundException,
     UserNotFoundException
 )
 
@@ -136,7 +138,9 @@ def account_email_get(email: str):
 def account_email_patch(args, email: str):
     action = args.get('action')
     if action is None:
-        return
+        return response.unprocessable_entity(
+            'Action is required'
+        )
 
     if action == 'logout':
         logout_user(g.user.id)
@@ -172,121 +176,84 @@ def blog_post(args):
         'update': new_blog.last_update,
     })
 
-# ==================
-# Line of Revolution
-# ==================
-@app.route('/api/postblog', methods=['POST'])
+@app.route('/api/blog/<int:id>', methods=['DELETE'])
 @login_required_api
-@use_args({
-    'id': fields.Integer()
-})
-def postblog_api(args) -> Response:
-    new_blog = BlogModel(title=args.title, tag=args.tag, text=args.text)
-    if g.user:
-        new_blog.user = g.user.id
+def blog_id_delete(id: int):
+    try:
+        blog_model = get_blog_by_id(id)
+    except BlogNotFoundException:
+        return response.not_found(
+            'Blog cannot be found'
+        )
 
-    # Handle tags and blog-tag relationship
-    if args.tag:
-        tags = json.loads(args.tag)
-        for tag in tags:
-            db_tag = db.session.query(TagModel)\
-                .filter(TagModel.tag == tag)\
-                .scalar()
-            if db_tag is None:
-                db_tag = TagModel(tag=tag)
-                db.session.add(db_tag)
-            new_blog.tags.append(db_tag)
+    if g.user.id != blog_model.author_id:
+        return response.unauthorized(
+            'Only the author can remove their article'
+        )
 
-    db.session.add(new_blog)
+    delete_blog_by_model(blog_model)
     return response.ok()
 
-
-@app.route('/api/updateblog', methods=['PATCH'])
+@app.route('/api/blog/<int:id>', methods=['PATCH'])
 @login_required_api
 @use_args({
-    'id': fields.Integer()
+    'action': fields.String(required=True),
+    'title': fields.String(),
+    'tags': fields.List(fields.String()),
+    'text': fields.String()
 })
-def updateblog_api(args) -> Response:
-    blog_id = args.id
-    blog = db.session.query(BlogModel)\
-        .filter(BlogModel.id == blog_id)\
-        .first()
+def blog_id_patch(args, id: int):
+    action = args.get('action')
+    if action is None:
+        return response.unprocessable_entity(
+            'Action is required'
+        )
 
-    if blog is None:
-        return response.unprocessable_entity()
+    if action == 'update':
+        try:
+            blog_model = get_blog_by_id(id)
+        except BlogNotFoundException:
+            return response.not_found(
+                'Blog cannot be found'
+            )
 
-    if blog.user != g.user.id:
-        return response.forbidden()
+        if g.user.id != blog_model.author_id:
+            return response.unauthorized(
+                'Only the author can amend their article'
+            )
 
-    blog.title = args.title
-    blog.tag = args.tag
-    blog.text = args.text
-    blog.last_update = datetime.utcnow()
+        title = args.get('title')
+        tags = args.get('tags', [])
+        text = args.get('text', '')
+        if not title:
+            return response.unprocessable_entity(
+                'Blog title cannot be empty'
+            )
 
-    db.session.add(blog)
-    db.session.flush()
-    return response.accepted()
+        delete_blog_by_model(blog_model)
+        new_blog = add_blog(g.user.id, title, tags, text)
+        return response.created({
+            'id': new_blog.id,
+            'title': new_blog.title,
+            'update': new_blog.last_update,
+        })
 
-
-@app.route('/api/deleteblog', methods=['DELETE'])
-@login_required_api
-@use_args({
-    'blog_id': fields.Integer(required=True)
-})
-def deleteblog_api(args) -> Response:
-    blog = db.session.query(BlogModel)\
-        .filter(BlogModel.id == args['blog_id'])\
-        .first()
-    if blog is None:
-        return response.unprocessable_entity()
-
-    if blog.user != g.user.id:
-        return response.forbidden()
-
-    for tag in blog.tags:
-        blog.tags.remove(tag)
-
-    db.session.delete(blog)
-    db.session.flush()
-    return response.accepted()
-
-
-@app.route('/api/getblog', methods=['GET'])
-@use_args({
-    'date': fields.String(),
-    'tag': fields.String(),
-    'limit': fields.Integer(required=True)
-})
-def getblog_api(args) -> Response:
-    blogs = db.session.query(BlogModel).order_by(BlogModel.last_update.desc())
-    if 'date' in args:
-        last_update = parser.parse(args['date'])
-        last_update += timedelta(hours=23, minutes=59, seconds=59)
-        blogs = blogs.filter(BlogModel.last_update <= last_update)
-
-    if 'tag' in args:
-        tag = args['tag']
-        blogs = blogs.filter(BlogModel.tag == tag)
-
-    if 'limit' in args:
-        limit = args['limit']
-        blogs = blogs.limit(limit)
-
-    return response.ok()
+    return response.bad_request(
+        'Action cannot be handled properly'
+    )
 
 @app.before_request
 def before_request():
     token = request.cookies.get('identity_token')
     if token is not None:
-        user = db.session.query(UserModel)\
-            .filter(UserModel.token == token)\
-            .first()
+        user = db.session.query(UserModel).filter(
+            UserModel.token == token
+        ).first()
         if user and user.login_expiry > datetime.utcnow():
             g.user = user
             return
 
     g.user = None
-
 
 @app.after_request
 def after_request(res):

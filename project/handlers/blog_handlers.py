@@ -76,3 +76,12 @@ def serialise_blogs(blogs: List[BlogModel]) -> Dict[str, any]:
             'update_date': blog.last_update
         })
     return result
+
+
+def delete_blog_by_model(blog_model: BlogModel) -> None:
+    db.session.query(BlogTagAssociation).filter(
+        BlogTagAssociation.blog_id == blog_model.id
+    ).delete(synchronize_session=False)
+
+    db.session.delete(blog_model)
+    return
