@@ -3,6 +3,7 @@ import {
   post_request,
   response_handler,
   patch_request,
+  delete_request,
 } from './utils';
 
 export default {
@@ -14,6 +15,11 @@ export default {
     };
     return post_request('/api/blog', {}, body)
       .then(response_handler)
+  },
+
+  deleteBlog: id => {
+    return delete_request(`/api/blog/${id}`)
+      .then(response_handler);
   },
 
   getAllBlogs: () => {

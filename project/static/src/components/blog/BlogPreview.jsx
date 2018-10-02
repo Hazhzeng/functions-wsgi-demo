@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import MarkdownIt from 'markdown-it';
 import moment from 'moment';
+import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
@@ -13,6 +14,8 @@ import 'markdown-it-latex/dist/index.css';
 
 import Chip from '@material-ui/core/Chip';
 import { withStyles } from '@material-ui/core/styles';
+import DeleteIcon from '@material-ui/icons/Delete';
+
 
 class BlogPreview extends React.PureComponent {
   constructor(props) {
@@ -34,6 +37,10 @@ class BlogPreview extends React.PureComponent {
       }
     });
     this.mdi = this.mdi.use(MarkdownItLatex);
+  }
+
+  handleDeleteGenerator() {
+    return () => this.props.handleDelete(this.props.id);
   }
 
   _renderTitle() {
@@ -81,6 +88,20 @@ class BlogPreview extends React.PureComponent {
     return <div dangerouslySetInnerHTML={result} />;
   }
 
+  _renderControlPanel() {
+    return [
+      this.props.handleDelete && (
+        <Button
+          key='handle_delete_button'
+          className={this.props.classes.button}
+          onClick={this.handleDeleteGenerator()}
+        >
+          <DeleteIcon />
+        </Button>
+      )
+    ]
+  }
+
   render() {
     return (
       <Grid item xs={12} lg={6} zeroMinWidth>
@@ -94,8 +115,9 @@ class BlogPreview extends React.PureComponent {
           <Typography variant='body1' component='div'>
             {this._renderMarkdown()}
           </Typography>
-          <Typography variant='body2' component='div'>
+          <Typography variant='body2' component='div' align='right'>
             {this._renderTags()}
+            {this._renderControlPanel()}
           </Typography>
         </Paper>
       </Grid>
@@ -108,6 +130,9 @@ BlogPreview.propType = {
   tags: PropTypes.arrayOf(PropTypes.string),
   time: PropTypes.string,
   text: PropTypes.string,
+
+  id: PropTypes.id,
+  handleDelete: PropTypes.func,
 }
 
 const styles = (theme) => ({
@@ -118,6 +143,9 @@ const styles = (theme) => ({
     marginTop: theme.spacing.unit * 3,
   },
   chip: {
+    margin: theme.spacing.unit / 2,
+  },
+  button: {
     margin: theme.spacing.unit / 2,
   }
 });

@@ -5,6 +5,7 @@ import {
   disgardAllDrafts,
   getAllBlogsSuccess, getAllBlogsFailure,
   submitBlogSuccess, submitBlogFailure,
+  deleteBlogSuccess, deleteBlogFailure,
 } from '../actions/BlogActions';
 import { pushProgress } from '../actions/UiActions';
 
@@ -39,8 +40,23 @@ function *deleteDraftSaga() {
   yield put(disgardAllDrafts());
 }
 
+function *deleteBlogSaga(action) {
+  yield put(pushProgress(0));
+  try {
+    const { id } = action.payload;
+    yield call(Api.deleteBlog, id);
+    yield put(pushProgress(70));
+    yield put(deleteBlogSuccess(id));
+  } catch (error) {
+    yield put(deleteBlogFailure(error));
+  }
+  yield put(pushProgress(100));
+}
+
 export default [
   takeLatest(blog.GET_ALL_BLOGS, getAllBlogsSaga),
   takeLatest(blog.SUBMIT_BLOG, submitBlogSaga),
+  takeLatest(blog.DELETE_BLOG, deleteBlogSaga),
+
   takeLatest(blog.SUBMIT_BLOG_SUCCESS, deleteDraftSaga),
 ];

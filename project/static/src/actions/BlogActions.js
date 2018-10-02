@@ -19,7 +19,29 @@ export const definition = {
   SUBMIT_BLOG: `[${prefix}]SUBMIT_BLOG`,
   SUBMIT_BLOG_SUCCESS: `[${prefix}]SUBMIT_BLOG->SUCCESS`,
   SUBMIT_BLOG_FAILURE: `[${prefix}]SUBMIT_BLOG->FAILURE`,
+
+  DELETE_BLOG: `[${prefix}]DELETE_BLOG`,
+  DELETE_BLOG_SUCCESS: `[${prefix}]DELETE_BLOG->SUCCESS`,
+  DELETE_BLOG_FAILURE: `[${prefix}]DELETE_BLOG->FAILURE`,
 };
+
+export const deleteBlog = id => ({
+  type: definition.DELETE_BLOG,
+  payload: {
+    id
+  }
+});
+
+export const deleteBlogSuccess = (id) => ({
+  type: definition.DELETE_BLOG_SUCCESS,
+  payload: {
+    id
+  }
+});
+
+export const deleteBlogFailure = () => ({
+  type: definition.DELETE_BLOG_FAILURE,
+});
 
 export const deleteBlogTag = (id=null, tag=null) => ({
   type: definition.DELETE_BLOG_TAG,

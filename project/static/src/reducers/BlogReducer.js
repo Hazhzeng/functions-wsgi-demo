@@ -26,6 +26,13 @@ export default (state = initialState, action) => {
         }
       });
     }
+    case definition.DELETE_BLOG_SUCCESS: {
+      const blogs = state.blogById;
+      delete blogs[action.payload.id];
+      return _.assignIn(state, {
+        draftById: blogs
+      });
+    }
     case definition.COMMIT_BLOG_TAG: {
       const oldDraft = state.draftById[action.payload.id] || {};
       if (oldDraft.tag) {
