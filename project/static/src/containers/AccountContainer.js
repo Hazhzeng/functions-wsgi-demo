@@ -46,8 +46,8 @@ class Account extends React.PureComponent {
   _getActionButtonLabel(status) {
     const label = {
       [accountStatus.LOGGED_OUT]: 'Awaiting email...',
-      [accountStatus.AWAITING_REGISTER]: 'Register (╯°. °）╯︵ ┻━┻',
-      [accountStatus.AWAITING_LOGIN]: 'Login ┬─┬ノ( º _ ºノ)',
+      [accountStatus.AWAITING_REGISTER]: 'Register',
+      [accountStatus.AWAITING_LOGIN]: 'Login',
       [accountStatus.LOGGED_IN]: 'You\'ve already logged in...',
     }
     return label[status];
@@ -86,7 +86,7 @@ class Account extends React.PureComponent {
       <AccountPasswordField
         key="account_password_field"
         label={this._getPasswordLabel(this.props.status)}
-        tooltip="A password must at least contain 1 uppercase, 1 lowercase, 1 digit and 8 characters"
+        tooltip="A password must contain digits and at least 6 characters"
         hasError={false}
         value={this.props.password}
         handleChange={this.handlePasswordChange}

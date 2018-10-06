@@ -8,7 +8,7 @@ class Appbar extends React.PureComponent {
     const user = _.head(Object.values(this.props.loggedInUsers));
     return (
       <ApplicationBar
-        title={(user && user.email) || 'Pristine'}
+        title={user ? 'Welcome Back' : 'Pristine'}
         progress={this.props.progress}
       />
     )
