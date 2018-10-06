@@ -2,7 +2,7 @@
 
 PROJECT=pristine
 PROJECT_ENV=env
-SERVICE_NAME=prisined
+SERVICE_NAME=pristined
 
 VERSION=$(git log --oneline | head -n 1 | cut -d' ' -f1)
 
