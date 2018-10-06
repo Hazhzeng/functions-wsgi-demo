@@ -1,6 +1,5 @@
 import hashlib, uuid
 from flask import Response, g, session, request, json
-from flask.views import MethodView
 from dateutil import parser
 from datetime import datetime, timedelta
 from webargs import fields
@@ -30,10 +29,13 @@ from project.handlers.exceptions import (
 )
 
 from .wrappers import login_required_api
-
 @app.route('/api/ping', methods=['GET'])
 def ping():
     return response.ok('pong')
+
+@app.route('/api/github', methods=['GET', 'POST'])
+def github_webhook():
+    return response.ok()
 
 @app.route('/api/blog', methods=['GET'])
 def blog_get():
