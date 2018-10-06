@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from project import db
 
 class BlogTagAssociation(db.Model):
@@ -16,4 +18,10 @@ class BlogTagAssociation(db.Model):
         'TagId',
         db.Integer,
         db.ForeignKey('tag.Id')
+    )
+    date_added = db.Column(
+        'DateAddedUtc',
+        db.DateTime,
+        nullable=False,
+        default=datetime.utcnow
     )
