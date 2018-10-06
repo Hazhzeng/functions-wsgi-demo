@@ -12,6 +12,8 @@ import AccountButton from './AppBarItemAccount';
 import BlogButton from './AppBarItemBlog';
 import EditButton from './AppBarItemEdit';
 
+import { isPhone } from '../../utils';
+
 class ApplicationBar extends React.PureComponent {
   _renderProgressBar() {
     return <LoadingIndicator progress={this.props.progress} />
@@ -42,14 +44,16 @@ class ApplicationBar extends React.PureComponent {
 
   render() {
     return (
-      <Grid item xs={12} lg={12} className={this.props.classes.root}>
-        <AppBar position={'fixed'}>
-          <Toolbar>
-            {this._renderProgressBar()}
-            {this._renderTitle()}
-            {this._renderAppBarItems()}
-          </Toolbar>
-        </AppBar>
+      <Grid item xs={12} lg={12}>
+        <div className={this.props.classes.root}>
+          <AppBar position={isPhone ? 'static' : 'fixed'}>
+            <Toolbar>
+              {this._renderProgressBar()}
+              {this._renderTitle()}
+              {this._renderAppBarItems()}
+            </Toolbar>
+          </AppBar>
+        </div>
       </Grid>
     );
   }
@@ -63,11 +67,11 @@ ApplicationBar.propTypes = {
 const styles = (theme) => ({
   root: {
     flexGrow: 1,
-    marginBottom: theme.spacing.unit * 3,
+    marginBottom: theme.spacing.unit,
   },
   flex: {
     flexGrow: 1,
-    margin: theme.spacing.unit * 3,
+    margin: theme.spacing.unit,
   },
 });
 

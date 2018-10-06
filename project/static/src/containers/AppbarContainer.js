@@ -3,12 +3,15 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { ApplicationBar } from '../components/appbar';
 
+import { isPhone } from '../utils';
+
 class Appbar extends React.PureComponent {
   render() {
     const user = _.head(Object.values(this.props.loggedInUsers));
+    const title = user ? user.email : 'Pristine';
     return (
       <ApplicationBar
-        title={user ? 'Welcome Back' : 'Pristine'}
+        title={isPhone ? '' : title}
         progress={this.props.progress}
       />
     )

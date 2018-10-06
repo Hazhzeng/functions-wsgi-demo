@@ -57,4 +57,4 @@ export const response_handler = (response) => {
 
 const md = new MobileDetect(window.navigator.userAgent);
 
-export const isPhone = md.phone();
+export const isPhone = Boolean(md.phone());
