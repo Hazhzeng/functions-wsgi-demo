@@ -3,6 +3,7 @@ import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { Route, Switch } from 'react-router';
 import { ConnectedRouter } from 'connected-react-router';
+import { isPhone } from './utils';
 import route from './route';
 
 const theme = createMuiTheme({
@@ -15,8 +16,8 @@ const theme = createMuiTheme({
     },
   },
   typography: {
-    fontSize: 24,
-    htmlFontSize: 20,
+    fontSize: isPhone ? 16 : 20,
+    htmlFontSize: isPhone ? 12 : 16,
   }
 });
 

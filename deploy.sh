@@ -1,7 +1,8 @@
 #!/bin/bash
 
-PROJECT=Roject
-PROJECT_ENV=RojectEnv
+PROJECT=pristine
+PROJECT_ENV=env
+SERVICE_NAME=prisined
 
 VERSION=$(git log --oneline | head -n 1 | cut -d' ' -f1)
 
@@ -14,6 +15,6 @@ pip install -r requirements.txt
 npm install --production
 npm run build
 
-sudo systemctl restart roject
+sudo systemctl restart $SERVICE_NAME
 
 deactivate

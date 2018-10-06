@@ -1,4 +1,5 @@
 import urlUtil from 'url';
+import MobileDetect from 'mobile-detect';
 
 const _fetch = (method, url, head = {}, body = null) => {
   const request_data = {
@@ -53,3 +54,7 @@ export const response_handler = (response) => {
     throw Promise.reject(new Error('Unknown response type'));
   }
 };
+
+const md = new MobileDetect(window.navigator.userAgent);
+
+export const isPhone = md.phone();
