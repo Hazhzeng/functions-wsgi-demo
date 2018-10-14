@@ -17,7 +17,7 @@ export class PageBase extends React.PureComponent {
         container
         spacing={24}
         direction="row"
-        justify="flex-start"
+        justify="center"
         alignItems="flex-start"
       >
         <AppbarContainer />

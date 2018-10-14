@@ -16,6 +16,10 @@ export const definition = {
   GET_ALL_BLOGS_SUCCESS: `[${prefix}]GET_ALL_BLOGS->SUCCESS`,
   GET_ALL_BLOGS_FAILURE: `[${prefix}]GET_ALL_BLOGS->FAILURE`,
 
+  GET_ALL_TAGS: `[${prefix}]GET_ALL_TAGS`,
+  GET_ALL_TAGS_SUCCESS: `[${prefix}]GET_ALL_TAGS->SUCCESS`,
+  GET_ALL_TAGS_FAILURE: `[${prefix}]GET_ALL_TAGS->FAILURE`,
+
   SUBMIT_BLOG: `[${prefix}]SUBMIT_BLOG`,
   SUBMIT_BLOG_SUCCESS: `[${prefix}]SUBMIT_BLOG->SUCCESS`,
   SUBMIT_BLOG_FAILURE: `[${prefix}]SUBMIT_BLOG->FAILURE`,
@@ -95,6 +99,24 @@ export const changeBlogText = (text, id=null) => ({
     id,
     text,
   }
+});
+
+export const getAllTags = () => ({
+  type: definition.GET_ALL_TAGS,
+});
+
+export const getAllTagsSuccess = (data) => ({
+  type: definition.GET_ALL_TAGS_SUCCESS,
+  payload: {
+    response: data
+  },
+});
+
+export const getAllTagsFailure = (data) => ({
+  type: definition.GET_ALL_TAGS_FAILURE,
+  payload: {
+    response: data
+  },
 });
 
 export const getAllBlogs = () => ({

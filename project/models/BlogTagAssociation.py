@@ -25,3 +25,14 @@ class BlogTagAssociation(db.Model):
         nullable=False,
         default=datetime.utcnow
     )
+
+    tag = db.relationship(
+        'TagModel',
+        primaryjoin='TagModel.id==BlogTagAssociation.tag_id',
+        uselist=False,
+    )
+    blog = db.relationship(
+        'BlogModel',
+        primaryjoin='BlogModel.id==BlogTagAssociation.blog_id',
+        uselist=False,
+    )

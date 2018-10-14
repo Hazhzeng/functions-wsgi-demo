@@ -49,8 +49,21 @@ def add_blog(
 
 
 def get_all_blogs() -> List[BlogModel]:
-    blogs = db.session.query(BlogModel).all()
+    blogs = db.session.query(
+        BlogModel
+    ).order_by(
+        BlogModel.last_update.desc()
+    ).all()
     return blogs
+
+
+def get_all_tags() -> List[TagModel]:
+    tags = db.session.query(
+        BlogTagAssociation
+    ).order_by(
+        BlogTagAssociation.date_added.desc()
+    ).all()
+    return tags
 
 
 def get_blog_by_id(id: int) -> BlogModel:
@@ -74,6 +87,17 @@ def serialise_blogs(blogs: List[BlogModel]) -> Dict[str, any]:
             'tags': tags,
             'text': blog.text,
             'update_date': blog.last_update
+        })
+    return result
+
+
+def serialise_tags(associations: List[BlogTagAssociation]) -> Dict[str, any]:
+    result = {}
+    result['tags'] = []
+    for association in associations:
+        result['tags'].append({
+            'name': association.tag.tag,
+            'update_date': association.tag.date_added
         })
     return result
 

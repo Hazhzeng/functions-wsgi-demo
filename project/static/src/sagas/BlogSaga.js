@@ -3,6 +3,7 @@ import Api from '../api';
 import {
   definition as blog,
   disgardAllDrafts,
+  getAllTagsSuccess, getAllTagsFailure,
   getAllBlogsSuccess, getAllBlogsFailure,
   submitBlogSuccess, submitBlogFailure,
   deleteBlogSuccess, deleteBlogFailure,
@@ -17,6 +18,18 @@ function *getAllBlogsSaga() {
     yield put(getAllBlogsSuccess(data));
   } catch (error) {
     yield put(getAllBlogsFailure(error))
+  }
+  yield put(pushProgress(100));
+}
+
+function *getAllTagsSaga() {
+  yield put(pushProgress(0));
+  try {
+    const data = yield call(Api.getAllTags);
+    yield put(pushProgress(30));
+    yield put(getAllTagsSuccess(data));
+  } catch (error) {
+    yield put(getAllTagsFailure(error))
   }
   yield put(pushProgress(100));
 }
@@ -54,6 +67,7 @@ function *deleteBlogSaga(action) {
 }
 
 export default [
+  takeLatest(blog.GET_ALL_TAGS, getAllTagsSaga),
   takeLatest(blog.GET_ALL_BLOGS, getAllBlogsSaga),
   takeLatest(blog.SUBMIT_BLOG, submitBlogSaga),
   takeLatest(blog.DELETE_BLOG, deleteBlogSaga),

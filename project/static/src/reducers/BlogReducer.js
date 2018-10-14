@@ -1,13 +1,27 @@
 import _ from 'lodash';
 import { definition } from '../actions/BlogActions';
+import moment from 'moment';
 
 const initialState = {
   blogById: {},
-  draftById: {}
+  draftById: {},
+  tagsByDate: {},
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    case definition.GET_ALL_TAGS_SUCCESS: {
+      const tagsByDate = Object.assign({}, state.tagsByDate);
+      action.payload.response.tags.map(tag => {
+        const datetime = moment(tag.update_date).format('MMMM YYYY');
+        const tagsSet = new Set(tagsByDate[datetime]);
+        tagsSet.add(tag.name);
+        tagsByDate[datetime] = Array.from(tagsSet);
+      });
+      return _.assignIn(state, {
+        tagsByDate: tagsByDate
+      });
+    }
     case definition.DISGARD_ALL_DRAFTS: {
       const drafts = state.draftById;
       delete drafts[null];

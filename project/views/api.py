@@ -10,8 +10,10 @@ from project.views import response
 from project.models import BlogModel, UserModel, TagModel
 from project.handlers.blog_handlers import (
     add_blog,
+    get_all_tags,
     get_all_blogs,
     get_blog_by_id,
+    serialise_tags,
     serialise_blogs,
     delete_blog_by_model,
 )
@@ -41,6 +43,11 @@ def github_webhook():
 def blog_get():
     blogs = get_all_blogs()
     return response.ok(serialise_blogs(blogs))
+
+@app.route('/api/tag', methods=['GET'])
+def tag_get():
+    tags = get_all_tags()
+    return response.ok(serialise_tags(tags))
 
 @app.route('/api/account', methods=['POST'])
 @use_args({

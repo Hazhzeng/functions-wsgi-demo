@@ -7,6 +7,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import LoadingIndicator from './LoadingIndicator';
 
+import RoadmapButton from './AppBarItemRoadmap';
 import LogoutButton from './AppBarItemLogout';
 import AccountButton from './AppBarItemAccount';
 import BlogButton from './AppBarItemBlog';
@@ -35,6 +36,7 @@ class ApplicationBar extends React.PureComponent {
     return (
       <div>
         <BlogButton />
+        <RoadmapButton />
         <EditButton />
         <AccountButton />
         <LogoutButton />

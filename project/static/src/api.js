@@ -22,6 +22,11 @@ export default {
       .then(response_handler);
   },
 
+  getAllTags: () => {
+    return get_request('/api/tag')
+      .then(response_handler)
+  },
+
   getAllBlogs: () => {
     return get_request('/api/blog')
       .then(response_handler)

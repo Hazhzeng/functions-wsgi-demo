@@ -12,6 +12,8 @@ def index():
 
 @app.route('/articles')
 @app.route('/account')
+@app.route('/tag')
+@app.route('/roadmap')
 def logout_view():
     return render_template('index.html')
 
@@ -38,6 +40,7 @@ def before_request():
     else:
         user = None
     g.user = user
+
 
 @app.context_processor
 def context_user():
