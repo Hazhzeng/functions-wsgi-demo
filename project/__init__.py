@@ -5,6 +5,7 @@ import json
 
 TEMPLATE_DIR = os.path.join('.', 'static')
 STATIC_DIR = os.path.join('.', 'static')
+DIST_DIR = os.path.join('.', 'static', 'dist')
 
 app = Flask(
     __name__,
@@ -13,6 +14,9 @@ app = Flask(
     template_folder=TEMPLATE_DIR,
 )
 app.config.from_object(__name__)
+app.config['TEMPLATE_DIR'] = TEMPLATE_DIR
+app.config['STATIC_DIR'] = STATIC_DIR
+app.config['DIST_DIR'] = DIST_DIR
 
 CONFIG_FILE = os.path.join(app.root_path, '..', 'roject.config')
 

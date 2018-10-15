@@ -1,5 +1,5 @@
 import hashlib, uuid
-from flask import Response, g, session, request, json
+from flask import Response, g, session, request, json, send_from_directory
 from dateutil import parser
 from datetime import datetime, timedelta
 from webargs import fields
@@ -29,6 +29,10 @@ from project.handlers.exceptions import (
     BlogNotFoundException,
     UserNotFoundException
 )
+
+@app.route('/dist/<filename>', methods=['GET'])
+def resource_get(filename):
+    return send_from_directory(app.config['DIST_DIR'], filename)
 
 from .wrappers import login_required_api
 @app.route('/api/ping', methods=['GET'])
