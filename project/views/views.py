@@ -6,10 +6,6 @@ from .wrappers import login_required
 
 
 @app.route('/')
-def index():
-    return redirect('/articles')
-
-
 @app.route('/articles')
 @app.route('/account')
 @app.route('/tag')

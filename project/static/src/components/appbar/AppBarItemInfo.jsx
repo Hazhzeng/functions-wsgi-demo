@@ -1,29 +1,34 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import IconButton from '@material-ui/core/IconButton';
-import { TimelineOutlined, TimelineSharp } from '@material-ui/icons';
+import { InfoOutlined, InfoSharp } from '@material-ui/icons';
 import { view, changeView } from '../../actions/ViewActions';
 import { changeRoute } from '../../actions/RouteActions';
+import { status } from '../../actions/AccountActions';
 
-class AppBarItemRoadmap extends React.Component {
+class AppBarItemInfo extends React.Component {
   constructor(props) {
     super(props);
     this.handleClick = this.handleClick.bind(this);
   }
 
   handleClick() {
-    this.props.changeViewToRoadmap();
-    this.props.changeRoute('/roadmap');
+    this.props.changeViewToInfo();
+    this.props.changeRoute('/');
   }
 
   renderIcon() {
-    if (this.props.view === view.ROADMAP_VIEW) {
-      return <TimelineSharp />;
+    if (this.props.view === view.INFO_VIEW) {
+      return <InfoSharp />;
     }
-    return <TimelineOutlined />;
+    return <InfoOutlined />;
   }
 
   render() {
+    if (this.props.status === status.LOGGED_IN) {
+      return null;
+    }
+
     return (
       <IconButton
         color='inherit'
@@ -39,9 +44,10 @@ class AppBarItemRoadmap extends React.Component {
 export default connect(
   state => ({
     view: state.view.currentView,
+    status: state.account.status,
   }),
   dispatch => ({
-    changeViewToRoadmap: () => dispatch(changeView(view.ROADMAP_VIEW)),
+    changeViewToInfo: () => dispatch(changeView(view.INFO_VIEW)),
     changeRoute: routePath => dispatch(changeRoute(routePath)),
   })
-)(AppBarItemRoadmap)
+)(AppBarItemInfo)

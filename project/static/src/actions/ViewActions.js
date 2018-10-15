@@ -8,6 +8,8 @@ export const view = {
   BLOG_VIEW: 'BLOG_VIEW',
   EDIT_VIEW: 'EDIT_VIEW',
   ACCOUNT_VIEW: 'ACCOUNT_VIEW',
+  ROADMAP_VIEW: 'ROADMAP_VIEW',
+  INFO_VIEW: 'INFO_VIEW',
 };
 
 export const changeView = viewName => ({

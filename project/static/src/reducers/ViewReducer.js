@@ -1,8 +1,8 @@
 import _ from 'lodash';
-import { definition, view } from '../actions/ViewActions';
+import { definition } from '../actions/ViewActions';
 
 const initialState = {
-  currentView: view.BLOG_VIEW,
+  currentView: null,
 };
 
 export default (state = initialState, action) => {

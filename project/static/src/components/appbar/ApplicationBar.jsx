@@ -12,6 +12,7 @@ import LogoutButton from './AppBarItemLogout';
 import AccountButton from './AppBarItemAccount';
 import BlogButton from './AppBarItemBlog';
 import EditButton from './AppBarItemEdit';
+import InfoButton from './AppBarItemInfo';
 
 import { isPhone } from '../../utils';
 
@@ -37,6 +38,7 @@ class ApplicationBar extends React.PureComponent {
       <div>
         <BlogButton />
         <RoadmapButton />
+        <InfoButton />
         <EditButton />
         <AccountButton />
         <LogoutButton />

@@ -1,6 +1,18 @@
-import { HomePage, AccountPage, ComposePage, RoadmapPage } from './pages';
+import {
+  HomePage,
+  AccountPage,
+  ComposePage,
+  RoadmapPage,
+  InformationPage,
+} from './pages';
 
 export default [
+  {
+    key: 'about me',
+    path: '/',
+    exact: true,
+    component: InformationPage,
+  },
   {
     key: 'articles',
     path: '/articles',
