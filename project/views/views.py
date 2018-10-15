@@ -34,9 +34,11 @@ def robots_txt_view():
 def before_request():
     token = request.cookies.get('token')
     if token is not None:
-        user = db.session.query(UserModel)\
-            .filter(UserModel.token == token)\
-            .first()
+        user = db.session.query(
+            UserModel
+        ).filter(
+            UserModel.token == token
+        ).first()
     else:
         user = None
     g.user = user

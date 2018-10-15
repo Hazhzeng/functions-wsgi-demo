@@ -18,12 +18,20 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, 'project', 'static', 'dist'),
-    chunkFilename: '[name].bundle.js',
-    filename: '[name].[hash].js'
+    chunkFilename: '[chunkhash].bundle.js',
+    filename: '[name].[contenthash].js'
   },
   optimization: {
     splitChunks: {
-     chunks: 'all'
+      chunks: 'all',
+      cacheGroups: {
+        vendor: {
+          test: /[\\/]node_modules[\\/]/,
+          name: 'vendors',
+          chunks: 'initial',
+          reuseExistingChunk: true
+        }
+      }
     }
   },
   plugins: [
