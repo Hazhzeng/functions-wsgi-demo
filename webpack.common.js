@@ -2,22 +2,25 @@
 let path = require('path');
 let HtmlWebpackPlugin = require('html-webpack-plugin');
 
+let staticPath = path.resolve(__dirname, 'project', 'static');
+
 module.exports = {
   resolve: {
     alias: {
-      base: path.resolve(__dirname, 'project', 'static', 'src'),
+      base: path.resolve(staticPath, 'src'),
     },
     extensions: ['.js', '.jsx']
   },
   entry: {
-    index: path.resolve(__dirname, 'project', 'static', 'src', 'index.jsx'),
-    account: path.resolve(__dirname, 'project', 'static', 'src', 'pages', 'AccountPage.jsx'),
-    compose: path.resolve(__dirname, 'project', 'static', 'src', 'pages', 'ComposePage.jsx'),
-    home: path.resolve(__dirname, 'project', 'static', 'src', 'pages', 'HomePage.jsx'),
-    roadmap: path.resolve(__dirname, 'project', 'static', 'src', 'pages', 'RoadmapPage.jsx'),
+    index: path.resolve(staticPath, 'src', 'index.jsx'),
+    account: path.resolve(staticPath, 'src', 'pages', 'AccountPage.jsx'),
+    compose: path.resolve(staticPath, 'src', 'pages', 'ComposePage.jsx'),
+    home: path.resolve(staticPath, 'src', 'pages', 'HomePage.jsx'),
+    roadmap: path.resolve(staticPath, 'src', 'pages', 'RoadmapPage.jsx'),
+    information: path.resolve(staticPath, 'src', 'pages', 'InformationPage.jsx'),
   },
   output: {
-    path: path.resolve(__dirname, 'project', 'static', 'dist'),
+    path: path.resolve(staticPath, 'dist'),
     chunkFilename: '[chunkhash].bundle.js',
     filename: '[name].[contenthash].js'
   },

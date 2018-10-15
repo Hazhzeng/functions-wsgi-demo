@@ -8,7 +8,7 @@ import {
 
 export default [
   {
-    key: 'about me',
+    key: 'about',
     path: '/',
     exact: true,
     component: InformationPage,
