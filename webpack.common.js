@@ -51,8 +51,11 @@ module.exports = {
         loader: 'babel-loader',
       },
       {
-        test: /\.(jpg|jpeg|png|gif|svg|ico)$/,
+        test: /\.(jpg|jpeg|png|gif|svg|ico|pdf)$/,
         loader: 'file-loader',
+        options: {
+          name: '[name].[ext]',
+        }
       },
       {
         test: /\.css$/,
