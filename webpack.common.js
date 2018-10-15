@@ -9,11 +9,22 @@ module.exports = {
     },
     extensions: ['.js', '.jsx']
   },
-  entry: path.resolve(__dirname, 'project', 'static', 'src', 'index.jsx'),
+  entry: {
+    index: path.resolve(__dirname, 'project', 'static', 'src', 'index.jsx'),
+    account: path.resolve(__dirname, 'project', 'static', 'src', 'pages', 'AccountPage.jsx'),
+    compose: path.resolve(__dirname, 'project', 'static', 'src', 'pages', 'ComposePage.jsx'),
+    home: path.resolve(__dirname, 'project', 'static', 'src', 'pages', 'HomePage.jsx'),
+    roadmap: path.resolve(__dirname, 'project', 'static', 'src', 'pages', 'RoadmapPage.jsx'),
+  },
   output: {
     path: path.resolve(__dirname, 'project', 'static', 'dist'),
     chunkFilename: '[name].bundle.js',
     filename: '[name].[hash].js'
+  },
+  optimization: {
+    splitChunks: {
+     chunks: 'all'
+    }
   },
   plugins: [
     new HtmlWebpackPlugin({
