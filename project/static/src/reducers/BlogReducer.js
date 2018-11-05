@@ -13,7 +13,7 @@ export default (state = initialState, action) => {
     case definition.GET_ALL_TAGS_SUCCESS: {
       const tagsByDate = Object.assign({}, state.tagsByDate);
       action.payload.response.tags.map(tag => {
-        const datetime = moment(tag.update_date).format('MMMM YYYY');
+        const datetime = moment(tag.update_date).format('YYYY-MM');
         const tagsSet = new Set(tagsByDate[datetime]);
         tagsSet.add(tag.name);
         tagsByDate[datetime] = Array.from(tagsSet);

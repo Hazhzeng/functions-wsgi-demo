@@ -12,7 +12,10 @@ class Roadmap extends React.Component {
     const tags = Object.keys(this.props.tagsByDate).map(date => ({
       date,
       set: this.props.tagsByDate[date],
-    }));
+    })).sort((t1, t2) => {
+      if (t1.date == t2.date) return 0;
+      return t1.date < t2.date ? 1 : -1;
+    });
     return <RoadmapBoard tags={tags} />;
   }
 }

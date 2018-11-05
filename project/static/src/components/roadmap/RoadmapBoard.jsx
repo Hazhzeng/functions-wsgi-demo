@@ -9,6 +9,18 @@ import StepLabel from '@material-ui/core/StepLabel';
 import { withStyles } from '@material-ui/core/styles';
 
 class RoadmapBoard extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      step: 0
+    };
+    this.handleStepOnClick = this.handleStepOnClick.bind(this);
+  }
+
+  handleStepOnClick(index) {
+    this.setState({ step: index });
+  }
+
   renderTagList(tagArray) {
     return (
       tagArray.map(tag => (
@@ -26,9 +38,9 @@ class RoadmapBoard extends React.Component {
   render() {
     return (
       <Grid item xs={12} lg={6} className={this.props.classes.grid}>
-        <Stepper orientation="vertical">
-          {this.props.tags.map(tag => (
-            <Step key={tag.date}>
+        <Stepper orientation="vertical" nonLinear activeStep={this.state.step}>
+          {this.props.tags.map((tag, index) => (
+            <Step key={tag.date} onClick={() => this.handleStepOnClick(index)}>
               <StepLabel>{tag.date}</StepLabel>
               <StepContent>{this.renderTagList(tag.set)}</StepContent>
             </Step>
