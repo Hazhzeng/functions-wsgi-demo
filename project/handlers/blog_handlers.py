@@ -38,7 +38,7 @@ def add_blog(
     db.session.add(new_blog_model)
     db.session.commit()
 
-    tag_models = get_tags(tags)
+    tag_models = get_tags([tag.lower() for tag in tags])
     new_blog_tag_associations = [
         BlogTagAssociation(blog_id=new_blog_model.id, tag_id=tag_model.id)
         for tag_model in tag_models
@@ -86,7 +86,7 @@ def serialise_blogs(blogs: List[BlogModel]) -> Dict[str, any]:
             'title': blog.title,
             'tags': tags,
             'text': blog.text,
-            'update_date': blog.last_update
+            'update_date': blog.last_update.isoformat()
         })
     return result
 
@@ -97,7 +97,7 @@ def serialise_tags(associations: List[BlogTagAssociation]) -> Dict[str, any]:
     for association in associations:
         result['tags'].append({
             'name': association.tag.tag,
-            'update_date': association.tag.date_added
+            'update_date': association.date_added.isoformat()
         })
     return result
 
