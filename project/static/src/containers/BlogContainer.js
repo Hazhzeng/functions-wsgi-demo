@@ -2,7 +2,7 @@ import _ from 'lodash';
 import React from 'react';
 import { connect } from 'react-redux';
 import { BlogPreviewList } from '../components/blog';
-import { getAllBlogs, deleteBlog } from '../actions/BlogActions';
+import { getAllBlogs, deleteBlog, editBlog } from '../actions/BlogActions';
 
 class Blog extends React.PureComponent {
   componentDidMount() {
@@ -15,6 +15,7 @@ class Blog extends React.PureComponent {
         blogs={this.props.blogs}
         userId={this.props.userId}
         handleDeleteBlog={this.props.deleteBlog}
+        handleEditBlog={this.props.editBlog}
       />
     );
   }
@@ -33,6 +34,7 @@ export const BlogContainer = connect(
   }),
   dispatch => ({
     getAllBlogs: () => dispatch(getAllBlogs()),
-    deleteBlog: id => dispatch(deleteBlog(id))
+    deleteBlog: id => dispatch(deleteBlog(id)),
+    editBlog: id => dispatch(editBlog(id)),
   })
 )(Blog);

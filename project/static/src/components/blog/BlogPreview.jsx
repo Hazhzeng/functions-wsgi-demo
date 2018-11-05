@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import MarkdownIt from 'markdown-it';
-import moment from 'moment';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
@@ -15,6 +14,9 @@ import 'markdown-it-latex/dist/index.css';
 import Chip from '@material-ui/core/Chip';
 import { withStyles } from '@material-ui/core/styles';
 import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
+
+import { formatDate } from '../../utils';
 
 
 class BlogPreview extends React.PureComponent {
@@ -41,6 +43,10 @@ class BlogPreview extends React.PureComponent {
 
   handleDeleteGenerator() {
     return () => this.props.handleDelete(this.props.id);
+  }
+
+  handleEditGenerator() {
+    return () => this.props.handleEdit(this.props.id);
   }
 
   _renderTitle() {
@@ -73,12 +79,7 @@ class BlogPreview extends React.PureComponent {
       return null;
     }
 
-    const datetimeMoment = moment(time);
-    if (!datetimeMoment.isValid()) {
-      return null;
-    }
-
-    return datetimeMoment.format('MMMM Do YYYY, h:mm:ss a');
+    return formatDate(time, 'MMMM Do YYYY, HH:mm:ss');
   }
 
   _renderMarkdown() {
@@ -90,6 +91,15 @@ class BlogPreview extends React.PureComponent {
 
   _renderControlPanel() {
     return [
+      this.props.handleEdit && null && (
+        <Button
+          key='handle_edit_button'
+          className={this.props.classes.button}
+          onClick={this.handleEditGenerator()}
+        >
+          <EditIcon />
+        </Button>
+      ),
       this.props.handleDelete && (
         <Button
           key='handle_delete_button'
@@ -98,7 +108,7 @@ class BlogPreview extends React.PureComponent {
         >
           <DeleteIcon />
         </Button>
-      )
+      ),
     ]
   }
 
@@ -133,6 +143,7 @@ BlogPreview.propType = {
 
   id: PropTypes.id,
   handleDelete: PropTypes.func,
+  handleEdit: PropTypes.func,
 }
 
 const styles = (theme) => ({

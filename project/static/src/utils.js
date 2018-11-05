@@ -1,3 +1,4 @@
+import moment from 'moment';
 import urlUtil from 'url';
 import MobileDetect from 'mobile-detect';
 
@@ -58,3 +59,8 @@ export const response_handler = (response) => {
 const md = new MobileDetect(window.navigator.userAgent);
 
 export const isPhone = Boolean(md.phone());
+
+export const formatDate = (utcISO, momentFormat) => {
+  const localTime = moment.utc(utcISO).local();
+  return localTime.format(momentFormat);
+}

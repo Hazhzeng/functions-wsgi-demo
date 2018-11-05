@@ -27,7 +27,29 @@ export const definition = {
   DELETE_BLOG: `[${prefix}]DELETE_BLOG`,
   DELETE_BLOG_SUCCESS: `[${prefix}]DELETE_BLOG->SUCCESS`,
   DELETE_BLOG_FAILURE: `[${prefix}]DELETE_BLOG->FAILURE`,
+
+  EDIT_BLOG: `[${prefix}]EDIT_BLOG`,
+  EDIT_BLOG_SUCCESS: `[${prefix}]EDIT_BLOG->SUCCESS`,
+  EDIT_BLOG_FAILURE: `[${prefix}]EDIT_BLOG->FAILURE`,
 };
+
+export const editBlog = id => ({
+  type: definition.EDIT_BLOG,
+  payload: {
+    id
+  }
+});
+
+export const editBlogSuccess = id => ({
+  type: definition.EDIT_BLOG_SUCCESS,
+  payload: {
+    id
+  }
+});
+
+export const editBlogFailure = () => ({
+  type: definition.EDIT_BLOG_FAILURE,
+});
 
 export const deleteBlog = id => ({
   type: definition.DELETE_BLOG,
