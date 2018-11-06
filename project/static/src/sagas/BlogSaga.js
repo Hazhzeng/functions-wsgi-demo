@@ -2,7 +2,6 @@ import { call, put, select, takeLatest } from 'redux-saga/effects';
 import Api from '../api';
 import {
   definition as blog,
-  disgardAllDrafts,
   getAllTagsSuccess, getAllTagsFailure,
   getAllBlogsSuccess, getAllBlogsFailure,
   submitBlogSuccess, submitBlogFailure,
@@ -40,17 +39,18 @@ function *submitBlogSaga(action) {
     const { id } = action.payload;
     const { title, tags, text } = yield select(state => state.blog.draftById[id]);
     yield put(pushProgress(30));
-    const data = yield call(Api.submitBlog, title, tags, text);
+    let data = null;
+    if (!id) {
+      data = yield call(Api.submitBlog, title, tags, text);
+    } else {
+      data = yield call(Api.updateBlog, id, title, tags, text);
+    }
     yield put(pushProgress(70));
     yield put(submitBlogSuccess(data));
   } catch (error) {
     yield put(submitBlogFailure(error));
   }
   yield put(pushProgress(100));
-}
-
-function *deleteDraftSaga() {
-  yield put(disgardAllDrafts());
 }
 
 function *deleteBlogSaga(action) {
@@ -71,6 +71,4 @@ export default [
   takeLatest(blog.GET_ALL_BLOGS, getAllBlogsSaga),
   takeLatest(blog.SUBMIT_BLOG, submitBlogSaga),
   takeLatest(blog.DELETE_BLOG, deleteBlogSaga),
-
-  takeLatest(blog.SUBMIT_BLOG_SUCCESS, deleteDraftSaga),
 ];

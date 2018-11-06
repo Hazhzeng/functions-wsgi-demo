@@ -16,6 +16,7 @@ from project.handlers.blog_handlers import (
     serialise_tags,
     serialise_blogs,
     delete_blog_by_model,
+    update_blog_by_model,
 )
 from project.handlers.account_handlers import (
     is_valid_email,
@@ -211,50 +212,26 @@ def blog_id_delete(id: int):
 @app.route('/api/blog/<int:id>', methods=['PATCH'])
 @login_required_api
 @use_args({
-    'action': fields.String(required=True),
-    'title': fields.String(),
     'tags': fields.List(fields.String()),
     'text': fields.String()
 })
 def blog_id_patch(args, id: int):
-    action = args.get('action')
-    if action is None:
-        return response.unprocessable_entity(
-            'Action is required'
+    try:
+        blog_model = get_blog_by_id(id)
+    except BlogNotFoundException:
+        return response.not_found(
+            'Blog cannot be found'
         )
 
-    if action == 'update':
-        try:
-            blog_model = get_blog_by_id(id)
-        except BlogNotFoundException:
-            return response.not_found(
-                'Blog cannot be found'
-            )
+    if g.user.id != blog_model.author_id:
+        return response.unauthorized(
+            'Only the author can remove their article'
+        )
 
-        if g.user.id != blog_model.author_id:
-            return response.unauthorized(
-                'Only the author can amend their article'
-            )
-
-        title = args.get('title')
-        tags = args.get('tags', [])
-        text = args.get('text', '')
-        if not title:
-            return response.unprocessable_entity(
-                'Blog title cannot be empty'
-            )
-
-        delete_blog_by_model(blog_model)
-        new_blog = add_blog(g.user.id, title, tags, text)
-        return response.created({
-            'id': new_blog.id,
-            'title': new_blog.title,
-            'update': new_blog.last_update,
-        })
-
-    return response.bad_request(
-        'Action cannot be handled properly'
-    )
+    tags = args.get('tags', [])
+    text = args.get('text', '')
+    update_blog_by_model(blog_model, tags, text)
+    return response.ok()
 
 @app.before_request
 def before_request():

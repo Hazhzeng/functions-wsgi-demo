@@ -25,10 +25,16 @@ function *routeSubmitBlogSuccessSaga() {
   yield put(changeView(view.BLOG_VIEW));
 }
 
+function *routeEditBlogSaga() {
+  yield put(push('/compose'));
+  yield put(changeView(view.EDIT_VIEW));
+}
+
 export default [
   takeLatest(route.CHANGE_ROUTE, changeRouteSaga),
 
   takeLatest(account.LOGIN_SUCCESS, routeLoginSuccessSaga),
   takeLatest(account.LOGOUT_SUCCESS, routeLogoutSuccessSaga),
   takeLatest(blog.SUBMIT_BLOG_SUCCESS, routeSubmitBlogSuccessSaga),
+  takeLatest(blog.EDIT_BLOG_BY_ID, routeEditBlogSaga),
 ];

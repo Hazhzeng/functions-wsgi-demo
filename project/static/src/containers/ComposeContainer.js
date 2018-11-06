@@ -23,43 +23,44 @@ class Compose extends React.PureComponent {
   }
 
   handleChangeTitle(event) {
-    this.props.changeTitle(event.target.value);
+    this.props.changeTitle(this.props.id, event.target.value);
   }
 
   handleChangeTag(event) {
-    this.props.changeTag(event.target.value);
+    this.props.changeTag(this.props.id, event.target.value);
   }
 
   handleChangeText(value) {
-    this.props.changeText(value);
+    this.props.changeText(this.props.id, value);
   }
 
   handleSubmit() {
-    this.props.submitBlog(null);
+    this.props.submitBlog(this.props.id);
   }
 
   handleCommitTag() {
-    this.props.commitTag(null);
+    this.props.commitTag(this.props.id);
   }
 
   handleDeleteTag(value) {
-    this.props.deleteTag(null, value);
+    this.props.deleteTag(this.props.id, value);
   }
 
   render() {
     return [
       <BlogEditor
         key="blog_editor"
+        id={this.props.id}
         title={this.props.blogTitle}
         tag={this.props.blogTag}
         tags={this.props.blogTags}
         text={this.props.blogText}
-        handleSubmit={this.handleSubmit}
         handleChangeTitle={this.handleChangeTitle}
         handleChangeTag={this.handleChangeTag}
         handleChangeText={this.handleChangeText}
         handleCommitTag={this.handleCommitTag}
         handleDeleteTag={this.handleDeleteTag}
+        handleSubmit={this.handleSubmit}
       />,
       <BlogPreview
         key="blog_preview"
@@ -74,17 +75,18 @@ class Compose extends React.PureComponent {
 export const ComposeContainer = connect(
   state => ({
     progress: state.ui.progress,
-    blogTitle: (state.blog.draftById[null] || {} ).title || '',
-    blogTag: (state.blog.draftById[null] || {}).tag || '',
-    blogTags: (state.blog.draftById[null] || {}).tags || [],
-    blogText: (state.blog.draftById[null] || {}).text || '',
+    id: state.blog.focusId,
+    blogTitle: (state.blog.draftById[state.blog.focusId] || {}).title || '',
+    blogTag: (state.blog.draftById[state.blog.focusId] || {}).tag || '',
+    blogTags: (state.blog.draftById[state.blog.focusId] || {}).tags || [],
+    blogText: (state.blog.draftById[state.blog.focusId] || {}).text || '',
   }),
   dispatch => ({
-    submitBlog: id => dispatch(submitBlog(id)),
-    changeTitle: title => dispatch(changeBlogTitle(title)),
-    changeTag: tag => dispatch(changeBlogTag(tag)),
-    changeText: text => dispatch(changeBlogText(text)),
+    changeTitle: (id, title) => dispatch(changeBlogTitle(title, id)),
+    changeTag: (id, tag) => dispatch(changeBlogTag(tag, id)),
+    changeText: (id, text) => dispatch(changeBlogText(text, id)),
     commitTag: id => dispatch(commitBlogTag(id)),
     deleteTag: (id, tag) => dispatch(deleteBlogTag(id, tag)),
+    submitBlog: id => dispatch(submitBlog(id)),
   })
 )(Compose);

@@ -17,6 +17,15 @@ export default {
       .then(response_handler)
   },
 
+  updateBlog: (id, title, tags, text) => {
+    const body = {
+      tags,
+      text,
+    };
+    return patch_request(`/api/blog/${id}`, {}, body)
+      .then(response_handler)
+  },
+
   deleteBlog: id => {
     return delete_request(`/api/blog/${id}`)
       .then(response_handler);

@@ -91,7 +91,7 @@ class BlogPreview extends React.PureComponent {
 
   _renderControlPanel() {
     return [
-      this.props.handleEdit && null && (
+      this.props.handleEdit && (
         <Button
           key='handle_edit_button'
           className={this.props.classes.button}

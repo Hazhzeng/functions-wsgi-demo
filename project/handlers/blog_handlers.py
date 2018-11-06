@@ -109,3 +109,25 @@ def delete_blog_by_model(blog_model: BlogModel) -> None:
 
     db.session.delete(blog_model)
     return
+
+
+def update_blog_by_model(
+    blog_model: BlogModel,
+    tags: List[str],
+    text: str
+) -> BlogModel:
+    blog_model.text = text
+    db.session.add(blog_model)
+
+    db.session.query(BlogTagAssociation).filter(
+        BlogTagAssociation.blog_id == blog_model.id
+    ).delete()
+
+    tag_models = get_tags([tag.lower() for tag in tags])
+    new_blog_tag_associations = [
+        BlogTagAssociation(blog_id=blog_model.id, tag_id=tag_model.id)
+        for tag_model in tag_models
+    ]
+    db.session.bulk_save_objects(new_blog_tag_associations)
+
+    return blog_model

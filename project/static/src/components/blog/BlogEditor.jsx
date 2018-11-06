@@ -30,7 +30,12 @@ class BlogEditor extends React.PureComponent {
         viewport_width,
     }
 
+    this.handleSubmitGenerator = this.handleSubmitGenerator.bind(this);
     this.handleDeleteTagGenerator = this.handleDeleteTagGenerator.bind(this);
+  }
+
+  handleSubmitGenerator(id) {
+    return () => this.props.handleSubmit(id);
   }
 
   handleDeleteTagGenerator(tag) {
@@ -45,6 +50,7 @@ class BlogEditor extends React.PureComponent {
         onChange={this.props.handleChangeTitle}
         className={this.props.classes.text}
         margin="normal"
+        disabled={Boolean(this.props.id)}
         fullWidth
       />
     );
@@ -90,16 +96,17 @@ class BlogEditor extends React.PureComponent {
   }
 
   _renderEditorControlPanel() {
+    const isUpdate = Boolean(this.props.id);
     return (
       <div>
         <Button
           variant="outlined"
           color="primary"
           className={this.props.classes.button}
-          onClick={this.props.handleSubmit}
+          onClick={this.handleSubmitGenerator(this.props.id)}
           fullWidth
         >
-          Submit
+          {isUpdate ? 'Update' : 'Submit'}
         </Button>
       </div>
     );
@@ -143,6 +150,7 @@ class BlogEditor extends React.PureComponent {
 }
 
 BlogEditor.propType = {
+  id: PropTypes.integer,
   title: PropTypes.string,
   tag: PropTypes.string,
   tags: PropTypes.arrayOf(PropTypes.string),
