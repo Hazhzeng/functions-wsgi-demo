@@ -74,7 +74,6 @@ class Compose extends React.PureComponent {
 
 export const ComposeContainer = connect(
   state => ({
-    progress: state.ui.progress,
     id: state.blog.focusId,
     blogTitle: (state.blog.draftById[state.blog.focusId] || {}).title || '',
     blogTag: (state.blog.draftById[state.blog.focusId] || {}).tag || '',

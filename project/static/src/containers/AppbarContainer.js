@@ -12,7 +12,7 @@ class Appbar extends React.PureComponent {
     return (
       <ApplicationBar
         title={isPhone ? '' : title}
-        progress={this.props.progress}
+        semaphore={this.props.semaphore}
       />
     )
   }
@@ -20,7 +20,7 @@ class Appbar extends React.PureComponent {
 
 export const AppbarContainer = connect(
   state => ({
-    progress: state.ui.progress,
+    semaphore: state.ui.loadingSemaphore,
     loggedInUsers: state.account.loggedInUserById,
   })
 )(Appbar);

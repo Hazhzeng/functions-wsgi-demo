@@ -18,7 +18,7 @@ import { isPhone } from '../../utils';
 
 class ApplicationBar extends React.PureComponent {
   _renderProgressBar() {
-    return <LoadingIndicator progress={this.props.progress} />
+    return <LoadingIndicator semaphore={this.props.semaphore} />
   }
 
   _renderTitle() {
@@ -65,7 +65,7 @@ class ApplicationBar extends React.PureComponent {
 
 ApplicationBar.propTypes = {
   title: PropTypes.string,
-  progress: PropTypes.number.isRequired,
+  semaphore: PropTypes.number.isRequired,
 }
 
 const styles = (theme) => ({

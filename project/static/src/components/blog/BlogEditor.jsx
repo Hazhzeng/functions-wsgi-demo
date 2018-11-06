@@ -150,7 +150,7 @@ class BlogEditor extends React.PureComponent {
 }
 
 BlogEditor.propType = {
-  id: PropTypes.integer,
+  id: PropTypes.number,
   title: PropTypes.string,
   tag: PropTypes.string,
   tags: PropTypes.arrayOf(PropTypes.string),

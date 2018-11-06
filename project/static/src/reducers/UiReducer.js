@@ -2,14 +2,18 @@ import _ from 'lodash';
 import { definition } from '../actions/UiActions';
 
 const initialState = {
-  progress: 100,
+  loadingSemaphore: 0,
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case definition.PUSH_PROGRESS:
+    case definition.START_LOADING:
       return _.assignIn(state, {
-        progress: action.payload.percentage
+        loadingSemaphore: state.loadingSemaphore + 1,
+      });
+    case definition.STOP_LOADING:
+      return _.assignIn(state, {
+        loadingSemaphore: Math.max(0, state.loadingSemaphore - 1),
       });
     default:
       return state;

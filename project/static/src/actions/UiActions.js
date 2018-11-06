@@ -1,12 +1,14 @@
 const prefix = 'Ui';
 
 export const definition = {
-  PUSH_PROGRESS: `[${prefix}]PUSH_PROGRESS`,
+  START_LOADING: `[${prefix}]START_LOADING`,
+  STOP_LOADING: `[${prefix}]STOP_LOADING`,
 };
 
-export const pushProgress = (percentage) => ({
-  type: definition.PUSH_PROGRESS,
-  payload: {
-    percentage,
-  }
+export const startLoading = () => ({
+  type: definition.START_LOADING,
 });
+
+export const stopLoading = () => ({
+  type: definition.STOP_LOADING,
+})
