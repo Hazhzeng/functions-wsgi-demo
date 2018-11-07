@@ -24,7 +24,7 @@ class Blog extends React.PureComponent {
 export const BlogContainer = connect(
   state => ({
     view: state.view.currentView,
-    semaphore: state.ui.loadingSemaphore,
+    mutex: state.ui.loadingMutex,
     blogs: Object.values(state.blog.blogById).sort((a, b) => {
       const aDate = new Date(a.updateDate);
       const bDate = new Date(b.updateDate);

@@ -64,7 +64,7 @@ class Account extends React.PureComponent {
   }
 
   _isActionButtonDisabled(status) {
-    const isProcessing = this.props.semaphore > 0;
+    const isProcessing = this.props.mutex > 0;
     const disabledStatuses = [
       accountStatus.LOGGED_IN,
       accountStatus.LOGGED_OUT
@@ -104,7 +104,7 @@ class Account extends React.PureComponent {
 export const AccountContainer = connect(
   state => ({
     view: state.view.currentView,
-    semaphore: state.ui.loadingSemaphore,
+    mutex: state.ui.loadingMutex,
     email: state.account.tempEmail || '',
     password: state.account.tempPassword || '',
     status: state.account.status,

@@ -54,9 +54,12 @@ function *registerSaga(action) {
   } catch (error) {
     yield put(registerFailure(error));
   }
+  yield put(stopLoading());
 }
 
 function *postRegisterLogin() {
+  yield put(startLoading());
+
   const email = yield select(state => state.account.tempEmail);
   const password = yield select(state => state.account.tempPassword);
   try {

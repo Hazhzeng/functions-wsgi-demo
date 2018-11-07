@@ -7,7 +7,7 @@ class LoadingIndicator extends React.PureComponent {
     return (
       <CircularProgress
         color="inherit"
-        variant={this.props.semaphore > 0 ? 'indeterminate' : 'determinate'}
+        variant={this.props.mutex > 0 ? 'indeterminate' : 'determinate'}
         size={20}
         value={100}
       />
@@ -16,7 +16,7 @@ class LoadingIndicator extends React.PureComponent {
 }
 
 LoadingIndicator.propTypes = {
-  semaphore: PropTypes.number,
+  mutex: PropTypes.number,
 };
 
 export default LoadingIndicator;

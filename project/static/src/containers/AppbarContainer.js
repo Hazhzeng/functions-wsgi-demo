@@ -12,7 +12,7 @@ class Appbar extends React.PureComponent {
     return (
       <ApplicationBar
         title={isPhone ? '' : title}
-        semaphore={this.props.semaphore}
+        mutex={this.props.mutex}
       />
     )
   }
@@ -20,7 +20,7 @@ class Appbar extends React.PureComponent {
 
 export const AppbarContainer = connect(
   state => ({
-    semaphore: state.ui.loadingSemaphore,
+    mutex: state.ui.loadingMutex,
     loggedInUsers: state.account.loggedInUserById,
   })
 )(Appbar);
