@@ -5,6 +5,7 @@ import {
   AccountPasswordField,
   AccountActionButton,
 } from '../components/account';
+import { definition as error } from '../actions/ErrorActions';
 import {
   status as accountStatus,
   checkEmail,
@@ -79,7 +80,7 @@ class Account extends React.PureComponent {
         label="Please enter your email"
         tooltip="A proper email is required for login or signup"
         value={this.props.email}
-        hasError={false}
+        hasError={this.props.errors.email}
         handleChange={this.handleEmailChange}
         handleFocus={this.handleEmailChange}
       />,
@@ -87,7 +88,7 @@ class Account extends React.PureComponent {
         key="account_password_field"
         label={this._getPasswordLabel(this.props.status)}
         tooltip="A password must contain digits and at least 6 characters"
-        hasError={false}
+        hasError={this.props.errors.password}
         value={this.props.password}
         handleChange={this.handlePasswordChange}
       />,
@@ -108,6 +109,10 @@ export const AccountContainer = connect(
     email: state.account.tempEmail || '',
     password: state.account.tempPassword || '',
     status: state.account.status,
+    errors: {
+      email: Boolean(state.error[error.USERNAME_PASSWORD_COMBINATION]),
+      password: Boolean(state.error[error.USERNAME_PASSWORD_COMBINATION]),
+    }
   }),
   dispatch => ({
     checkEmail: email => dispatch(checkEmail(email)),
