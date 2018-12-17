@@ -23,7 +23,8 @@
         "babel-loader": "^8.0.0",
         "clean-webpack-plugin": "^0.1.19",
         "eslint": "^5.5.0",
-        "eslint-plugin-react": "^7.11.1"
+        "eslint-plugin-react": "^7.11.1",
+        "js-cookie": "^2.2.0"
     },
     "dependencies": {
         "@material-ui/core": "^1.5.1",

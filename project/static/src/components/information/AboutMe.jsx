@@ -1,8 +1,11 @@
 import _ from 'lodash';
 import React from 'react';
+import Cookies from 'js-cookie';
 import Grid from '@material-ui/core/Grid';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
+import Checkbox from '@material-ui/core/Checkbox';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { withStyles } from '@material-ui/core/styles';
 
 import EmailFilled from '@material-ui/icons/Email';
@@ -33,13 +36,15 @@ class AboutMe extends React.Component {
     super(props);
 
     this.state = {
-      wechatModal: false
+      wechatModal: false,
+      checkSkip: Boolean(Number(Cookies.get('skipPersonalPage') || '0'))
     };
 
     this.handleEmail = this.handleEmail.bind(this);
     this.handleWechat = this.handleWechat.bind(this);
     this.handleGithub = this.handleGithub.bind(this);
     this.handleResume = this.handleResume.bind(this);
+    this.handleCheckSkip = this.handleCheckSkip.bind(this);
   }
 
   handleEmail() {
@@ -58,6 +63,20 @@ class AboutMe extends React.Component {
 
   handleResume() {
     window.open(`/dist/${ResumeFile}`, '_blank');
+  }
+
+  handleCheckSkip() {
+    const nextCheckSkip = !this.state.checkSkip;
+
+    if (nextCheckSkip) {
+      Cookies.set('skipPersonalPage', 1);
+    } else {
+      Cookies.set('skipPersonalPage', 0);
+    }
+
+    this.setState(
+      _.assignIn(this.state, { checkSkip: nextCheckSkip })
+    );
   }
 
   renderAvatar() {
@@ -167,6 +186,24 @@ class AboutMe extends React.Component {
     )
   }
 
+  renderSkipCheckbox() {
+    return (
+      <div className={this.props.classes.checkboxDiv}>
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={this.state.checkSkip}
+              onChange={this.handleCheckSkip}
+              value="checkSkip"
+              color="primary"
+            />
+          }
+          label="Skip personal page next time"
+        />
+      </div>
+    );
+  }
+
   render() {
     return (
       <Grid item xs={12} lg={6} className={this.props.classes.grid}>
@@ -174,6 +211,7 @@ class AboutMe extends React.Component {
         {this.renderContactDetail()}
         {this.renderModals()}
         {this.renderAbout()}
+        {this.renderSkipCheckbox()}
       </Grid>
     );
   }
@@ -200,6 +238,11 @@ const styles = (theme) => ({
   aboutDiv: {
     marginTop: theme.spacing.unit * 3,
     justifyContent: 'center',
+  },
+  checkboxDiv: {
+    marginTop: theme.spacing.unit * 2,
+    justifyContent: 'center',
+    display: 'flex',
   },
   typoSpace: {
     marginBottom: theme.spacing.unit,

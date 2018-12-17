@@ -6,6 +6,18 @@ from .wrappers import login_required
 
 
 @app.route('/')
+def home():
+    skipPersonalPage = request.cookies.get('skipPersonalPage')
+    try:
+        isSkipEnable = bool(int(skipPersonalPage))
+    except ValueError:
+        isSkipEnable = False
+        response.cookie['skipPersonalPage'] = '0'
+
+    if isSkipEnable:
+        return redirect('/articles', code=302)
+    return render_template('index.html')
+
 @app.route('/articles')
 @app.route('/account')
 @app.route('/tag')
