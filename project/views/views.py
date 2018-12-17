@@ -1,5 +1,13 @@
 from datetime import datetime
-from flask import render_template, Response, g, redirect, jsonify, request
+from flask import (
+    render_template,
+    make_response,
+    Response,
+    g,
+    redirect,
+    jsonify,
+    request
+)
 from project import app, db
 from project.models import UserModel
 from .wrappers import login_required
@@ -10,13 +18,17 @@ def home():
     skipPersonalPage = request.cookies.get('skipPersonalPage')
     try:
         isSkipEnable = bool(int(skipPersonalPage))
+    except TypeError:
+        isSkipEnable = False
     except ValueError:
         isSkipEnable = False
-        response.cookie['skipPersonalPage'] = '0'
 
     if isSkipEnable:
         return redirect('/articles', code=302)
-    return render_template('index.html')
+
+    response = make_response(render_template('index.html'))
+    response.set_cookie('skipPersonalPage', '0')
+    return response
 
 @app.route('/articles')
 @app.route('/account')
