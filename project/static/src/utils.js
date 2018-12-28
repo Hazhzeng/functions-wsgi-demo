@@ -64,3 +64,21 @@ export const formatDate = (utcISO, momentFormat) => {
   const localTime = moment.utc(utcISO).local();
   return localTime.format(momentFormat);
 }
+
+export const localStorage = {
+  get: (field) => {
+    const value = window.localStorage.getItem(field);
+    if (value === null) {
+      return undefined;
+    }
+    return value;
+  },
+
+  set: (field, value) => {
+    window.localStorage.setItem(field, value);
+  },
+
+  clear: (field) => {
+    window.localStorage.clear(field);
+  }
+};

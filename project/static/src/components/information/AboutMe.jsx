@@ -69,9 +69,9 @@ class AboutMe extends React.Component {
     const nextCheckSkip = !this.state.checkSkip;
 
     if (nextCheckSkip) {
-      Cookies.set('skipPersonalPage', 1);
+      Cookies.set('skipPersonalPage', '1', { expires: 30 });
     } else {
-      Cookies.set('skipPersonalPage', 0);
+      Cookies.set('skipPersonalPage', '0', { expires: 30 });
     }
 
     this.setState(

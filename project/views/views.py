@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 from flask import (
     render_template,
     make_response,
@@ -27,7 +27,11 @@ def home():
         return redirect('/articles', code=302)
 
     response = make_response(render_template('index.html'))
-    response.set_cookie('skipPersonalPage', '0')
+    response.set_cookie(
+        key='skipPersonalPage',
+        value='0',
+        expires=datetime.utcnow() + timedelta(days=30)
+    )
     return response
 
 @app.route('/articles')
