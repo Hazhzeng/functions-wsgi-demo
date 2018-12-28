@@ -27,6 +27,9 @@ export const definition = {
   DELETE_BLOG: `[${prefix}]DELETE_BLOG`,
   DELETE_BLOG_SUCCESS: `[${prefix}]DELETE_BLOG->SUCCESS`,
   DELETE_BLOG_FAILURE: `[${prefix}]DELETE_BLOG->FAILURE`,
+
+  SAVE_BLOG_TO_DRAFT: `[${prefix}]SAVE_BLOG_TO_DRAFT`,
+  LOAD_BLOG_FROM_DRAFT: `[${prefix}LOAD_BLOG_FROM_DRAFT]`,
 };
 
 export const deleteBlog = id => ({
@@ -161,4 +164,12 @@ export const saveBlogById = (id) => ({
 
 export const disgardAllDrafts = () => ({
   type: definition.DISGARD_ALL_DRAFTS,
+});
+
+export const saveBlogToDraft = () => ({
+  type: definition.SAVE_BLOG_TO_DRAFT
+});
+
+export const loadBlogFromDraft = () => ({
+  type: definition.LOAD_BLOG_FROM_DRAFT
 });

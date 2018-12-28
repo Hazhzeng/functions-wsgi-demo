@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import { definition } from '../actions/BlogActions';
-import { formatDate } from '../utils';
+import { formatDate, localStorage } from '../utils';
 
 const initialState = {
   focusId: null,
@@ -11,6 +11,33 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    case definition.SAVE_BLOG_TO_DRAFT: {
+      const unsavedDraft = state.draftById[null] || null;
+      if (unsavedDraft) {
+        localStorage.set(
+          'blogDraft',
+          JSON.stringify(unsavedDraft)
+        );
+      }
+      return state;
+    }
+    case definition.LOAD_BLOG_FROM_DRAFT: {
+      const newState = Object.assign({}, state);
+      const savedDraftJson = localStorage.get('blogDraft');
+      if (savedDraftJson) {
+        let draftObject = null;
+        try {
+          draftObject = JSON.parse(savedDraftJson);
+        } catch (error) {
+          localStorage.clear('blogDraft');
+        }
+
+        if (draftObject) {
+          newState.draftById[null] = draftObject;
+        }
+      }
+      return newState;
+    }
     case definition.EDIT_BLOG_BY_ID: {
       const newState = Object.assign({}, state);
       newState.draftById[action.payload.id] = state.blogById[action.payload.id];
@@ -33,6 +60,7 @@ export default (state = initialState, action) => {
       const newState = Object.assign({}, state);
       delete newState.draftById[state.focusId];
       newState.focusId = null;
+      localStorage.clear('blogDraft');
       return newState;
     }
     case definition.DELETE_BLOG_SUCCESS: {

@@ -8,6 +8,8 @@ import {
   changeBlogText,
   commitBlogTag,
   deleteBlogTag,
+  saveBlogToDraft,
+  loadBlogFromDraft,
 } from '../actions/BlogActions';
 
 class Compose extends React.PureComponent {
@@ -20,6 +22,21 @@ class Compose extends React.PureComponent {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleCommitTag = this.handleCommitTag.bind(this);
     this.handleDeleteTag = this.handleDeleteTag.bind(this);
+    this.handleBeforeunload = this.handleBeforeunload.bind(this);
+  }
+
+  componentDidMount() {
+    window.addEventListener("beforeunload", this.handleBeforeunload);
+    this.props.loadBlogFromDraft();
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("beforeunload", this.handleBeforeunload);
+    this.props.saveBlogToDraft();
+  }
+
+  handleBeforeunload() {
+    this.props.saveBlogToDraft();
   }
 
   handleChangeTitle(event) {
@@ -87,5 +104,7 @@ export const ComposeContainer = connect(
     commitTag: id => dispatch(commitBlogTag(id)),
     deleteTag: (id, tag) => dispatch(deleteBlogTag(id, tag)),
     submitBlog: id => dispatch(submitBlog(id)),
+    saveBlogToDraft: () => dispatch(saveBlogToDraft()),
+    loadBlogFromDraft: () => dispatch(loadBlogFromDraft()),
   })
 )(Compose);
