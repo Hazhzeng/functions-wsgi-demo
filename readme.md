@@ -1,5 +1,14 @@
 # Pristine
-A shared note taking website for casual user.
+A simple blog Flask website
+
+---
+# How to Run
+1. Ensure you have Python >= 3.6
+2. Create a virtual environment, `python -m venv env` and activate it
+3. Restore package dependencies by `pip install -r requirements.txt`
+4. Populate the database table with the `project/sql` script
+5. Set environment variable `DIALECT = mssql`, `DRIVER = pyodbc`, `ODBC = {SQL Server ODBC String}`
+6. To run it on [Azure Functions Core Tools](https://github.com/Azure/azure-functions-core-tools): `func host start`
 
 ---
 ## Story
@@ -21,7 +30,7 @@ Shall let our ideas flow, but not keeping an eye on who bores them.
 
 ---
 ## Features
-- Provide immediate feedback when editing in markdown language, the rendering library I use is **[markdown-js](https://github.com/evilstreak/markdown-js) (many thanks)** 
+- Provide immediate feedback when editing in markdown language, the rendering library I use is **[markdown-js](https://github.com/evilstreak/markdown-js) (many thanks)**
 - Provide credential management to keep your blog safe, **everyone shares the same privilege**.
 - Provide clean wipe out for your blogs, **does not record delete action** on database.
 - Neat user interface using **[material-ui-next](https://material-ui-next.com/) (hugs)**
