@@ -34,7 +34,6 @@ def login_account(email: str) -> UserModel:
     db.session.add(user)
     return user
 
-
 def register_account(email: str, password: str) -> UserModel:
     now = datetime.utcnow()
     expiry = now + timedelta(hours=24)
@@ -42,10 +41,11 @@ def register_account(email: str, password: str) -> UserModel:
     salt = bcrypt.gensalt()
     encoded_password = password.encode(encoding='utf-8')
     hashed = bcrypt.hashpw(encoded_password, salt)
+    decoded_hashed = hashed.decode('utf-8')
     new_user = UserModel(
         username=email,
         salt=salt,
-        hash=hashed,
+        hash=decoded_hashed,
         token=token,
         login_date=now,
         login_expiry=expiry,
@@ -66,9 +66,15 @@ def is_account_credential_valid(email: str, password: str) -> bool:
         UserModel.username == email
     ).first()
 
+    print(user.username)
     if user is None:
         return False
 
-    bcrypt_hash = user.hash.encode(encoding='utf-8')
+    bcrypt_hash = user.hash.strip().encode(encoding='utf-8')
     encoded_password = password.encode(encoding='utf-8')
-    return bcrypt.checkpw(encoded_password, bcrypt_hash)
+    result = bcrypt.checkpw(encoded_password, bcrypt_hash)
+    print(f'user.hash = {user.hash}')
+    print(f'bcrypt_hash = {bcrypt_hash}')
+    print(f'encoded_password = {encoded_password}')
+    print(f'result = {result}')
+    return result

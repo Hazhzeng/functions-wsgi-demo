@@ -1,4 +1,3 @@
-alter table blog_tag_map
-	add column DateAddedUtc DATETIME default NOW();
-	
-create index IX_BLOG_TAG_MAP_DATEADDEDUTC on blog_tag_map(DateAddedUtc);
+ALTER TABLE BlogTagMap ADD DateAddedUtc DATETIME NOT NULL DEFAULT GETDATE();
+
+CREATE INDEX IX_BLOG_TAG_MAP_DATEADDEDUTC ON BlogTagMap(DateAddedUtc);

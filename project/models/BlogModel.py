@@ -2,7 +2,7 @@ from project import db
 from datetime import datetime
 
 class BlogModel(db.Model):
-    __tablename__ = 'blog'
+    __tablename__ = 'PristineBlog'
     id = db.Column(
         'Id',
         db.Integer,
@@ -11,7 +11,7 @@ class BlogModel(db.Model):
     author_id = db.Column(
         'AuthorId',
         db.Integer,
-        db.ForeignKey('user.Id')
+        db.ForeignKey('PristineUser.Id')
     )
     title = db.Column(
         'Title',
@@ -39,7 +39,7 @@ class BlogModel(db.Model):
     )
     tags = db.relationship(
         'TagModel',
-        secondary='blog_tag_map',
+        secondary='BlogTagMap',
         uselist=True,
     )
 

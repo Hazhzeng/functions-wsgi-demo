@@ -4,7 +4,7 @@ from datetime import datetime
 from .BlogTagAssociation import BlogTagAssociation
 
 class TagModel(db.Model):
-    __tablename__ = 'tag'
+    __tablename__ = 'PristineTag'
     id = db.Column(
         'Id',
         db.Integer,

@@ -1,11 +1,11 @@
-create table blog (
-	Id INT auto_increment primary key,
+CREATE TABLE PristineBlog (
+	Id INT IDENTITY(1,1) PRIMARY KEY,
 	AuthorId INT not null,
 	Title VARCHAR(128) not null,
 	Text TEXT null,
 	LastUpdateDateUtc DATETIME null,
-	foreign key (AuthorId) references user(Id)
+	FOREIGN KEY (AuthorId) REFERENCES PristineUser(Id)
 );
 
-create index IX_BLOG_AUTHORID on blog(AuthorId);
-create index IX_BLOG_TITLE on blog(Title);
+CREATE INDEX IX_BLOG_AUTHORID ON PristineBlog(AuthorId);
+CREATE INDEX IX_BLOG_TITLE ON PristineBlog(Title);

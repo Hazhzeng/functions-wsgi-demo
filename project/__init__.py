@@ -2,6 +2,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 import os
 import json
+from urllib.parse import quote_plus
 
 TEMPLATE_DIR = os.path.join('.', 'static')
 STATIC_DIR = os.path.join('.', 'static')
@@ -19,22 +20,19 @@ app.config['STATIC_DIR'] = STATIC_DIR
 app.config['DIST_DIR'] = DIST_DIR
 
 CONFIG_FILE = os.path.join(app.root_path, '..', 'roject.config')
+config = {}
+if os.path.exists(CONFIG_FILE):
+    with open(CONFIG_FILE, 'r') as config_file:
+        config = json.load(config_file)
 
-with open(CONFIG_FILE, 'r') as config_file:
-    config = json.load(config_file)
-    app.config.update(dict(
-        SQLALCHEMY_DATABASE_URI=''
-        '{dialect}+{driver}://{username}:{password}@{host}:{port}/{database}'\
-            .format(
-                dialect=config['dialect'],
-                driver=config['driver'],
-                username=config['username'],
-                password=config['password'],
-                host=config['host'],
-                port=config['port'],
-                database=config['database'],
-            ),
-    ))
+app.config.update(dict(
+    SQLALCHEMY_DATABASE_URI=''
+    '{dialect}+{driver}:///?odbc_connect={odbc}'.format(
+        dialect=config.get('dialect') or os.environ.get('DIALECT'),
+        driver=config.get('driver') or os.environ.get('DRIVER'),
+        odbc=quote_plus(config.get('odbc') or os.environ.get('ODBC'))
+    )
+))
 
 app.config.update(dict(SQLALCHEMY_TRACK_MODIFICATIONS='False'))
 

@@ -1,7 +1,7 @@
-create table tag (
-	Id INT auto_increment primary key,
-	Tag VARCHAR(128) unique not null,
-	DateAddedUtc DATETIME not null default now()
+CREATE TABLE PristineTag (
+	Id INT IDENTITY(1,1) PRIMARY KEY,
+	Tag VARCHAR(128) UNIQUE NOT NULL,
+	DateAddedUtc DATETIME NOT NULL DEFAULT GETDATE()
 );
 
-create index IX_TAG_TAG on tag(Tag);
+CREATE INDEX IX_TAG_TAG ON PristineTag(Tag);

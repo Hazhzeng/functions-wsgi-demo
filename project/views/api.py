@@ -62,16 +62,15 @@ def tag_get():
 def account_post(args):
     username = args.get('email', '').lower()
     password = args.get('password', '')
-    if not username or not password:
-        return response.bad_request(
-            'Either email or password field is empty'
-        )
+    if not username:
+        return response.bad_request('Email should not be empty')
+
+    if not password:
+        return response.bad_request('Password should not be empty')
 
     isEmail = is_valid_email(username)
     if not isEmail:
-        return response.bad_request(
-            'Email address is malformed'
-        )
+        return response.bad_request('Email address is malformed')
 
     user = get_user_by_email(username)
     if user is not None:
@@ -96,15 +95,11 @@ def login_api(args, email: str) -> Response:
     username = email.lower()
     password = args.get('password', '')
     if not username or not password:
-        return response.bad_request(
-            'Either email or password field is empty'
-        )
+        return response.bad_request('Either email or password field is empty')
 
     isEmail = is_valid_email(username)
     if not isEmail:
-        return response.bad_request(
-            'Email address is malformed'
-        )
+        return response.bad_request('Email address is malformed')
 
     isCredentialValid = is_account_credential_valid(username, password)
     if not isCredentialValid:
