@@ -5,8 +5,8 @@ import bcrypt
 from email.utils import parseaddr
 from datetime import datetime, timedelta
 
-from project import db
-from project.models import UserModel
+from .. import db
+from ..models import UserModel
 
 def is_valid_email(email: str) -> bool:
     parsed_email = parseaddr(email)[1]

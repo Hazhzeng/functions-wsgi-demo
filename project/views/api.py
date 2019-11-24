@@ -5,10 +5,10 @@ from datetime import datetime, timedelta
 from webargs import fields
 from webargs.flaskparser import use_args
 
-from project import app, db
-from project.views import response
-from project.models import BlogModel, UserModel, TagModel
-from project.handlers.blog_handlers import (
+from __app__.project import app, db
+from __app__.project.views import response
+from __app__.project.models import BlogModel, UserModel, TagModel
+from __app__.project.handlers.blog_handlers import (
     add_blog,
     get_all_tags,
     get_all_blogs,
@@ -18,7 +18,7 @@ from project.handlers.blog_handlers import (
     delete_blog_by_model,
     update_blog_by_model,
 )
-from project.handlers.account_handlers import (
+from __app__.project.handlers.account_handlers import (
     is_valid_email,
     is_account_credential_valid,
     get_user_by_email,
@@ -26,7 +26,7 @@ from project.handlers.account_handlers import (
     register_account,
     logout_user,
 )
-from project.handlers.exceptions import (
+from __app__.project.handlers.exceptions import (
     BlogNotFoundException,
     UserNotFoundException
 )

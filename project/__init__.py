@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 import os
+import sys
 import json
 from urllib.parse import quote_plus
 
@@ -38,5 +39,4 @@ app.config.update(dict(SQLALCHEMY_TRACK_MODIFICATIONS='False'))
 
 db = SQLAlchemy(app)
 
-import project.views.views
-import project.views.api
+from __app__.project.views import views, api

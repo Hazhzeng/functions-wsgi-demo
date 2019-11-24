@@ -8,8 +8,8 @@ from flask import (
     jsonify,
     request
 )
-from project import app, db
-from project.models import UserModel
+from __app__.project import app, db
+from __app__.project.models import UserModel
 from .wrappers import login_required
 
 

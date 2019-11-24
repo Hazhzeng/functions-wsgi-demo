@@ -1,0 +1,11 @@
+{
+    "version":  "2.0",
+    "functions": [
+        "HttpTrigger"
+    ],
+    "extensions": {
+        "http": {
+            "routePrefix": ""
+        }
+    }
+}

@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from project import db
+from __app__.project import db
 
 class BlogTagAssociation(db.Model):
     __tablename__ = 'BlogTagMap'

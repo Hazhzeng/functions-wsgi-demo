@@ -1,4 +1,4 @@
-from project import db
+from __app__.project import db
 
 class UserModel(db.Model):
     __tablename__ = 'PristineUser'

@@ -1,4 +1,4 @@
-from project import db
+from __app__.project import db
 from datetime import datetime
 
 from .BlogTagAssociation import BlogTagAssociation

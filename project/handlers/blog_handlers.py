@@ -1,8 +1,8 @@
 from typing import List, Dict
 from datetime import datetime
-from project import db
+from __app__.project import db
 
-from project.models import BlogModel, TagModel, BlogTagAssociation
+from __app__.project.models import BlogModel, TagModel, BlogTagAssociation
 from .exceptions import BlogNotFoundException
 
 
