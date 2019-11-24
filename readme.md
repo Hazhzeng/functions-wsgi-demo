@@ -6,6 +6,7 @@ A simple blog Flask website
 1. Ensure you have Python >= 3.6
 2. Create a virtual environment, `python -m venv env` and activate it
 3. Restore package dependencies by `pip install -r requirements.txt`
+4. Build webpages by `npm install` and `npm run build`
 4. Populate the database table with the `project/sql` script
 5. Set environment variable `DIALECT = mssql`, `DRIVER = pyodbc`, `ODBC = {SQL Server ODBC String}`
 6. To run it on [Azure Functions Core Tools](https://github.com/Azure/azure-functions-core-tools): `func host start`

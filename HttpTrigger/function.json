@@ -10,7 +10,8 @@
         "get",
         "post",
         "put",
-        "delete"
+        "delete",
+        "patch"
       ],
       "route": "{*route}"
     },
