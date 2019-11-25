@@ -1,15 +1,27 @@
 # Pristine
-A simple blog Flask website
+A simple personal blog website runs on Flask.
 
 ---
-# How to Run
+## How to Develop Locally
 1. Ensure you have Python >= 3.6
 2. Create a virtual environment, `python -m venv env` and activate it
 3. Restore package dependencies by `pip install -r requirements.txt`
 4. Build webpages by `npm install` and `npm run build`
 4. Populate the database table with the `project/sql` script
 5. Set environment variable `DIALECT = mssql`, `DRIVER = pyodbc`, `ODBC = {SQL Server ODBC String}`
-6. To run it on [Azure Functions Core Tools](https://github.com/Azure/azure-functions-core-tools): `func host start`
+6. To run it using
+  - [Azure Functions Core Tools](https://github.com/Azure/azure-functions-core-tools): `func host start`
+  - [Python Interpreter](https://www.python.org/): `python runserver.py`
+
+## How to Deploy to Azure Functions
+1. Create an [Python Azure Functions App](https://functions.azure.com)
+2. Build webpages using `npm install` and `npm run build`
+3. Deploy to the Azure Functions App using `func azure functionapp publish <function-app-name>`
+4. Change app settings `DIALECT = mssql`, `DRIVER = pyodbc`, `ODBC = {SQL Server ODBC String}`
+5. Go to `https://function-app-name.azurewebsites.net`, it should be up and running.
+
+## Before want to deploy this to production
+If you want to reuse this repo as your personal website, please change `AboutMe.jsx` to match your personal information.
 
 ---
 ## Story
@@ -37,13 +49,7 @@ Shall let our ideas flow, but not keeping an eye on who bores them.
 - Neat user interface using **[material-ui-next](https://material-ui-next.com/) (hugs)**
 
 ---
-## Usage
+## Special Thanks
 1. Pure markdown rendering. Personally, I recommend **[markdown cheetsheet by adam-p](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet)**
 2. LaTeX mathematics. Using **`$inline formula$`** or **```math block formula```** for math rendering. Special thanks to **[markdown-it-latex by tylingsoft](https://github.com/tylingsoft/markdown-it-latex)**
 3. Acually, the markdown-it-latex is powered by **[KaTeX](https://github.com/Khan/KaTeX)**. Here a round of applause to it.
-
----
-## About this repo and about me
-I post my personal website here as an example. Please use with caution. **[https://rogerzeng.com](https://rogerzeng.com)**
-
-For any suggestions or improvements, please raise an issue or contact **[zenghanzhang46@gmail.com](mailto://zenghanzhang46@gmail.com)**

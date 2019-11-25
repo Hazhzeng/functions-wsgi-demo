@@ -58,7 +58,7 @@ class AboutMe extends React.Component {
   }
 
   handleGithub() {
-    window.open('https://github.com/RogerTsang/Pristine', '_blank');
+    window.open('https://github.com/Hazhzeng/functions-wsgi-demo', '_blank');
   }
 
   handleResume() {
@@ -100,9 +100,6 @@ class AboutMe extends React.Component {
   renderContactDetail() {
     return (
       <div className={this.props.classes.contactDetailDiv}>
-        <IconButton aria-label="resume" onClick={this.handleResume}>
-          <AttachFileFilled />
-        </IconButton>
         <IconButton aria-label="email" onClick={this.handleEmail}>
           <EmailFilled />
         </IconButton>
