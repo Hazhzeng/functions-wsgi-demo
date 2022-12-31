@@ -16,11 +16,11 @@
   "repository": "https://github.com/RogerTsang/pristine",
   "license": "ISC",
   "devDependencies": {
-    "@babel/core": "^7.0.0",
+    "@babel/core": "^7.20.7",
     "@babel/plugin-transform-runtime": "^7.0.0",
     "@babel/preset-env": "^7.0.0",
     "@babel/preset-react": "^7.0.0",
-    "babel-loader": "^8.0.0",
+    "babel-loader": "^8.3.0",
     "clean-webpack-plugin": "^0.1.19",
     "eslint": "^5.5.0",
     "eslint-plugin-react": "^7.11.1"
@@ -29,10 +29,10 @@
     "@material-ui/core": "^1.5.1",
     "@material-ui/icons": "^2.0.3",
     "connected-react-router": "^4.4.1",
-    "css-loader": "^1.0.0",
-    "file-loader": "^2.0.0",
+    "css-loader": "^6.7.3",
+    "file-loader": "^6.2.0",
     "highlight.js": "^9.12.0",
-    "html-webpack-plugin": "^3.2.0",
+    "html-webpack-plugin": "^5.5.0",
     "js-cookie": "^2.2.1",
     "lodash": "^4.17.13",
     "markdown-it": "^8.4.1",
@@ -48,10 +48,10 @@
     "react-router-dom": "^4.2.2",
     "redux": "^3.7.2",
     "redux-saga": "^0.16.0",
-    "style-loader": "^0.23.0",
+    "style-loader": "^3.3.1",
     "url": "^0.11.0",
-    "webpack": "^4.17.1",
-    "webpack-cli": "^3.1.0",
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.1",
     "webpack-merge": "^4.1.2"
   }
 }
